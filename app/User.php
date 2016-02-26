@@ -32,4 +32,38 @@ class User extends Authenticatable
     public function addresses(){
         return $this->hasMany('App\Address');
     }
+
+    /**
+     * Get the permissions associated with the user.
+     */
+    public function permissions()
+    {
+        return $this->hasMany('App\Permission');
+    }
+
+    /**
+     * Returns the raffles associated with the user.
+     *
+     * @return array( Raffle )
+     */
+    public function raffles(){
+        return $this->belongsToMany('App\Raffle');
+    }
+
+    /**
+     * Gives back, if the user has a given permission.
+     *
+     * @param  string  $slug
+     * @return boolean
+     */
+    public function hasPermission($slug)
+    {
+        $check = $this->permissions()->where('slug', $slug)->get();
+        if(count($check) === 1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

@@ -27,4 +27,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('logout', 'UserController@logout');
 
     Route::get('dashboard', 'PagesController@dashboard');
+
+    // Admin Routes
+        Route::get('admin', 'AdminController@dashboard');
 });

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Raffle;
+
 use Auth;
 
 class PagesController extends Controller
@@ -38,6 +40,7 @@ class PagesController extends Controller
 	 */
     public function dashboard(){
     	$user = Auth::user();
-    	return view('pages.dashboard', compact('user'));
+    	$raffles = Raffle::where('start','<=',time())->where('end','>=',time());
+    	return view('pages.dashboard', compact('user','raffles'));
 	}
 }
