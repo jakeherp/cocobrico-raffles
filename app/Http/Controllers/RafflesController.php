@@ -37,6 +37,19 @@ class RafflesController extends Controller
     }
 
     /**
+     * Deletes an existing raffle.
+     *
+     * @param  Request $request
+     * @return Response
+     */
+    public function delete(Request $request){
+        $raffle = Raffle::find($request->raffleId);
+        $raffle->delete();
+
+        return redirect('admin/raffles');
+    }
+
+    /**
      * Edits a existing raffle.
      *
      * @param  CreateRaffleRequest $request

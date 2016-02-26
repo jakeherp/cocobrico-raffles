@@ -34,6 +34,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('admin/raffles', 'AdminController@showRafflesView');
         Route::get('admin/raffles/create', 'AdminController@createRafflesView');
         Route::post('admin/raffles/create', 'RafflesController@create');
+        Route::post('admin/raffles/delete', 'RafflesController@delete');
         Route::put('admin/raffles', 'RafflesController@edit');
         Route::get('admin/users', 'AdminController@users');
 });

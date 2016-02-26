@@ -26,9 +26,16 @@
                     <td>{{ date(trans('global.datetimeformat'), $raffle->end) }}</td>
                     <td>{{ count($raffle->users) }}</td>
                     <td>
-                      <a href="#" class="tiny button warning has-tip" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="{{ trans('orders.edit') }}"><i class="fa fa-pencil"></i></a>
-                      <a href="#" class="tiny button success has-tip" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="{{ trans('orders.copy') }}"><i class="fa fa-clone"></i></a>
-                      <a href="#" class="tiny button alert has-tip" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="{{ trans('orders.cancel') }}"><i class="fa fa-trash"></i></a>
+                      <a class="tiny button warning has-tip" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Bearbeiten"><i class="fa fa-pencil"></i></a>
+                      <a 
+                        class="tiny button alert deleteRaffleButton" 
+                        raffleId="{{ $raffle->id }}" 
+                        data-tooltip aria-haspopup="true" 
+                        data-disable-hover='false' 
+                        tabindex=1 
+                        title="Löschen" 
+                        data-open="deleteRaffleModal" 
+                      ><i class="fa fa-trash"></i></a>
                     </td>
                   </tr>
               @endforeach
@@ -38,5 +45,33 @@
       </div>
 
     </section>
+
+    <!-- Modal for deleting raffles -->
+    <div class="reveal" id="deleteRaffleModal" data-reveal>
+      <h3>Cancel order <span class="orderReferenceSpan"></span></h3>
+      <div class="callout alert">Wollen Sie das Gewinnspiel wirklich löschen?</div>
+      {!! Form::open(['url' => 'admin/raffles/delete', 'method' => 'post']) !!}
+        <input type="hidden" id="raffleId" name="raffleId" value="">
+        <button id="deleteRaffleButton" class="alert button">Löschen</button>
+        <button type="reset" class="secondary button" data-close>Abbrechen</button>
+      {!! Form::close() !!}
+      <button class="close-button" data-close aria-label="Close reveal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <script>
+      $(document).ready(function() {
+          // Functionality for deleting raffles:
+          $('#table').on('click', '.deleteRaffleButton', function() {
+            deleteRaffleModal(this);
+          });
+      });
+
+      function deleteRaffleModal(obj){
+        var raffleId = $(obj).attr('raffleId');
+        $('#raffleId').val(raffleId);
+      }
+    </script>
     
 @endsection
