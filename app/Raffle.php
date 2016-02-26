@@ -13,4 +13,13 @@ class Raffle extends Model
      */
     protected $table = 'raffles';
 
+    /**
+     * Returns the raffles associated with the user.
+     *
+     * @return array( Raffle )
+     */
+    public function users(){
+        return $this->belongsToMany('App\User','raffle_user');
+    }
+
 }

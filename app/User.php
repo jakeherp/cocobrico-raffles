@@ -47,7 +47,7 @@ class User extends Authenticatable
      * @return array( Raffle )
      */
     public function raffles(){
-        return $this->belongsToMany('App\Raffle');
+        return $this->belongsToMany('App\Raffle','raffle_user');
     }
 
     /**
@@ -59,6 +59,23 @@ class User extends Authenticatable
     public function hasPermission($slug)
     {
         $check = $this->permissions()->where('slug', $slug)->get();
+        if(count($check) === 1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    /**
+     * Gives back, if the user is already participating in the raffle.
+     *
+     * @param  integer  $id
+     * @return boolean
+     */
+    public function hasRaffle($id)
+    {
+        $check = $this->raffles()->find($id);
         if(count($check) === 1){
             return true;
         }

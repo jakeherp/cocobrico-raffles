@@ -40,7 +40,7 @@ class PagesController extends Controller
 	 */
     public function dashboard(){
     	$user = Auth::user();
-    	$raffles = Raffle::where('start','<=',time())->where('end','>=',time());
+    	$raffles = Raffle::where('start','<=',time())->where('end','>=',time())->get();
     	return view('pages.dashboard', compact('user','raffles'));
 	}
 }

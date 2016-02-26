@@ -27,7 +27,13 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('logout', 'UserController@logout');
 
     Route::get('dashboard', 'PagesController@dashboard');
+    Route::post('dashboard', 'RafflesController@participate');
 
     // Admin Routes
         Route::get('admin', 'AdminController@dashboard');
+        Route::get('admin/raffles', 'AdminController@showRafflesView');
+        Route::get('admin/raffles/create', 'AdminController@createRafflesView');
+        Route::post('admin/raffles/create', 'RafflesController@create');
+        Route::put('admin/raffles', 'RafflesController@edit');
+        Route::get('admin/users', 'AdminController@users');
 });
