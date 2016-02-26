@@ -61,7 +61,6 @@
       <div class="top-bar-right">
         <ul class="dropdown menu" data-dropdown-menu>
           <li><a href="{{ url('settings') }}" class="iconlink" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="{{ trans('global.settings') }}"><i class="fa fa-cog"></i></a></li>
-          <li><a href="{{ url('messages') }}" class="iconlink" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="{{ trans('global.messages') }}"><i class="fa fa-envelope"></i><sup class="alert label">2</sup></a></li>
           <li>
             <a href="javascript:;"><i class="fa fa-user"></i> {{ $user->email }}</a>
             <ul class="dropdown menu" data-dropdown-menu data-click-open="true">
