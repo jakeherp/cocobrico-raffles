@@ -55,4 +55,14 @@ class PagesController extends Controller
     	$countries = Country::getForView();
     	return view('pages.settings', compact('user','countries'));
 	}
+
+	/**
+	 * Shows the impressum.
+	 *
+	 * @return Response
+	 */
+    public function settings(){
+    	$user = Auth::user();
+    	return view('pages.impressum', compact('user'));
+	}
 }
