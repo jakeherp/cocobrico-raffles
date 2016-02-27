@@ -29,6 +29,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('dashboard', 'PagesController@dashboard');
     Route::post('dashboard', 'RafflesController@participate');
 
+    Route::get('impressum', 'PagesController@impressum');
+
     // Admin Routes
         Route::get('admin', 'AdminController@dashboard');
         Route::get('admin/raffles', 'AdminController@showRafflesView');
