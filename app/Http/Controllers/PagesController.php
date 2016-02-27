@@ -61,7 +61,7 @@ class PagesController extends Controller
 	 *
 	 * @return Response
 	 */
-    public function settings(){
+    public function impressum(){
     	$user = Auth::user();
     	return view('pages.impressum', compact('user'));
 	}
