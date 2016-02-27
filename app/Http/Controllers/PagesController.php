@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Country;
 use App\Raffle;
 
 use Auth;
@@ -42,5 +43,16 @@ class PagesController extends Controller
     	$user = Auth::user();
     	$raffles = Raffle::where('start','<=',time())->where('end','>=',time())->get();
     	return view('pages.dashboard', compact('user','raffles'));
+	}
+
+	/**
+	 * Shows the users settings page.
+	 *
+	 * @return Response
+	 */
+    public function settings(){
+    	$user = Auth::user();
+    	$countries = Country::getForView();
+    	return view('pages.settings', compact('user','countries'));
 	}
 }

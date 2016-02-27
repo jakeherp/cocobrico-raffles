@@ -10,8 +10,15 @@
               <h3>{{ $raffle->title }}</h3>
               {{ $raffle->body }}
 
-              {!! Form::open(['url' => 'dashboard', 'method' => 'post']) !!}
+              {!! Form::open(['url' => 'dashboard', 'method' => 'post', 'files' => true]) !!}
                 {!! Form::hidden('id', $raffle->id, []) !!}
+
+                @if($raffle->imageReq == 1)
+                  <div class="callout">
+                    <p>Die Teilnahme am Gewinnspiel erfordert einen Dateiupload:</p>
+                    {!! Form::file('file'); !!}
+                  </div>
+                @endif
                 <button class="alert button" 
                 @if($user->hasRaffle($raffle->id))
                   disabled>Bereits angemeldet

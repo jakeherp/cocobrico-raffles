@@ -22,6 +22,8 @@ class CreateAddressesTable extends Migration
             $table->string('zipcode', 255)->default('');
             $table->string('city', 255)->default('');
             $table->integer('country_id')->default(0);
+            $table->string('phone', 255)->default('');
+            $table->string('fax', 255)->default('');
             $table->timestamps();
         });
     }

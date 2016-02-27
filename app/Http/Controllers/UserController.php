@@ -86,7 +86,7 @@ class UserController extends Controller
    		}
    	}
 
-   	/**
+  /**
 	 * Registers the users password.
 	 *
 	 * @param  RegisterRequest $request
@@ -108,11 +108,40 @@ class UserController extends Controller
         $address->address2 = $request->address2;
         $address->zipcode = $request->zipcode;
         $address->city = $request->city;
-        $user->addresses()->save($address);
+        $user->address()->save($address);
 
 			  // User logged in!
 			  return $this->authenticate($request);
 		  }
+    }
+
+  /**
+   * Edits the user details.
+   *
+   * @param  Request $request
+   * @return Response
+   */
+    public function edit(Request $request){
+      $user = Auth::user();
+      if ($user != null) {
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->save();
+
+        $address = $user->address;
+        $address->firstname = $request->firstname;
+        $address->lastname = $request->lastname;
+        $address->address1 = $request->address1;
+        $address->address2 = $request->address2;
+        $address->zipcode = $request->zipcode;
+        $address->city = $request->city;
+        $address->country_id = $request->country;
+        $address->phone = $request->phone;
+        $address->fax = $request->fax;
+        $address->save();
+
+        return redirect()->back();
+      }
     }
 
     /**

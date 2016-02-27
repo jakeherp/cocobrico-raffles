@@ -25,12 +25,12 @@ class User extends Authenticatable
     ];
 
     /**
-     * Returns the addresses associated with the user.
+     * Returns the address associated with the user.
      *
      * @return array( Address )
      */
-    public function addresses(){
-        return $this->hasMany('App\Address');
+    public function address(){
+        return $this->hasOne('App\Address');
     }
 
     /**
@@ -39,6 +39,14 @@ class User extends Authenticatable
     public function permissions()
     {
         return $this->hasMany('App\Permission');
+    }
+
+    /**
+     * Get the files the user has uploaded.
+     */
+    public function files()
+    {
+        return $this->hasMany('App\File','file_user');
     }
 
     /**

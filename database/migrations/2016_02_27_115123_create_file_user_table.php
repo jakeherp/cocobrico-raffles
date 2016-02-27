@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRafflesTable extends Migration
+class CreateFileUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,11 @@ class CreateRafflesTable extends Migration
      */
     public function up()
     {
-        Schema::create('raffles', function (Blueprint $table) {
+        Schema::create('file_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title',255)->default('');
-            $table->text('body')->default('');
-            $table->integer('start')->default(0);
-            $table->integer('end')->default(0);
-            $table->boolean('imageReq')->default(0);
+            $table->integer('user_id')->default(0);
+            $table->integer('file_id')->default(0);
+            $table->integer('raffle_id')->default(0);
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateRafflesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('raffles');
+        Schema::drop('file_user');
     }
 }

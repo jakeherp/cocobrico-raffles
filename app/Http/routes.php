@@ -12,7 +12,7 @@
 */
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('/', 'UserController@showEmailForm');
+    Route::get('/', 'PagesController@index');
 
     Route::get('identify', function () { return redirect('/'); });
     Route::post('identify', 'UserController@identify');
@@ -28,6 +28,8 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('dashboard', 'PagesController@dashboard');
     Route::post('dashboard', 'RafflesController@participate');
+    Route::get('settings', 'PagesController@settings');
+    Route::put('settings', 'UserController@edit');
 
     // Admin Routes
         Route::get('admin', 'AdminController@dashboard');

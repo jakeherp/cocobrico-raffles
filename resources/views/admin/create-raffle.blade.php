@@ -30,6 +30,13 @@
               {!! Form::date('end', null, ['class' => 'input-group-field', 'placeholder' => 'End-Zeitpunkt']) !!}
             </div>
           </label>
+          <label>
+            Optionen
+            <div class="input-group">
+              <i class="fa fa-upload"></i>
+              {!! Form::checkbox('imageReq', '1') !!} Der Benutzer muss ein Bild hochladen.
+            </div>
+          </label>
           {!! Form::submit('Gewinnspiel erstellen', ['class' => 'button alert']) !!}
 		  {!! Form::close() !!}
         </div>
