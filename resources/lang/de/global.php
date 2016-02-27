@@ -12,6 +12,7 @@ return [
     'cocobrico'             => 'Cocobrico',
     'menu'                  => 'Menü',
     'dashboard'             => 'Übersicht',
+    'imprint'               => 'Impressum',
     'settings'              => 'Einstellungen',
     'logout'                => 'Logout',
     'welcome'               => 'Willkommen zurück',

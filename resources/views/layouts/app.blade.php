@@ -55,6 +55,7 @@
       <div class="top-bar-left" id="main-nav">
         <ul class="menu">
           <li><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> {{ trans('global.dashboard') }}</a></li>
+          <li><a href="{{ url('impressum') }}"><i class="fa fa-bank"></i> {{ trans('global.imprint') }}</a></li>
         </ul>
       </div>
 

@@ -31,6 +31,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('settings', 'PagesController@settings');
     Route::put('settings', 'UserController@edit');
 
+    Route::get('impressum', 'PagesController@impressum');
+
     // Admin Routes
         Route::get('admin', 'AdminController@dashboard');
         Route::get('admin/raffles', 'AdminController@showRafflesView');
