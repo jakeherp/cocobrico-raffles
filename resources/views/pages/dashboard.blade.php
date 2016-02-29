@@ -21,13 +21,19 @@
 
                 @if($raffle->imageReq == 1)
                   <div class="callout">
-                    <p>Die Teilnahme am Gewinnspiel erfordert einen Dateiupload:</p>
-                    {!! Form::file('file'); !!}
+                    <p>Die Teilnahme am Gewinnspiel erfordert ein Profilbild.</p>
+                    @if(($file = $user->files()->where('slug','profile_img')->first()) != null)
+                      <img src="{{ URL::asset($file->path) }}">
+                    @else
+                      <a href="settings">Bild hochladen</a>
+                    @endif
                   </div>
                 @endif
                 <button class="alert button" 
                 @if($user->hasRaffle($raffle->id))
                   disabled>Bereits angemeldet
+                @elseif($raffle->imageReq == 1 && $file == null)
+                  disabled>Profilbild benötigt
                 @else
                   role="submit">Teilnehmen
                 @endif

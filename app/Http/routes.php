@@ -30,6 +30,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('dashboard', 'RafflesController@participate');
     Route::get('settings', 'PagesController@settings');
     Route::put('settings', 'UserController@edit');
+    Route::put('settings/image', 'UserController@image');
 
     Route::get('impressum', 'PagesController@impressum');
 

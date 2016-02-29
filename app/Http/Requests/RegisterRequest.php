@@ -30,7 +30,8 @@ class RegisterRequest extends Request
             'lastname'          =>  ['required'],
             'phone'             =>  ['required'],
             'register_token'    =>  ['required','exists:users,register_token'],
-            'email'             =>  ['required','email','exists:users,email'], 
+            'email'             =>  ['required','email','exists:users,email'],
+            'profilePicture'    =>  ['image','max:10000']
         ];
     }
 }

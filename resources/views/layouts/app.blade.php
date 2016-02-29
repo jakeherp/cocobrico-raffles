@@ -63,10 +63,11 @@
         <ul class="dropdown menu" data-dropdown-menu>
           <li><a href="{{ url('settings') }}" class="iconlink" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="{{ trans('global.settings') }}"><i class="fa fa-cog"></i></a></li>
           <li>
-            <a href="javascript:;"><i class="fa fa-user"></i> {{ $user->email }}</a>
-            <ul class="dropdown menu" data-dropdown-menu data-click-open="true">
-              <li><a href="{{ url('logout') }}">{!! trans('global.logout') !!}</a></li>
-            </ul>
+            <a href="javascript:;">
+              <i class="fa fa-user"></i> {{ $user->email }}</a>
+              <ul class="dropdown menu" data-dropdown-menu data-click-open="true">
+                <li><a href="{{ url('logout') }}">{!! trans('global.logout') !!}</a></li>
+              </ul>
           </li>
         </ul>
       </div>

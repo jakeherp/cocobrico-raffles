@@ -10,8 +10,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CheckEmailRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\UploadProfileImageRequest;
 
 use App\Address;
+use App\Country;
+use App\File;
 use App\User;
 
 use Auth;
@@ -37,14 +40,18 @@ class UserController extends Controller
      */
    	public function showRegisterForm($token){
    		if($token != ''){
-	    	$user = User::where('register_token', '=', $token)->firstOrFail();
+	    	$user = User::where('register_token', '=', $token)->first();
+        $countries = Country::getForView();
 	    	if ($user != null) {
-			   	return view('auth.register',compact('user'));
-			}
-		}
-		else{
-			return redirect('/');
-		}
+			   	return view('auth.register',compact('user','countries'));
+  			}
+        else{
+          return redirect('/');
+        }
+  		}
+  		else{
+  			return redirect('/');
+  		}
    	}
 
    	/**
@@ -108,7 +115,28 @@ class UserController extends Controller
         $address->address2 = $request->address2;
         $address->zipcode = $request->zipcode;
         $address->city = $request->city;
+        $address->country_id = $request->country;
+        $address->phone = $request->phone;
+        $address->fax = $request->fax;
         $user->address()->save($address);
+
+        if ($request->hasFile('profilePicture')) {  
+          if ($request->file('profilePicture')->isValid()) {
+            $file = $request->file('profilePicture');
+            $destinationPath = '/files/user_' . $user->id;
+            $upload = new File();
+            $filename = $upload->uploadFile($file, $destinationPath);
+            if(!$filename){
+              return redirect()->back()->withInput()->withErrors(['Fileupload went wrong!']);
+            }
+            else{
+              $upload->slug = 'profile_img';
+              $upload->name = 'Profilbild';
+              $upload->path = 'files/user_' . $user->id . '/' . $filename;
+              $user->files()->save($upload);
+            }
+          }
+        }
 
 			  // User logged in!
 			  return $this->authenticate($request);
@@ -142,6 +170,39 @@ class UserController extends Controller
 
         return redirect()->back();
       }
+    }
+
+    /**
+   * Edits the users profile image
+   *
+   * @param  Request $request
+   * @return Response
+   */
+    public function image(UploadProfileImageRequest $request){
+      $user = Auth::user();
+      if ($request->hasFile('profilePicture')) { 
+        if ($request->file('profilePicture')->isValid()) {
+          $file = $request->file('profilePicture');
+          $destinationPath = '/files/user_' . $user->id;
+          if(($upload = $user->files()->where('slug','profile_img')->first()) == null){
+            $upload = new File();
+          }
+          else{
+            unlink(public_path($upload->path));
+          }
+          $filename = $upload->uploadFile($file, $destinationPath);
+          if(!$filename){
+            return redirect()->back()->withInput()->withErrors(['Fileupload went wrong!']);
+          }
+          else{
+            $upload->slug = 'profile_img';
+            $upload->name = 'Profilbild';
+            $upload->path = 'files/user_' . $user->id . '/' . $filename;
+            $user->files()->save($upload);
+          }
+        }
+      }
+      return redirect()->back();
     }
 
     /**

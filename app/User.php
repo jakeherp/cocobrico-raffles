@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use Storage;
+
 class User extends Authenticatable
 {
     /**
@@ -46,7 +48,7 @@ class User extends Authenticatable
      */
     public function files()
     {
-        return $this->hasMany('App\File','file_user');
+        return $this->hasMany('App\File');
     }
 
     /**

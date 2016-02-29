@@ -13,7 +13,7 @@
 
           @include ('errors.list')
 
-            {!! Form::open(['url' => 'register', 'method' => 'post']) !!}
+            {!! Form::open(['url' => 'register', 'method' => 'post', 'files' => true]) !!}
               {!! Form::hidden('_method', 'PUT', []) !!}
               {!! Form::hidden('register_token', $user->register_token, []) !!}
               <div class="row">
@@ -54,24 +54,37 @@
                       </div>
                       <label>
                         Additional Information
-                        <div class="input-group">
-                         <span class="input-group-label"><i class="fa fa-user"></i></span>
-                         {!! Form::text('address1', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.address1')]) !!}
-                        </div>
-                        <div id="password" class="callout warning">
-                        </div>
                       </label>
                       <div class="input-group">
-                        <span class="input-group-label"><i class="fa fa-user"></i></span>
+                         <span class="input-group-label"><i class="fa fa-home"></i></span>
+                         {!! Form::text('address1', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.address1')]) !!}
+                      </div>
+                      <div class="input-group">
+                        <span class="input-group-label"><i class="fa fa-home"></i></span>
                         {!! Form::text('address2', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.address2')]) !!}
                       </div>
                       <div class="input-group">
-                        <span class="input-group-label"><i class="fa fa-user"></i></span>
+                        <span class="input-group-label"><i class="fa fa-building"></i></span>
                         {!! Form::text('zipcode', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.postcode')]) !!}
                       </div>
                       <div class="input-group">
-                        <span class="input-group-label"><i class="fa fa-user"></i></span>
+                        <span class="input-group-label"><i class="fa fa-map"></i></span>
                         {!! Form::text('city', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.city')]) !!}
+                      </div>
+                      <div class="input-group">
+                        <span class="input-group-label"><i class="fa fa-globe"></i></span>
+                        {!! Form::select('country', $countries, null, ['class' => 'input-group-field']) !!}
+                      </div>
+                      <div class="input-group">
+                        <span class="input-group-label"><i class="fa fa-phone"></i></span>
+                        {!! Form::text('fax', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.fax')]) !!}
+                      </div>
+                      <label>
+                        Profile Picture
+                      </label>
+                      <em>Die Teilnahme an einigen Gewinnspielen erfordert ein Profilbild.</em>
+                      <div class="input-group">
+                        {!! Form::file('profilePicture'); !!}
                       </div>
                     {!! Form::submit(trans('auth.continue') . ' &raquo;', ['class' => 'button alert']) !!}
                     </div>

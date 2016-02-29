@@ -22,10 +22,20 @@ class File extends Model
     }
 
     /**
-     * Get the raffle, the file was uploaded for.
+     * Uploads a new file to the given path.
+     *
+     * @param  request $file
+     * @param  string $path
+     * @return boolean
      */
-    public function raffle()
-    {
-        return $this->belongsTo('App\Raffle','file_user');
+    public function uploadFile($file, $path){
+        $destinationPath = $path;
+        $filename = md5($file->getClientOriginalName() . microtime()) . '.' . $file->getClientOriginalExtension();
+        if(!$file->move(public_path($destinationPath), $filename)){
+            return false;
+        }
+        else{
+            return $filename;
+        }
     }
 }

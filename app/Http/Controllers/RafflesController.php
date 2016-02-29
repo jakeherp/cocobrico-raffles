@@ -17,6 +17,7 @@ use Auth;
 class RafflesController extends Controller
 {
     public function __construct(){
+        $this->middleware('auth');
         $this->middleware('admin', ['except' => ['participate']]);
     }
     
@@ -81,29 +82,20 @@ class RafflesController extends Controller
     public function participate(Request $request)
     {
         $user = Auth::user();
-        $raffleId = $request->id;
-        $user->raffles()->attach($raffleId);
 
+        $raffleId = $request->id;
         $raffle = Raffle::find($raffleId);
 
         if($raffle->imageReq == 1){
-            if ($request->hasFile('file')) {
-                if ($request->file('file')->isValid()) {
-                    $file = $request->file('file');
-                    $destinationPath = '/files/user_' . $user->id;
-                    $upload = new File();
-                    $filename = $upload->uploadFile($file, $destinationPath);
-                    if(!$filename){
-                        return redirect()->back()->withInput()->withErrors(['Fileupload went wrong!']);
-                    }
-                    else{
-                        $upload->name = 'Datei für Gewinnspiel ' . $raffle->title;
-                        $upload->path = '/files/user_' . $user->id . '/' . $filename;
-                        $user->files()->save($upload);
-                        $raffles->files()->attach($upload->id);
-                    }
-                }
+            if($user->files()->where('slug','profile_img')->first() != null){
+                $user->raffles()->attach($raffleId);
             }
+            else{
+                return redirect()->back()->withErrors(['Sie benötigen ein Profilbild um an diesem Gewinnspiel teilzunehmen.']);
+            }
+        }
+        else{
+            $user->raffles()->attach($raffleId);
         }
 
         return redirect()->back();

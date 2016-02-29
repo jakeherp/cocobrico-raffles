@@ -13,12 +13,20 @@
         <div class="callout">
           <div class="row">
             <div class="large-12 column">
-              <h4>Gewinnspiele</h4>
-
+              <h4>Profilbild</h4>
+                {!! Form::open(['url' => 'settings/image', 'method' => 'post', 'files' => true]) !!}
+                    {!! Form::hidden('_method', 'PUT', []) !!}
+                    {!! Form::hidden('register_token', $user->register_token, []) !!}
+                    @if(($file = $user->files()->where('slug','profile_img')->first()) != null)
+                      <img src="{{ URL::asset($file->path) }}">
+                      <p>Profilbild ändern:</p>
+                    @else
+                      <p>Profilbild hochladen:</p>
+                    @endif
+                    {!! Form::file('profilePicture'); !!}
+                    {!! Form::submit(trans('auth.continue') . ' &raquo;', ['class' => 'button alert']) !!}
+                {!! Form::close() !!}
             </div>
-          </div>
-          <div class="row"> 
-         
           </div>
         </div>
       </div>

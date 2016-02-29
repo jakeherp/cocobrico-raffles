@@ -22,12 +22,4 @@ class Raffle extends Model
         return $this->belongsToMany('App\User','raffle_user');
     }
 
-    /**
-     * Get the files which were uploaded for the raffle.
-     */
-    public function files()
-    {
-        return $this->hasMany('App\File','file_user');
-    }
-
 }

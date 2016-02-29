@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFilesTable extends Migration
+class CreateCountriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,13 @@ class CreateFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('files', function (Blueprint $table) {
+        Schema::create('countries', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->default(0);
-            $table->string('slug',255)->default('');
+            $table->string('iso', 2)->default('');
             $table->string('name',255)->default('');
-            $table->string('path',255)->default('');
+            $table->boolean('exclusivity')->default(0);
+            $table->string('notificationEmail', 255)->default('admin@cocobrico.com');
+            $table->boolean('active')->default(1);
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateFilesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('files');
+        Schema::drop('countries');
     }
 }
