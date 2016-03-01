@@ -29,6 +29,7 @@ class RegisterRequest extends Request
             'firstname'         =>  ['required'],
             'lastname'          =>  ['required'],
             'phone'             =>  ['required'],
+            'birthday'          =>  ['required'],
             'register_token'    =>  ['required','exists:users,register_token'],
             'email'             =>  ['required','email','exists:users,email'],
             'profilePicture'    =>  ['image','max:10000']

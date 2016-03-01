@@ -106,6 +106,7 @@ class UserController extends Controller
 		   	$user->register_token = '';
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
+        $user->birthday = strtotime($request->birthday);
 			  $user->save();
 
         $address = new Address();
@@ -260,5 +261,24 @@ class UserController extends Controller
         else{
         	return redirect()->back()->withInput()->withErrors(['Something went wrong!']);
         }
+    }
+
+    /**
+     * Deletes the user.
+     *
+     * @return Response
+     */
+    public function delete(Request $request)
+    {
+      $user = Auth::user();
+      if($user->hasPermission('is_admin') && $user->id != $request->userId){
+        $id = $request->userId;
+        $member = User::find($id);
+        $member->delete();
+        return redirect()->back();
+      }
+      else{
+        return redirect()->back();
+      }
     }
 }

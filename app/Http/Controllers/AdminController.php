@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Raffle;
+use App\User;
 
 use Auth;
 
@@ -55,6 +56,18 @@ class AdminController extends Controller
 	 */
     public function users(){
     	$user = Auth::user();
-    	return view('admin.users', compact('user'));
+    	$members = User::all();
+    	return view('admin.users', compact('user','members'));
+	}
+
+	/**
+	 * Shows the users details.
+	 *
+	 * @return Response
+	 */
+    public function userDetail($id){
+    	$user = Auth::user();
+    	$member = User::find($id);
+    	return view('admin.user-detail', compact('user','member'));
 	}
 }

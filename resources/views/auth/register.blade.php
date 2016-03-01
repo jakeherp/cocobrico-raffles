@@ -52,6 +52,10 @@
                         <span class="input-group-label"><i class="fa fa-phone"></i></span>
                         {!! Form::text('phone', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.phone')]) !!}
                       </div>
+                      <div class="input-group">
+                        <span class="input-group-label"><i class="fa fa-birthday-cake"></i></span>
+                        {!! Form::date('birthday', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.birthday')]) !!}
+                      </div>
                       <label>
                         Additional Information
                       </label>

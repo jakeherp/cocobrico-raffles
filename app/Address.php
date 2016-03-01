@@ -13,4 +13,12 @@ class Address extends Model
     {
         return $this->belongsToOne('App\User');
     }
+
+    /**
+     * Get the country associated with the address.
+     */
+    public function country()
+    {
+        return $this->belongsTo('App\Country');
+    }
 }
