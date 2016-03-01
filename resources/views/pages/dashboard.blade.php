@@ -14,21 +14,23 @@
         <div class="large-6 small-12 columns">
           <div class="callout">
             <h3>{{ $raffle->title }}</h3>
-            {{ $raffle->body }}
 
             {!! Form::open(['url' => 'dashboard', 'method' => 'post', 'files' => true]) !!}
                 {!! Form::hidden('id', $raffle->id, []) !!}
 
                 @if($raffle->imageReq == 1)
-                  <div class="callout">
-                    <p>Die Teilnahme am Gewinnspiel erfordert ein Profilbild.</p>
                     @if(($file = $user->files()->where('slug','profile_img')->first()) != null)
-                      <img src="{{ URL::asset($file->path) }}">
+                      <div class="profilepicture"><img src="{{ URL::asset($file->path) }}"></div>
                     @else
-                      <a href="settings">Bild hochladen</a>
+                      <div class="callout alert">
+                        <p>Die Teilnahme am Gewinnspiel erfordert ein Profilbild.</p>
+                          <a href="settings">Bild hochladen</a>
+                      </div>
                     @endif
-                  </div>
                 @endif
+
+                <p>{{ $raffle->body }}</p>
+
                 <button class="alert button" 
                 @if($user->hasRaffle($raffle->id))
                   disabled>Bereits angemeldet

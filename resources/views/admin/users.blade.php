@@ -5,29 +5,29 @@
     <section class="row" id="content">
 
   	  <div class="large-12 column">
-      	<a href="{{ url('admin/raffles/create') }}" class="pull-right success button"><i class="fa fa-plus"></i> Gewinnspiel hinzufügen</a>
-        <h1><i class="fa fa-trophy"></i> Gewinnspiele</h1>
+        <h1><i class="fa fa-user"></i> Mitglieder</h1>
         <div class="horizontal-scroll">
           <table id="table" class="full-table">
             <thead>
               <tr>
+                <th></th>
                 <th>Name</th>
-                <th>Startdatum</th>
-                <th>Enddatum</th>
-                <th>Teilnehmer</th>
+                <th>Geburtsdatum</th>
+                <th>Mitglied seit</th>
+                <th>Gewinnspiel Teilnahmen</th>
                 <th>Optionen</th>
               </tr>
             </thead>
             <tbody>
-              @foreach($raffles as $raffle)
+              @foreach($users as $user)
                  <tr>
-                    <td>{{ $raffle->title }}</td>
-                    <td>{{ date(trans('global.datetimeformat'), $raffle->start) }}</td>
-                    <td>{{ date(trans('global.datetimeformat'), $raffle->end) }}</td>
-                    <td>{{ count($raffle->users) }}</td>
+                    <td><div class="round-image" style="background:url('{{ URL::asset($file->path) }}') no-repeat center center;background-size:cover;"></div></td>
+                    <td>Max Mustermann</td>
+                    <td>01.01.1990 (26 Jahre)</td>
+                    <td>01.02.2016</td>
+                    <td><span class="has-tooltip" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Gewinnspiel 1, Gewinnspiel 2">2</span></td>
                     <td>
-                      <a class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Teilnehmer anzeigen"><i class="fa fa-search"></i></a>
-                      <a class="tiny button warning" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Bearbeiten"><i class="fa fa-pencil"></i></a>
+                      <a class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Details anzeigen"><i class="fa fa-search"></i></a>
                       <a 
                         class="tiny button alert deleteRaffleButton" 
                         raffleId="{{ $raffle->id }}" 

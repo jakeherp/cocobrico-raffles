@@ -255,6 +255,28 @@ div.callout.secondary > em {
     color: #999;
 }
 
+.round-image{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+}
+
+.profilepicture{
+    max-width: 100px;
+    float: right;
+}
+.profilepicture:before,
+.profilepicture:after{
+    content: "";
+    display: table;
+}
+.profilepicture:after{
+    clear: both;
+}
+.profilepicture{
+    zoom: 1;
+}
+
 .horizontal-scroll {
   overflow: hidden;
   overflow-x: auto;
