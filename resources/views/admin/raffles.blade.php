@@ -26,7 +26,7 @@
                     <td>{{ date(trans('global.datetimeformat'), $raffle->end) }}</td>
                     <td>{{ count($raffle->users) }}</td>
                     <td>
-                      <a class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Teilnehmer anzeigen"><i class="fa fa-search"></i></a>
+                      <a href="{{ url('admin/raffles/'. $raffle->id ) }}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Teilnehmer anzeigen"><i class="fa fa-search"></i></a>
                       <a class="tiny button warning" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Bearbeiten"><i class="fa fa-pencil"></i></a>
                       <a 
                         class="tiny button alert deleteRaffleButton" 

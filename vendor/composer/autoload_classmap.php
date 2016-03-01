@@ -6,10 +6,12 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'CountriesTableSeeder' => $baseDir . '/database/seeds/CountriesTableSeeder.php',
     'CreateAddressesTable' => $baseDir . '/database/migrations/2016_02_24_111112_create_addresses_table.php',
-    'CreatePermissionUserTable' => $baseDir . '/database/migrations/2016_02_26_142450_create_permission_user_table.php',
+    'CreateCountriesTable' => $baseDir . '/database/migrations/2016_02_29_134627_create_countries_table.php',
+    'CreateFilesTable' => $baseDir . '/database/migrations/2016_02_27_114901_create_files_table.php',
     'CreatePermissionsTable' => $baseDir . '/database/migrations/2016_02_26_142423_create_permissions_table.php',
-    'CreateRaffleUsersTable' => $baseDir . '/database/migrations/2016_02_26_140735_create_raffle_users_table.php',
+    'CreateRaffleUserTable' => $baseDir . '/database/migrations/2016_02_26_140735_create_raffle_user_table.php',
     'CreateRafflesTable' => $baseDir . '/database/migrations/2016_02_26_140706_create_raffles_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',

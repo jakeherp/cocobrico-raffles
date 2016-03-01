@@ -68,6 +68,28 @@ class AdminController extends Controller
     public function userDetail($id){
     	$user = Auth::user();
     	$member = User::find($id);
-    	return view('admin.user-detail', compact('user','member'));
+    	if($member != null){
+    		return view('admin.user-detail', compact('user','member'));
+    	}
+    	else{
+    		return redirect('admin/users');
+    	}
+	}
+
+	/**
+	 * Shows the raffles details.
+	 *
+	 * @return Response
+	 */
+    public function raffleDetail($id){
+    	$user = Auth::user();
+    	$raffle = Raffle::find($id);
+    	if($raffle != null){
+    		$members = $raffle->users;
+    		return view('admin.raffle-detail', compact('user','raffle','members'));
+    	}
+    	else{
+    		return redirect('admin/raffles');
+    	}
 	}
 }
