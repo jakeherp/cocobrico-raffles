@@ -18,16 +18,16 @@ return [
 
     // Login
     'signin'                =>  'Login',
-    'signindesc'            =>  'Bitte geben Sie Ihre Email-Adresse ein.',
+    'signindesc'            =>  'Gib bitte deine Email-Adresse ein.',
     'email'                 =>  'Email-Adresse',
     'validate'              =>  'Validieren',
     'welcomeback'           =>  'Willkommen zurück',
     'password'              =>  'Passwort',
     'login'                 =>  'Login',
-    'forgotpassword'        =>  'Haben Sie ihr Passwort vergessen?',
+    'forgotpassword'        =>  'Hast du dein Passwort vergessen?',
 
     // Registration
-    'choosepassword'        =>  'Bitte wählen Sie Ihr Passwort:',
+    'choosepassword'        =>  'Wähle bitte ein Passwort:',
     'passwordrepeat'        =>  'Passwort wiederholen',
     'signup'                =>  'Registrieren',
     'firstname'             =>  'Vorname',
