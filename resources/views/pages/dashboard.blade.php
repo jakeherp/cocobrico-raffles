@@ -3,13 +3,7 @@
 @section('content')
     
     <section id="content">
-      @if (session()->has('messages')) {
-        <div class="row"><div class="large-12 columns">
-          @foreach ( session('messages') as $message)
-              <div class="callout {{ $message->class }}">{{ $message->body }}</div>
-          @endforeach
-        </div></div>
-      @endif
+
       <div class="row">
         <div class="large-12 columns">
           <h1><i class="fa fa-trophy"></i> Verfügbare Gewinnspiele</h1>

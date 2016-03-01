@@ -7,11 +7,7 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-        "laravelcollective/html": "5.2.*",
-        "barryvdh/laravel-snappy": "^0.3.0",
-        "knplabs/knp-snappy": "^0.4.3",
-        "h4cc/wkhtmltopdf-i386": "0.12.x",
-        "h4cc/wkhtmltoimage-i386": "0.12.x"
+        "laravelcollective/html": "5.2.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

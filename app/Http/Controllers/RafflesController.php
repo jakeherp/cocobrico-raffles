@@ -13,7 +13,6 @@ use App\File;
 use App\Raffle;
 
 use Auth;
-use PDF;
 
 class RafflesController extends Controller
 {
@@ -90,12 +89,6 @@ class RafflesController extends Controller
         if($raffle->imageReq == 1){
             if($user->files()->where('slug','profile_img')->first() != null){
                 $user->raffles()->attach($raffleId);
-                $file = new File();
-                $file->slug = 'raffle_'.$raffle->id;
-                $file->name = 'Teilnahmezertifikat für Gewinnspiel '.$raffle->title;
-                $file->path = 'files/user_' . $user->id . '/' . md5($file->slug . microtime()) . '.pdf';
-                $user->files()->save($file);
-                $pdf = PDF::loadView('pdf.info', compact('user'))->save(public_path($file->path));
             }
             else{
                 return redirect()->back()->withErrors(['Sie benötigen ein Profilbild um an diesem Gewinnspiel teilzunehmen.']);
