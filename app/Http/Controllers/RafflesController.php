@@ -92,6 +92,7 @@ class RafflesController extends Controller
         if($raffle->imageReq == 1){
             if($user->files()->where('slug','profile_img')->first() != null){
                 //$user->raffles()->attach($raffleId);
+                return PDF::loadView('pdf.info', compact('user','raffle'))->stream('test.pdf');
                 $this->participationSucceed($user, $raffle);
             }
             else{
@@ -100,6 +101,7 @@ class RafflesController extends Controller
         }
         else{
             //$user->raffles()->attach($raffleId);
+            return PDF::loadView('pdf.info', compact('user','raffle'))->stream('test.pdf');
             $this->participationSucceed($user, $raffle);
         }
 
