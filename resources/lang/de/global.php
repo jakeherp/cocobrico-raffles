@@ -22,5 +22,6 @@ return [
     'datetimeformat'        => 'd.m.Y H:i:s',
     'dateformat'            => 'd.m.Y',
     'timeformat'            => 'H:i:s',
+    'admin'                 => 'Adminbereich'
 
 ];

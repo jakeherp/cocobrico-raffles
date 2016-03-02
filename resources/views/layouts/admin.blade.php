@@ -48,6 +48,7 @@
             <li class="user">{{ $user->firstname }} {{ $user->lastname }}<em>Administrator</em></li>
 
             <li class="title"><i class="fa fa-cog"></i> Einstellungen</li>
+            <li><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> Zum Dashboard</a></li>
               <li><a href="{{ url('admin/users') }}"><i class="fa fa-user-secret"></i> Benutzer</a></li>
               <li><a href="{{ url('admin/raffles') }}"><i class="fa fa-trophy"></i> Gewinnspiele</a></li>
           </ul>

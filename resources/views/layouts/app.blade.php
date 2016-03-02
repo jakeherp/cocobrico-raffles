@@ -56,6 +56,9 @@
         <ul class="menu">
           <li><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> {{ trans('global.dashboard') }}</a></li>
           <li><a href="{{ url('impressum') }}"><i class="fa fa-bank"></i> {{ trans('global.imprint') }}</a></li>
+          @if($user->hasPermission('is_admin'))
+            <li><a href="{{ url('admin') }}"><i class="fa fa-star"></i> {{ trans('global.admin') }}</a></li>
+          @endif
         </ul>
       </div>
 
