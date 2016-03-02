@@ -109,6 +109,8 @@ class UserController extends Controller
         $user->birthday = strtotime($request->birthday);
 			  $user->save();
 
+        $user->fileFolder();
+
         $address = new Address();
         $address->firstname = $request->firstname;
         $address->lastname = $request->lastname;

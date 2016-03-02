@@ -93,4 +93,19 @@ class User extends Authenticatable
             return false;
         }
     }
+
+    /**
+     * Gives back, if the personal file folder already exists if not it creates it.
+     *
+     * @return boolean
+     */
+    public function fileFolder()
+    {
+        if(file_exists (public_path('files/user_' . $this->id))){
+            return true;
+        }
+        else{
+            return mkdir(public_path('files/user_' . $this->id));
+        }
+    }
 }
