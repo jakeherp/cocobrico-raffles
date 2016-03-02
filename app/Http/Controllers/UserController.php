@@ -72,10 +72,10 @@ class UserController extends Controller
    			$user->save();
 
    			// Verification-Email is send to user.
-			/*$sent = Mail::send('emails.verifyEmail', ['user' => $user], function ($m) use ($user) {
+			  $sent = Mail::send('emails.verifyEmail', ['user' => $user], function ($m) use ($user) {
         		$m->from('noreply@cb.pcserve.eu', 'Cocobrico');
         		$m->to($user->email, $user->email)->subject('Verify your Email.');
-        });*/
+        });
 
 		    return view('auth.verifyEmail', compact('user'));
    		}

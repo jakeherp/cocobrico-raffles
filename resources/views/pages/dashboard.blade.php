@@ -9,6 +9,15 @@
           <h1><i class="fa fa-trophy"></i> Verfügbare Gewinnspiele</h1>
         </div>
       </div>
+      @if(session()->has('msg'))
+        <div class="row">
+          <div class="large-12 small-12 columns">
+            <div class="callout {{ session('msgState') }}">
+              <p>{{ session('msg') }}</p>
+            </div>
+          </div>
+        </div>
+      @endif
       <div class="row">
       @if((time() - $user->birthday) >= 567648000)
         @foreach($raffles as $raffle)

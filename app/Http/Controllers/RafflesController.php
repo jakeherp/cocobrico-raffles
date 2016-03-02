@@ -13,6 +13,7 @@ use App\File;
 use App\Raffle;
 
 use Auth;
+use Mail;
 use PDF;
 
 class RafflesController extends Controller
@@ -78,6 +79,7 @@ class RafflesController extends Controller
     /**
      * Participates in a raffle.
      *
+     * @param Request $request
      * @return Response
      */
     public function participate(Request $request)
@@ -90,31 +92,42 @@ class RafflesController extends Controller
         if($raffle->imageReq == 1){
             if($user->files()->where('slug','profile_img')->first() != null){
                 $user->raffles()->attach($raffleId);
-                
-                // Generate Confirmation PDF
-                $file = new File();
-                $file->slug = 'raffle_'.$raffle->id;
-                $file->name = 'Teilnahmezertifikat für Gewinnspiel '.$raffle->title;
-                $file->path = 'files/user_' . $user->id . '/' . md5($file->slug . microtime()) . '.pdf';
-                $user->files()->save($file);
-                $pdf = PDF::loadView('pdf.info', compact('user','raffle'))->save('files/user_'.$user->id.'/'.md5($file->slug . microtime()).'.pdf');
+                $this->participationSucceed($user, $raffle);
             }
             else{
-                return redirect()->back()->withErrors(['Sie benötigen ein Profilbild um an diesem Gewinnspiel teilzunehmen.']);
+                return redirect()->back()->withErrors(['Du benötigst ein Profilbild um an diesem Gewinnspiel teilzunehmen.']);
             }
         }
         else{
             $user->raffles()->attach($raffleId);
-
-            // Generate Confirmation PDF
-            $file = new File();
-            $file->slug = 'raffle_'.$raffle->id;
-            $file->name = 'Teilnahmezertifikat für Gewinnspiel '.$raffle->title;
-            $file->path = 'files/user_' . $user->id . '/' . md5($file->slug . microtime()) . '.pdf';
-            $user->files()->save($file);
-            $pdf = PDF::loadView('pdf.info', compact('user','raffle'))->save('files/user_'.$user->id.'/'.md5($file->slug . microtime()).'.pdf');
+            $this->participationSucceed($user, $raffle);
         }
 
-        return redirect()->back();
+        return redirect('dashboard')->with('msg', 'Du hast erfolgreich am Gewinnspiel ' . $raffle->title . ' teilgenommen. Wir haben dir eine Bestätigungsemail geschickt. Überprüfe auch dein Spampostfach.')->with('msgState', 'success');
+    }
+
+    /**
+     * Handles PDF Creation and Confirmation Email
+     *
+     * @param User $user
+     * @param Raffle $raffle
+     * @return true
+     */
+    protected function participationSucceed($user, $raffle){
+        // Generates Confirmation PDF
+        $file = new File();
+        $file->slug = 'raffle_'.$raffle->id;
+        $file->name = 'Teilnahmezertifikat für Gewinnspiel '.$raffle->title;
+        $file->path = 'files/user_' . $user->id . '/' . md5($file->slug . microtime()) . '.pdf';
+        $user->files()->save($file);
+        $pdf = PDF::loadView('pdf.info', compact('user','raffle'))->save($file->path);
+
+        // Sends Confirmation Email
+        $email = Mail::send('emails.confirmRaffle', compact('user','raffle'), function ($m) use ($user, $file) {
+            $m->from('noreply@cb.pcserve.eu', 'Cocobrico');
+            $m->attach($file->path);
+            $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject('Gewinnspiel Teilnahmebestätigung');
+        });
+        return true;
     }
 }
