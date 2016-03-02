@@ -68,7 +68,7 @@
 						<strong>Email:</strong> {{ $user->email }}<br>
 						<strong>Geburtsdatum:</strong> {{ date(trans('global.dateformat'),$user->birthday) }}
                         
-                        <h2>Reservierungsnummer: {{ $raffle->code }}</h2>
+                        <h2>Reservierungsnummer: {{ $user->raffles()->where('raffle_id', $raffle->id)->first()->pivot->code }}</h2>
 					</td>
 				</tr>
 				<tr>

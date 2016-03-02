@@ -57,7 +57,7 @@ class User extends Authenticatable
      * @return array( Raffle )
      */
     public function raffles(){
-        return $this->belongsToMany('App\Raffle','raffle_user');
+        return $this->belongsToMany('App\Raffle','raffle_user')->withPivot('code');
     }
 
     /**

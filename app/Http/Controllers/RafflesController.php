@@ -13,6 +13,7 @@ use App\File;
 use App\Raffle;
 
 use Auth;
+use DB;
 use Mail;
 use PDF;
 
@@ -89,9 +90,16 @@ class RafflesController extends Controller
         $raffleId = $request->id;
         $raffle = Raffle::find($raffleId);
 
+        $check = null;
+        do{
+            $code = strtoupper(str_random(6));
+            $check = DB::table('raffle_user')->where('code', '=', $code)->get();
+        } while($check != null);
+
         if($raffle->imageReq == 1){
             if($user->files()->where('slug','profile_img')->first() != null){
                 $user->raffles()->attach($raffleId);
+                $user->raffles()->updateExistingPivot($raffleId, ['code' => $code]);
                 $this->participationSucceed($user, $raffle);
             }
             else{
@@ -100,6 +108,7 @@ class RafflesController extends Controller
         }
         else{
             $user->raffles()->attach($raffleId);
+            $user->raffles()->updateExistingPivot($raffleId, ['code' => $code]);
             $this->participationSucceed($user, $raffle);
         }
 
