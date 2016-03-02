@@ -3,18 +3,17 @@
 @section('content')
 
     <section class="row" id="content">
-
-    	{{ $raffle->title }}<br>
-        {{ $raffle->body }}<br>
-        {{ date(trans('global.datetimeformat'), $raffle->start) }}<br>
-        {{ date(trans('global.datetimeformat'), $raffle->end) }}<br><br>
-
-        Teilnehmer: {{ count($members) }}
-
-        <br><br>
+      <div class="large-12 column">
+        <h1>{{ $raffle->title }}</h1>
+        <div class="callout">
+          <p><strong>Start:</strong> {{ date(trans('global.datetimeformat'), $raffle->start) }}, 
+          <strong>Ende:</strong> {{ date(trans('global.datetimeformat'), $raffle->end) }}</p>
+          <p>{{ $raffle->body }}</p>
+        </div>
+      </div>
 
         <div class="large-12 column">
-        <h1><i class="fa fa-user"></i> Teilnehmer</h1>
+        <h1><i class="fa fa-user"></i> Teilnehmer <span class="label">{{ count($members) }}</span></h1>
         <div class="horizontal-scroll">
           <table id="table" class="full-table">
             <thead>
