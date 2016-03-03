@@ -5,9 +5,18 @@
     <section class="row" id="content">
 
 	    <div class="large-12 column">
-        
       	<h1><i class="fa fa-cog"></i> Settings</h1>
       </div>
+
+      @if ($errors->any())
+          <div class="large-12 small-12 columns">
+            <div class="callout alert">
+              @foreach ($errors->all() as $error)
+               <p>{{ $error }}</p>
+              @endforeach
+            </div>
+          </div>
+      @endif
 
       <div class="large-8 medium-6 small-12 columns">
         <div class="callout">
@@ -46,13 +55,48 @@
                 title="Bearbeiten" 
                 data-open="editProfileModal" 
               >Bearbeiten</a>
-              <a href="" class="tiny secondary button" title="Passwort ändern">Passwort ändern</a>
+              <a 
+                class="tiny secondary button" 
+                data-tooltip aria-haspopup="true" 
+                data-disable-hover='false' 
+                tabindex=1 
+                title="Passwort ändern" 
+                data-open="changePasswordModal" 
+                >Passwort ändern</a>
             </div>
           </div>
         </div>
       </div>
 
     </section>
+
+      <!-- Modal for changing the password -->
+      <div class="reveal" id="changePasswordModal" data-reveal>
+        <h3>Passwort ändern</h3>
+        {!! Form::open(['url' => 'settings/password', 'method' => 'post']) !!}
+          <input type="hidden" name="_method" value="PUT">
+          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <div class="large-12 small-12 columns">
+              <div class="callout">
+                <label>
+                  Password
+                  {!! Form::password('password', ['id' => 'passwordInput', 'class' => 'input-group-field', 'placeholder' => trans('auth.password')]) !!}
+                </label>
+                <div id="password" class="callout warning">
+                  </div>
+                <label>
+                  Passwort wiederholen
+                  {!! Form::password('password_2', ['class' => 'input-group-field', 'placeholder' => trans('auth.passwordrepeat')]) !!}
+                </label>
+               </div>
+              <button role="submit" class="alert button">Speichern</button>
+              <button type="reset" class="secondary button" data-close>Abbrechen</button>
+            </div>
+        {!! Form::close() !!}
+        <button class="close-button" data-close aria-label="Close reveal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
       <!-- Modal for editing the profile details -->
       <div class="reveal" id="editProfileModal" data-reveal>
@@ -124,5 +168,33 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+
+      <script>
+      $(document).ready(function(){
+        $('#passwordInput').on('input',function(e){
+          var val = $(this).val();
+          var error = '';
+          if((val.length < 8) || !(val.match(/[A-Z]/)) || !(val.match(/[a-z]/)) || !(val.match(/\d/))){
+            if(val.length < 8){
+              error = '<p>{{ trans('auth.rule1') }}</p>';
+            }
+            if(!(val.match(/[A-Z]/))){
+              error = error + '<p>{{ trans('auth.rule2') }}</p>';
+            }
+            if(!(val.match(/[a-z]/))){
+              error = error + '<p>{{ trans('auth.rule3') }}</p>';
+            }
+            if(!(val.match(/\d/))){
+              error = error + '<p>{{ trans('auth.rule4') }}</p>';
+            }
+            $('#password').show('slow');
+          }
+          else{
+             $('#password').hide('slow');
+          }
+          $('#password').html(error);
+        });
+      });
+    </script>
 
 @endsection

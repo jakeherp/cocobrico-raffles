@@ -92,12 +92,21 @@ class UserController extends Controller
      * @return Response
      */
     public function savePasswordChange(NewPasswordRequest $request){
-      $user = User::where('register_token', '=', $request->register_token)->first();
-      $user->register_token = '';
-      $user->password = Hash::make($request->password);
-      $user->save();
+      if(Auth::check()){
+        $user = Auth::user();
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect('dashboard')->with('msg', 'Dein Passwort wurde erfolgreich geändert.')->with('msgState', 'success');
+      }
+      else{
+        $user = User::where('register_token', '=', $request->register_token)->first();
+        $user->register_token = '';
+        $user->password = Hash::make($request->password);
+        $user->save();
       
-      return redirect('login')->with('email', $user->email);
+        return redirect('login')->with('email', $user->email);
+      }
     }
 
    	/**
