@@ -77,7 +77,15 @@
                       </div>
                       <div class="input-group">
                         <span class="input-group-label"><i class="fa fa-globe"></i></span>
-                        {!! Form::select('country', $countries, null, ['class' => 'input-group-field']) !!}
+                        <select name="country" class="input-group-field">
+                          <option value="80">Deutschland</option>
+                          <option value="14">Österreich</option>
+                          <option value="206">Schweiz</option>
+                          <option value="80">-------------</option>
+                          @foreach($countries as $country)
+                            <option value="{{ $country->id }}">{{ $country->name }}</option>
+                          @endforeach
+                        </select>
                       </div>
                       <div class="input-group">
                         <span class="input-group-label"><i class="fa fa-phone"></i></span>

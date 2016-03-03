@@ -90,7 +90,15 @@
                 </label>
                 <label>
                   Land
-                  {!! Form::select('country', $countries, $user->address->country_id) !!}
+                  <select name="country" class="input-group-field">
+                    <option value="80" @if($user->address->country_id == 80) selected @endif>Deutschland</option>
+                    <option value="14" @if($user->address->country_id == 14) selected @endif>Österreich</option>
+                    <option value="206" @if($user->address->country_id == 206) selected @endif>Schweiz</option>
+                    <option value="80">-------------</option>
+                    @foreach($countries as $country)
+                      <option value="{{ $country->id }}" @if($user->address->country_id == $country->id) selected @endif>{{ $country->name }}</option>
+                    @endforeach
+                  </select>
                 </label>
               </div>
                <div class="callout">

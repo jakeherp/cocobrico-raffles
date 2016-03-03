@@ -41,7 +41,7 @@ class UserController extends Controller
    	public function showRegisterForm($token){
    		if($token != ''){
 	    	$user = User::where('register_token', '=', $token)->first();
-        $countries = Country::getForView();
+        $countries = Country::where('active',1)->get();
 	    	if ($user != null) {
 			   	return view('auth.register',compact('user','countries'));
   			}

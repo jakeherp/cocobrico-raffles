@@ -52,7 +52,7 @@ class PagesController extends Controller
 	 */
     public function settings(){
     	$user = Auth::user();
-    	$countries = Country::getForView();
+    	$countries = Country::where('active',1)->get();
     	return view('pages.settings', compact('user','countries'));
 	}
 
