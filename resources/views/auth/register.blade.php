@@ -36,7 +36,7 @@
                         {!! Form::password('password_2', ['class' => 'input-group-field', 'placeholder' => trans('auth.passwordrepeat')]) !!}
                       </div>
                       <label>
-                        Personal Information
+                        Persönliche Daten
                         <div class="input-group">
                          <span class="input-group-label"><i class="fa fa-user"></i></span>
                          {!! Form::text('firstname', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.firstname')]) !!}
@@ -57,7 +57,7 @@
                         {!! Form::date('birthday', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.birthday')]) !!}
                       </div>
                       <label>
-                        Additional Information
+                        Weitere Informationen
                       </label>
                       <div class="input-group">
                          <span class="input-group-label"><i class="fa fa-home"></i></span>
@@ -92,9 +92,9 @@
                         {!! Form::text('fax', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.fax')]) !!}
                       </div>
                       <label>
-                        Profile Picture
+                        Profilbild
                       </label>
-                      <em>Die Teilnahme an einigen Gewinnspielen erfordert ein Profilbild.</em>
+                      <em>Die Teilnahme an einigen Gewinnspielen erfordert ein Foto von dir.</em>
                       <div class="input-group">
                         {!! Form::file('profilePicture'); !!}
                       </div>

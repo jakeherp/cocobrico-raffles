@@ -5,10 +5,9 @@
 	<section class="row" id="login">
       <div class="large-6 small-12 large-centered columns">
         <div class="callout large">
-          <h3>{{ trans('auth.activateemail') }}</h3>
+          <h3>Bitte bestätige deine Email-Adresse</h3>
           <div class="success callout">
-            <p>{!! trans('auth.activateemaildesc', ['email' => $user->email]) !!}</p>
-            <a href="{{ url('register/'.$user->register_token) }}">TEST</a>
+            <p>Wir haben eine Bestätigungsmail an deine Adresse {{ $user->email }} geschickt. Bitte klicke auf den darin enthaltenen Link, um deine Registrierung fortzusetzen.</p>
           </div>
         </div>
       </div>
