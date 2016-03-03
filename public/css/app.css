@@ -29,6 +29,15 @@ section#login{
 	flex: 1;
 }
 
+.nobutton{
+    border: 0;
+    background: transparent;
+    color: #ff0000;
+    position: relative;
+    top: -35px;
+    right: 0;
+}
+
 a {
 	color: #ee1d23;
 }
