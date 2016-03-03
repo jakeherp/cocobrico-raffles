@@ -42,26 +42,17 @@
               <a 
                 class="small alert button pull-right" 
                 data-tooltip aria-haspopup="true" 
-                data-disable-hover='false' 
-                tabindex=1 
-                title="Bearbeiten" 
                 data-open="editProfileModal" 
               >Bearbeiten</a>
-<<<<<<< HEAD
               <a 
                 class="tiny secondary button" 
                 data-tooltip aria-haspopup="true" 
-                data-disable-hover='false' 
-                tabindex=1 
-                title="Passwort ändern" 
                 data-open="changePasswordModal" 
                 >Passwort ändern</a>
-=======
               <h4>Benutzerkonto</h4>
               <strong>Name:</strong> {{ $user->firstname }} {{ $user->lastname }}<br>
               <strong>Email:</strong> {{ $user->email }}<br>
               <strong>Passwort:</strong> ******** <a href="" class="tiny alert button" title="Passwort ändern">ändern</a>
->>>>>>> f8a0d6a49656d0171fd06eeaf69ab50d8a1f59a7
             </div>
           </div>
         </div>
