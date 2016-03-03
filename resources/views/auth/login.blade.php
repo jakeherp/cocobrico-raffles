@@ -16,10 +16,9 @@
               @endforeach
           @endif
 
-            {!! Form::open(['url' => 'login', 'method' => 'post']) !!}
               <div class="row">
                 <div class="large-12 columns">
-                
+                   {!! Form::open(['url' => 'login', 'method' => 'post']) !!}
 				          <div class="input-group">
                     <span class="input-group-label"><i class="fa fa-envelope"></i></span>
                     {!! Form::email('email', session('email'), ['class' => 'input-group-field', 'placeholder' => trans('auth.email')]) !!}
@@ -28,14 +27,18 @@
                     <span class="input-group-label"><i class="fa fa-lock"></i></span>
                     {!! Form::password('password', ['class' => 'input-group-field', 'placeholder' => trans('auth.password')]) !!}
                   </div>  
-                  {!! Form::submit(trans('auth.login'), ['class' => 'button alert']) !!}
-                  <div class="float-right text-right">
-                  	<a href="#" class="text-right">{{ trans('auth.forgotpassword') }}</a>
-                  </div>
+                    {!! Form::submit(trans('auth.login'), ['class' => 'button alert']) !!}
+                  {!! Form::close() !!}   
+                  {!! Form::open(['url' => 'password', 'method' => 'post']) !!}
+                    {!! Form::hidden('email', session('email')) !!}
+                    <div class="float-right text-right">
+                      {!! Form::submit(trans('auth.forgotpassword'), ['class' => 'button alert']) !!}
+                    </div>
+                  {!! Form::close() !!}
 
                 </div>
                </div>
-            {!! Form::close() !!}              
+                       
                 </div>
               </div>
             

@@ -7,11 +7,8 @@
         <div class="callout large">
           <h3>Passwort vergessen</h3>
           <div class="success callout">
-            <p>Hier klicken um passwort kot:</p>
-            {!! Form::open(['url' => 'password', 'method' => 'post']) !!}
-              <input type="hidden" name="userId" value="{{ $user->id }}">
-              <button>Psswort zrücksetzn</button>
-            {!! Form::close() !!}
+            <p>Wir haben Ihnen eine Email mit einem Zurücksetzungslink geschickt. Klicken Sie bitte auf den Zurücksetzungslink in dieser Email, um die Zurücksetzung Ihres Passwortes in die Wege zu leiten.</p>
+            <a href="{{ url('password/'. $user->register_token ) }}">TEST</a>
           </div>
         </div>
       </div>

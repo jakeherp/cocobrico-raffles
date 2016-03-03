@@ -11,6 +11,7 @@ use App\Http\Requests\CheckEmailRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UploadProfileImageRequest;
+use App\Http\Requests\NewPasswordRequest;
 
 use App\Address;
 use App\Country;
@@ -54,6 +55,51 @@ class UserController extends Controller
   		}
    	}
 
+    /**
+     * Shows the password reset message.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function showPasswordMsg(Request $request){
+      $user = User::where('email', '=', $request->email)->first();
+      $user->register_token = str_random(40);
+      $user->save();
+      // Password Reset Email
+      $sent = Mail::send('emails.password', ['user' => $user], function ($m) use ($user) {
+        $m->from('noreply@cb.pcserve.eu', 'Cocobrico');
+        $m->to($user->email, $user->email)->subject('Passwort Vergessen');
+      });
+      return view('auth.password',compact('user'));
+    }
+
+    /**
+     * Shows the password reset form.
+     *
+     * @param string $token
+     * @return Response
+     */
+    public function showPasswordForm($token){
+      $user = User::where('register_token', '=', $token)->first();
+      
+      return view('auth.passwordForm',compact('user'));
+    }
+
+    /**
+     * Saves the changed password.
+     *
+     * @param string $token
+     * @return Response
+     */
+    public function savePasswordChange(NewPasswordRequest $request){
+      $user = User::where('register_token', '=', $request->register_token)->first();
+      $user->register_token = '';
+      $user->password = Hash::make($request->password);
+      $user->save();
+      
+      return redirect('login')->with('email', $user->email);
+    }
+
    	/**
      * Checks if the email address is already registered, if the user already has a password and if the
      * email address is verified.
@@ -74,7 +120,7 @@ class UserController extends Controller
    			// Verification-Email is send to user.
 			  $sent = Mail::send('emails.verifyEmail', ['user' => $user], function ($m) use ($user) {
         		$m->from('noreply@cb.pcserve.eu', 'Cocobrico');
-        		$m->to($user->email, $user->email)->subject('Verify your Email.');
+        		$m->to($user->email, $user->email)->subject('Bestätige deine Email-Adresse');
         });
 
 		    return view('auth.verifyEmail', compact('user'));

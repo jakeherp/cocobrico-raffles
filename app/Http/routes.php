@@ -21,6 +21,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('register/{token}', 'UserController@showRegisterForm');
     Route::put('register', 'UserController@register');
 
+    Route::post('password', 'UserController@showPasswordMsg'); 
+    Route::get('password/{token}', 'UserController@showPasswordForm');
+    Route::put('password', 'UserController@savePasswordChange');
+
     Route::post('login', 'UserController@login');
     Route::get('login', 'UserController@showLoginForm'); 
 
