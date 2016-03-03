@@ -11,7 +11,7 @@ return [
     'title'                 => 'Cocobrico Gewinnspiele',
     'cocobrico'             => 'Cocobrico',
     'menu'                  => 'Menü',
-    'dashboard'             => 'Übersicht',
+    'dashboard'             => 'Gewinnspiele',
     'imprint'               => 'Impressum',
     'settings'              => 'Einstellungen',
     'logout'                => 'Logout',

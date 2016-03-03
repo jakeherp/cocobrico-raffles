@@ -6,7 +6,7 @@
       <div class="large-6 small-12 large-centered columns">
         <div class="callout large">
           <h3>{{ trans('auth.signin') }}</h3>
-          <p>{{ trans('auth.welcomeback') }}</p>
+          <p>{{ trans('auth.welcomeback') }}!</p>
 
           @if ($errors->any())
               @foreach ($errors->all() as $error)
