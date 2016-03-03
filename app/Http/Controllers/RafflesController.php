@@ -72,9 +72,10 @@ class RafflesController extends Controller
         $raffle->body = $request->body;
         $raffle->start = strtotime($request->start);
         $raffle->end = strtotime($request->end);
+        $raffle->imageReq = $request->imageReq;
         $raffle->save();
 
-        return redirect()->back();
+        return redirect('admin/raffles/'.$raffle->id);
     }
 
     /**

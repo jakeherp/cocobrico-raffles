@@ -50,6 +50,23 @@ class AdminController extends Controller
 	}
 
 	/**
+	 * Shows the edit raffle form.
+	 *
+	 * @param integer $id
+	 * @return Response
+	 */
+    public function editRaffleView($id){
+    	$user = Auth::user();
+    	$raffle = Raffle::find($id);
+    	if($raffle != null){
+    		return view('admin.edit-raffle', compact('user','raffle'));
+    	}
+    	else{
+    		return redirect('admin/raffles');
+    	}
+	}
+
+	/**
 	 * Shows the raffles.
 	 *
 	 * @return Response

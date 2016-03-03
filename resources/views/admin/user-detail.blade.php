@@ -16,7 +16,7 @@
             {{ $member->address->address2 }}<br>
             {{ $member->address->city }}<br>
             {{ $member->address->zipcode }}<br>
-            {{ trans('localization.'.$member->address->country->iso) }}<br><br>
+            {{ $member->address->country->name }}<br><br>
             {{ $member->address->phone }}<br>
             {{ $member->address->fax }}<br>
 

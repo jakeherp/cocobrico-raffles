@@ -27,7 +27,14 @@
                     <td>{{ count($raffle->users) }}</td>
                     <td>
                       <a href="{{ url('admin/raffles/'. $raffle->id ) }}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Teilnehmer anzeigen"><i class="fa fa-search"></i></a>
-                      <a class="tiny button warning" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Bearbeiten"><i class="fa fa-pencil"></i></a>
+                      <a 
+                        href="{{ url('admin/raffles/'. $raffle->id . '/edit' ) }}"
+                        class="tiny button warning editRaffleButton" 
+                        data-tooltip aria-haspopup="true" 
+                        data-disable-hover='false' 
+                        tabindex=1 
+                        title="Bearbeiten"
+                      ><i class="fa fa-pencil"></i></a>
                       <a 
                         class="tiny button alert deleteRaffleButton" 
                         raffleId="{{ $raffle->id }}" 
@@ -49,7 +56,7 @@
 
     <!-- Modal for deleting raffles -->
     <div class="reveal" id="deleteRaffleModal" data-reveal>
-      <h3>Cancel order <span class="orderReferenceSpan"></span></h3>
+      <h3>Gewinnspiel löschen</h3>
       <div class="callout alert">Wollen Sie das Gewinnspiel wirklich löschen?</div>
       {!! Form::open(['url' => 'admin/raffles/delete', 'method' => 'post']) !!}
         <input type="hidden" id="raffleId" name="raffleId" value="">
