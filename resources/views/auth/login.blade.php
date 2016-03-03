@@ -32,7 +32,7 @@
                   {!! Form::open(['url' => 'password', 'method' => 'post']) !!}
                     {!! Form::hidden('email', session('email')) !!}
                     <div class="float-right text-right">
-                      {!! Form::submit(trans('auth.forgotpassword'), ['class' => 'button alert']) !!}
+                      {!! Form::submit(trans('auth.forgotpassword'), ['class' => 'nobutton']) !!}
                     </div>
                   {!! Form::close() !!}
 

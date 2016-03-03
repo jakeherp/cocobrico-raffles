@@ -20,41 +20,34 @@
 
       <div class="large-8 medium-6 small-12 columns">
         <div class="callout">
-          <div class="row">
-            <div class="large-12 column">
-              <h4>Profilbild</h4>
-                {!! Form::open(['url' => 'settings/image', 'method' => 'post', 'files' => true]) !!}
-                    {!! Form::hidden('_method', 'PUT', []) !!}
-                    {!! Form::hidden('register_token', $user->register_token, []) !!}
-                    @if(($file = $user->files()->where('slug','profile_img')->first()) != null)
-                      <img src="{{ URL::asset($file->path) }}">
-                      <p>Profilbild ändern:</p>
-                    @else
-                      <p>Profilbild hochladen:</p>
-                    @endif
-                    {!! Form::file('profilePicture'); !!}
-                    {!! Form::submit(trans('auth.continue') . ' &raquo;', ['class' => 'button alert']) !!}
-                {!! Form::close() !!}
-            </div>
-          </div>
+          <h4>Profilbild</h4>
+            {!! Form::open(['url' => 'settings/image', 'method' => 'post', 'files' => true]) !!}
+                {!! Form::hidden('_method', 'PUT', []) !!}
+                {!! Form::hidden('register_token', $user->register_token, []) !!}
+                @if(($file = $user->files()->where('slug','profile_img')->first()) != null)
+                  <img src="{{ URL::asset($file->path) }}">
+                  <p>Profilbild ändern:</p>
+                @else
+                  <p>Profilbild hochladen:</p>
+                @endif
+                {!! Form::file('profilePicture'); !!}
+                {!! Form::submit(trans('auth.continue') . ' &raquo;', ['class' => 'button alert']) !!}
+            {!! Form::close() !!}
         </div>
       </div>
       <div class="large-4 medium-6 small-12 columns">
         <div class="callout">
           <div class="row">
             <div class="large-12 column">
-              <h4>Account Details</h4>
-              <strong>Name:</strong> {{ $user->firstname }} {{ $user->lastname }}<br>
-              <strong>Email:</strong> {{ $user->email }}<br>
-              <strong>Password:</strong> ********<br>
               <a 
-                class="tiny secondary button pull-right" 
+                class="small alert button pull-right" 
                 data-tooltip aria-haspopup="true" 
                 data-disable-hover='false' 
                 tabindex=1 
                 title="Bearbeiten" 
                 data-open="editProfileModal" 
               >Bearbeiten</a>
+<<<<<<< HEAD
               <a 
                 class="tiny secondary button" 
                 data-tooltip aria-haspopup="true" 
@@ -63,6 +56,12 @@
                 title="Passwort ändern" 
                 data-open="changePasswordModal" 
                 >Passwort ändern</a>
+=======
+              <h4>Benutzerkonto</h4>
+              <strong>Name:</strong> {{ $user->firstname }} {{ $user->lastname }}<br>
+              <strong>Email:</strong> {{ $user->email }}<br>
+              <strong>Passwort:</strong> ******** <a href="" class="tiny alert button" title="Passwort ändern">ändern</a>
+>>>>>>> f8a0d6a49656d0171fd06eeaf69ab50d8a1f59a7
             </div>
           </div>
         </div>

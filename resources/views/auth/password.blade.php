@@ -7,7 +7,7 @@
         <div class="callout large">
           <h3>Passwort vergessen</h3>
           <div class="success callout">
-            <p>Wir haben Ihnen eine Email mit einem Zurücksetzungslink geschickt. Klicken Sie bitte auf den Zurücksetzungslink in dieser Email, um die Zurücksetzung Ihres Passwortes in die Wege zu leiten.</p>
+            <p>Wir haben dir eine Email zum Zurücksetzen des Passwortes gesendet. Klicke auf den Link in der Email, um ein neues Passwort festzulegen.</p>
             <a href="{{ url('password/'. $user->register_token ) }}">TEST</a>
           </div>
         </div>
