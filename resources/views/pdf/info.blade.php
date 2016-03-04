@@ -63,7 +63,7 @@
 
 						<h2>Bestätigung</h2><br>
 
-                        <strong>Reservierungsnummer:</strong> {{ $user->raffles()->where('raffle_id', $raffle->id)->first()->pivot->code }}<br>
+                        <strong>Reservierungsnummer:</strong> {{ $user->raffles()->where('raffle_id', $raffle->id)->first()->pivot->code }}<br><br>
 						<strong>Datum:</strong> <?php echo date('d.m.Y');?><br>
 						<strong>Name:</strong> {{ $user->lastname }}, {{ $user->firstname }}<br>
 						<strong>Email:</strong> {{ $user->email }}<br>

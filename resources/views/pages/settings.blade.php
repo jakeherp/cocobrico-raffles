@@ -25,7 +25,7 @@
                 {!! Form::hidden('_method', 'PUT', []) !!}
                 {!! Form::hidden('register_token', $user->register_token, []) !!}
                 @if(($file = $user->files()->where('slug','profile_img')->first()) != null)
-                  <img src="{{ URL::asset($file->path) }}">
+                  <img src="{{ URL::asset($file->path) }}" style="max-width:200px;">
                   <p>Profilbild ändern:</p>
                 @else
                   <p>Profilbild hochladen:</p>
