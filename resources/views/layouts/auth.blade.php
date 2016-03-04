@@ -34,7 +34,7 @@
 	    
     <footer class="row">
       <div class="large-12 columns text-center">
-        &copy; <?=date("Y");?> {{ trans('global.company') }}
+        &copy; <?=date("Y");?> {{ trans('global.company') }} | <a href="{{ url('impressum') }}" style="color:#fff;">Impressum / Datenschutz</a>
       </div>
     </footer>
 	

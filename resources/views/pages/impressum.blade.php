@@ -11,7 +11,7 @@
           <div class="row">
             <div class="large-6 small-12 columns">
               <h4>Kontaktadresse</h4>
-              <p>Cocobrico Europe Ltd.<br>
+              <p>Cocobrico Ltd<br>
               Blegistrasse 15<br>
               CH-6340 Baar<br>
               Schweiz</p>
@@ -21,11 +21,9 @@
               </p>
             </div>
             <div class="large-6 small-12 columns">
-              <h4>Vertretungsberechtigte Personen</h4>
-              <p><strong>Geschäftsführer:</strong> Andreas Reichmuth</p>
 
               <h4>Handelsregistereintrag</h4>
-              <p><strong>Eingetragener Firmenname:</strong> Cocobrico Europe Ltd<br>
+              <p><strong>Eingetragener Firmenname:</strong> Cocobrico Ltd<br>
               <strong>Nummer:</strong> CH-170.3.035.395-8<br>
               <strong>Handelsregisteramt:</strong> Kanton Zug</p>
             </div>
@@ -41,7 +39,7 @@
           <p>Verweise und Links auf Webseiten Dritter liegen ausserhalb unseres Verantwortungsbereichs Es wird jegliche Verantwortung für solche Webseiten abgelehnt. Der Zugriff und die Nutzung solcher Webseiten erfolgen auf eigene Gefahr des Nutzers oder der Nutzerin. </p>
 
           <h4>Urheberrechte</h4>
-          <p>Die Urheber- und alle anderen Rechte an Inhalten, Bildern, Fotos oder anderen Dateien auf der Website gehören ausschliesslich <strong>der Firma Cocobrico Europe Ltd.</strong> oder den speziell genannten Rechtsinhabern. Für die Reproduktion jeglicher Elemente ist die schriftliche Zustimmung der Urheberrechtsträger im Voraus einzuholen.</p>
+          <p>Die Urheber- und alle anderen Rechte an Inhalten, Bildern, Fotos oder anderen Dateien auf der Website gehören ausschliesslich <strong>der Firma Cocobrico Ltd</strong> oder den speziell genannten Rechtsinhabern. Für die Reproduktion jeglicher Elemente ist die schriftliche Zustimmung der Urheberrechtsträger im Voraus einzuholen.</p>
 
           <h4>Datenschutz</h4>
           <p>Gestützt auf Artikel 13 der schweizerischen Bundesverfassung  und die datenschutzrechtlichen Bestimmungen des Bundes (Datenschutzgesetz, DSG)  hat jede Person Anspruch auf Schutz ihrer Privatsphäre sowie auf Schutz vor  Missbrauch ihrer persönlichen Daten. Wir halten diese Bestimmungen ein.  Persönliche Daten werden streng vertraulich behandelt und weder an Dritte  verkauft noch weiter gegeben.</p>

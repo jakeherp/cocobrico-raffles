@@ -53,8 +53,8 @@
                         {!! Form::text('phone', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.phone')]) !!}
                       </div>
                       <div class="input-group">
-                        <span class="input-group-label"><i class="fa fa-birthday-cake"></i></span>
-                        {!! Form::date('birthday', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.birthday')]) !!}
+                        <span class="input-group-label"><i class="fa fa-calendar"></i></span>
+                        {!! Form::date('birthday', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.birthday'), data-date='' data-date-format="DD.MM.YYYY"]) !!}
                       </div>
                       <label>
                         Weitere Informationen

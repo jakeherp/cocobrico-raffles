@@ -18,13 +18,13 @@ return [
 
     // Login
     'signin'                =>  'Login',
-    'signindesc'            =>  'Gib bitte deine Email-Adresse ein.',
+    'signindesc'            =>  'Gib bitte Deine Email-Adresse ein.',
     'email'                 =>  'Email-Adresse',
     'validate'              =>  'Validieren',
     'welcomeback'           =>  'Willkommen zurück',
     'password'              =>  'Passwort',
     'login'                 =>  'Login',
-    'forgotpassword'        =>  'Hast du dein Passwort vergessen?',
+    'forgotpassword'        =>  'Hast Du Dein Passwort vergessen?',
 
     // Registration
     'choosepassword'        =>  'Wähle bitte ein Passwort:',

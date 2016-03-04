@@ -6,7 +6,7 @@
 
 		<p style="text-align: center; margin: 30px 0;">
 			<span style="border: 2px solid #ee1d23; padding: 10px; color: #ee1d23; font-size: 1.25em;">
-				{!! link_to('http://cb.pcserve.eu/password/'.$user->register_token, $title = 'Passwort zurücksetzen', $attributes = array(), $secure = null); !!}
+				{!! link_to('http://gewinnspiel.cb.pcserve.eu/password/'.$user->register_token, $title = 'Zurücksetzen', $attributes = array(), $secure = null); !!}
 			</span>
 		</p>
 

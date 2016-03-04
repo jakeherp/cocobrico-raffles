@@ -8,16 +8,16 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'title'                 => 'Cocobrico Gewinnspiele',
+    'title'                 => 'Cocobrico Kundenportal',
     'cocobrico'             => 'Cocobrico',
     'menu'                  => 'Menü',
-    'dashboard'             => 'Gewinnspiele',
+    'dashboard'             => 'Aktionen',
     'imprint'               => 'Impressum',
     'settings'              => 'Einstellungen',
     'logout'                => 'Logout',
     'welcome'               => 'Willkommen zurück',
-    'commercialcustomers'   => 'Gewinnspiele',
-    'company'               => 'Cocobrico Europe Ltd',
+    'commercialcustomers'   => 'Kundenportal',
+    'company'               => 'Cocobrico Ltd',
     'companies'             => 'Your companies',
     'datetimeformat'        => 'd.m.Y H:i:s',
     'dateformat'            => 'd.m.Y',

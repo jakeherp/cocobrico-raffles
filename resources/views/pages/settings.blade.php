@@ -41,18 +41,17 @@
             <div class="large-12 column">
               <a 
                 class="small alert button pull-right" 
-                data-tooltip aria-haspopup="true" 
+                aria-haspopup="true" 
                 data-open="editProfileModal" 
               >Bearbeiten</a>
-              <a 
-                class="tiny secondary button" 
-                data-tooltip aria-haspopup="true" 
-                data-open="changePasswordModal" 
-                >Passwort ändern</a>
               <h4>Benutzerkonto</h4>
               <strong>Name:</strong> {{ $user->firstname }} {{ $user->lastname }}<br>
               <strong>Email:</strong> {{ $user->email }}<br>
-              <strong>Passwort:</strong> ******** <a href="" class="tiny alert button" title="Passwort ändern">ändern</a>
+              <strong>Passwort:</strong> ******** <a 
+                class="tiny secondary button" 
+                aria-haspopup="true" 
+                data-open="changePasswordModal" 
+                >ändern</a>
             </div>
           </div>
         </div>

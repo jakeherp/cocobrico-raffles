@@ -32,6 +32,12 @@
                                 
                 </div>
               </div>
+
+              <div class="row">
+                <div class="large-12 columns">
+                  <p style="font-size:0.7em;margin-top:1em;text-align:justify;">Durch Klick auf den Knopf "Validieren" bestätigst Du, dass Du von den Richtlinien zum Datenschutz Kenntnis genommen hast und mit der Bearbeitung Deiner Daten einverstanden bist.</p>
+                </div>
+              </div>
             {!! Form::close() !!}
             
         </div>
