@@ -210,23 +210,28 @@ class UserController extends Controller
     public function edit(Request $request){
       $user = Auth::user();
       if ($user != null) {
-        $user->firstname = $request->firstname;
-        $user->lastname = $request->lastname;
-        $user->save();
+        if(count($user->raffles()->where('start','<=',time())->where('end','>=',time())->get()) > 0){
+          return redirect('dashboard')->with('msg', 'Du kannst deine Benutzerdaten nicht ändern, solange du an einem aktiven Gewinnspiel teilnimmst.')->with('msgState', 'alert');
+        }
+        else{
+          $user->firstname = $request->firstname;
+          $user->lastname = $request->lastname;
+          $user->save();
 
-        $address = $user->address;
-        $address->firstname = $request->firstname;
-        $address->lastname = $request->lastname;
-        $address->address1 = $request->address1;
-        $address->address2 = $request->address2;
-        $address->zipcode = $request->zipcode;
-        $address->city = $request->city;
-        $address->country_id = $request->country;
-        $address->phone = $request->phone;
-        $address->fax = $request->fax;
-        $address->save();
+          $address = $user->address;
+          $address->firstname = $request->firstname;
+          $address->lastname = $request->lastname;
+          $address->address1 = $request->address1;
+          $address->address2 = $request->address2;
+          $address->zipcode = $request->zipcode;
+          $address->city = $request->city;
+          $address->country_id = $request->country;
+          $address->phone = $request->phone;
+          $address->fax = $request->fax;
+          $address->save();
+        }
 
-        return redirect()->back();
+        return redirect('settings')->with('msg', 'Deine Benutzerdaten wurden erfolgreich aktualisiert.')->with('msgState', 'success');
       }
     }
 

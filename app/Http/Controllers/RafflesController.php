@@ -87,30 +87,34 @@ class RafflesController extends Controller
 
         $raffleId = $request->id;
         $raffle = Raffle::find($raffleId);
+        if(($raffle->legalAgeReq == 1) && (time() - $user->birthday) < 567648000){
+            return redirect('dashboard')->with('msg', 'Die Teilnahme am Gewinnspiel ist ab 18 Jahren freigegeben.')->with('msgState', 'alert');
+        }
+        else{
+            $check = null;
+            do{
+                $code = strtoupper(str_random(6));
+                $check = DB::table('raffle_user')->where('code', '=', $code)->get();
+            } while($check != null);
 
-        $check = null;
-        do{
-            $code = strtoupper(str_random(6));
-            $check = DB::table('raffle_user')->where('code', '=', $code)->get();
-        } while($check != null);
-
-        if($raffle->imageReq == 1){
-            if($user->files()->where('slug','profile_img')->first() != null){
+            if($raffle->imageReq == 1){
+                if($user->files()->where('slug','profile_img')->first() != null){
+                    $user->raffles()->attach($raffleId);
+                    $user->raffles()->updateExistingPivot($raffleId, ['code' => $code]);
+                    $this->participationSucceed($user, $raffle);
+                }
+                else{
+                    return redirect()->back()->withErrors(['Du benötigst ein Profilbild um an diesem Gewinnspiel teilzunehmen.']);
+                }
+            }
+            else{
                 $user->raffles()->attach($raffleId);
                 $user->raffles()->updateExistingPivot($raffleId, ['code' => $code]);
                 $this->participationSucceed($user, $raffle);
             }
-            else{
-                return redirect()->back()->withErrors(['Du benötigst ein Profilbild um an diesem Gewinnspiel teilzunehmen.']);
-            }
-        }
-        else{
-            $user->raffles()->attach($raffleId);
-            $user->raffles()->updateExistingPivot($raffleId, ['code' => $code]);
-            $this->participationSucceed($user, $raffle);
-        }
 
-        return redirect('dashboard')->with('msg', 'Du hast erfolgreich am Gewinnspiel ' . $raffle->title . ' teilgenommen. Wir haben dir eine Bestätigungsemail geschickt. Überprüfe auch dein Spampostfach.')->with('msgState', 'success');
+            return redirect('dashboard')->with('msg', 'Du hast erfolgreich am Gewinnspiel ' . $raffle->title . ' teilgenommen. Wir haben dir eine Bestätigungsemail geschickt. Überprüfe auch dein Spampostfach.')->with('msgState', 'success');
+        }
     }
 
     /**

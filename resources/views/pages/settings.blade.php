@@ -18,6 +18,14 @@
           </div>
       @endif
 
+      @if(session()->has('msg'))
+          <div class="large-12 small-12 columns">
+            <div class="callout {{ session('msgState') }}">
+              <p>{{ session('msg') }}</p>
+            </div>
+          </div>
+      @endif
+
       <div class="large-8 medium-6 small-12 columns">
         <div class="callout">
           <h4>Profilbild</h4>
@@ -39,11 +47,18 @@
         <div class="callout">
           <div class="row">
             <div class="large-12 column">
+            @if(count($user->raffles()->where('start','<=',time())->where('end','>=',time())->get()) > 0)
+              <a 
+                class="small alert button pull-right" 
+                disabled
+              >Bearbeiten</a>
+            @else
               <a 
                 class="small alert button pull-right" 
                 aria-haspopup="true" 
                 data-open="editProfileModal" 
               >Bearbeiten</a>
+            @endif
               <h4>Benutzerkonto</h4>
               <strong>Name:</strong> {{ $user->firstname }} {{ $user->lastname }}<br>
               <strong>Email:</strong> {{ $user->email }}<br>
