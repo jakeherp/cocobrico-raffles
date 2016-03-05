@@ -7,7 +7,7 @@
   	  <div class="large-12 column">
         <h1><i class="fa fa-trophy"></i> Gewinnspiel hinzufügen</h1>
         <div class="callout">
-		  {!! Form::open(['url' => 'admin/raffles/create', 'method' => 'post']) !!}
+		  {!! Form::open(['url' => 'admin/raffles/create', 'method' => 'post', 'files' => true]) !!}
 		  <div class="input-group">
             <span class="input-group-label"><i class="fa fa-pencil"></i></span>
                 {!! Form::text('title', null, ['class' => 'input-group-field', 'placeholder' => 'Titel']) !!}
@@ -28,6 +28,12 @@
             <div class="input-group">
               <span class="input-group-label"><i class="fa fa-calendar"></i></span>
               {!! Form::date('end', null, ['class' => 'input-group-field', 'placeholder' => 'End-Zeitpunkt']) !!}
+            </div>
+          </label>
+          <label>
+            Aktionsgrafik
+            <div class="input-group">
+              {!! Form::file('rafflePicture'); !!}
             </div>
           </label>
           <h4>Optionen</h4>

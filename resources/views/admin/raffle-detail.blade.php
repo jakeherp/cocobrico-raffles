@@ -11,6 +11,17 @@
           <p>{{ $raffle->body }}</p>
           <a class="button secondary" href="{{ URL('admin/raffles') }}">Zurück</a>
           <a class="button secondary" href="{{ URL('admin/raffles/'.$raffle->id.'/pdf') }}">PDF Vorschau</a>
+
+          <?php
+            $file = $raffle->files()->where('slug','raffle_img')->first();
+          ?>
+
+          <p>Aktionsgrafik:</p>
+          @if($file != null)
+            <img src="{{ URL::asset($file->path) }}">
+          @else
+            Keine Grafik vorhanden
+          @endif
         </div>
       </div>
 
