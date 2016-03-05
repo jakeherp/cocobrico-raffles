@@ -12,16 +12,15 @@
     @endif
 
           <p>
-            {{ $member->address->address1 }}<br>
-            {{ $member->address->address2 }}<br>
-            {{ $member->address->city }}<br>
-            {{ $member->address->zipcode }}<br>
+          <h4>Adresse:</h4>
+            {{ $member->address->address1 }} {{ $member->address->address2 }}<br>
+            {{ $member->address->zipcode }} {{ $member->address->city }}<br>
             {{ $member->address->country->name }}<br><br>
-            {{ $member->address->phone }}<br>
-            {{ $member->address->fax }}<br>
+            <strong>Telefon:</strong> <a href="tel:{{ $member->address->phone }}">{{ $member->address->phone }}</a><br>
+            <strong>Email:</strong> <a href="mailto:{{ $member->email }}"> {{ $member->email }}</a><br>
 
-            Geburtstag: {{ date(trans('global.dateformat'),$member->birthday) }}<br>
-            Registriert seit: {{ date(trans('global.dateformat'),strtotime($member->created_at)) }}<br>
+            <strong>Geburtstag:</strong> {{ date(trans('global.dateformat'),$member->birthday) }}<br>
+            <strong>Mitglied seit:</strong> {{ date(trans('global.dateformat'),strtotime($member->created_at)) }}<br>
           </p>
         </div>
       </div>

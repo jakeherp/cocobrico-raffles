@@ -2,6 +2,9 @@ body {
 	background: #202020;
 	color: #fff;
 }
+html{
+  height: auto;
+}
 
 header.row {
 	margin: 3em auto 1em;

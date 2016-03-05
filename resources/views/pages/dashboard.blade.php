@@ -89,17 +89,8 @@
 
                     <p>{!! $raffle->body !!}</p>
 
-                    <div class="pull-right">Abgelaufen seit {{ date(trans('global.dateformat'), $raffle->end) }}</div>
-                    <button class="alert button" 
-                        @if($user->hasRaffle($raffle->id))
-                          disabled>Bereits angemeldet
-                        @elseif($raffle->imageReq == 1 && $file == null)
-                          disabled>Profilbild benötigt
-                        @else
-                          role="submit">Teilnehmen
-                        @endif
-                        </button>
-                      {!! Form::close() !!}
+                    <p><em>Abgelaufen seit {{ date(trans('global.dateformat'), $raffle->end) }}</em></p>
+                    {!! Form::close() !!}
                   </div>
                 </li>
         @endforeach
@@ -135,23 +126,15 @@
 
                         <p>{!! $raffle->body !!}</p>
 
-                        <div class="pull-right">Läuft noch bis {{ date(trans('global.dateformat'), $raffle->end) }}</div>
-                        <button class="alert button" 
-                        @if($user->hasRaffle($raffle->id))
-                          disabled>Bereits angemeldet
-                        @elseif($raffle->imageReq == 1 && $file == null)
-                          disabled>Profilbild benötigt
-                        @else
-                          role="submit">Teilnehmen
-                        @endif
-                        </button>
+                        <p><em>Läuft noch bis {{ date(trans('global.dateformat'), $raffle->end) }}</em></p>
+
                       {!! Form::close() !!}
                   </div>
                 </li>
           @endforeach
         </ul>
         @else
-          <div class="callout">keine registrierten Aktionen</div>
+          <div class="callout">Du bist momentan für keine Aktion registriert.</div>
         @endif
 
     </div>

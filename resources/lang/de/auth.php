@@ -32,6 +32,7 @@ return [
     'signup'                =>  'Registrieren',
     'firstname'             =>  'Vorname',
     'lastname'              =>  'Nachname',
+    'birthday'              =>  'Geburtstag',
     'address'               =>  'Adresse',
     'address1'              =>  'Adresse 1',
     'address2'              =>  'Addrese 2',
