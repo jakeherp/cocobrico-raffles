@@ -65,7 +65,7 @@
 
                         <strong>Reservierungsnummer:</strong> 
                         @if(isset($preview))
-                        	PREVIEW
+                        	PREVIEW<br><br>
                         @else
                         	{{ $user->raffles()->where('raffle_id', $raffle->id)->first()->pivot->code }}<br><br>
                         @endif
@@ -89,7 +89,9 @@
 		</table>
 		<p>&nbsp;</p>
 		<h3>{{ $raffle->title }}</h3>
-		<p>{{ $raffle->body }}</p>
+		<p>{!! $raffle->body !!}</p>
+		<p>&nbsp;</p>
+		<img src="{{ URL::asset($raffle->file()->path) }}" style="width: 700px; height:400px;">
 	</div>
 </body>
 </html>
