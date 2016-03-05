@@ -30,11 +30,17 @@
               {!! Form::date('end', null, ['class' => 'input-group-field', 'placeholder' => 'End-Zeitpunkt']) !!}
             </div>
           </label>
+          <h4>Optionen</h4>
           <label>
-            Optionen
             <div class="input-group">
               <i class="fa fa-upload"></i>
               {!! Form::checkbox('imageReq', '1') !!} Der Benutzer muss ein Profilbild besitzen.
+            </div>
+          </label>
+          <label>
+            <div class="input-group">
+              <i class="fa fa-child"></i>
+              {!! Form::checkbox('legalAgeReq', '1') !!} Der Benutzer muss 18 Jahre alt sein.
             </div>
           </label>
           {!! Form::submit('Gewinnspiel erstellen', ['class' => 'button alert']) !!}
