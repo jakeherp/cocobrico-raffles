@@ -13,8 +13,8 @@ return [
     |
     */
 
-    'failed'                =>  'These credentials do not match our records.',
-    'throttle'              =>  'Too many login attempts. Please try again in :seconds seconds.',
+    'failed'                =>  'Die eingegebenen Daten sind nicht korrekt.',
+    'throttle'              =>  'Zu viele Login Versuche. Versuche es bitte in :seconds Sekunden erneut.',
 
     // Login
     'signin'                =>  'Login',
@@ -40,22 +40,22 @@ return [
     'contactdetails'        =>  'Kontaktdaten',
     'phone'                 =>  'Telefon',
     'fax'                   =>  'Fax',
-    'continue'              =>  'Fortfahren',
+    'continue'              =>  'Weiter',
 
     // Password Rules
-    'rule1'                 =>  'The password must have at least 8 characters.',
-    'rule2'                 =>  'The password must contain at least one capital letter.',
-    'rule3'                 =>  'The password must contain at least one lowercase letter.',
-    'rule4'                 =>  'The password must contain at least one number.',
+    'rule1'                 =>  'Das Passwort muss mindestens 8 Zeichen beinhalten.',
+    'rule2'                 =>  'Das Passwort muss mindestens einen Großbuchstaben beinhalten.',
+    'rule3'                 =>  'Das Passwort muss mindestens einen Kleinbuchstaben beinhalten.',
+    'rule4'                 =>  'Das Passwort muss mindestens eine Zahl beinhalten.',
 
     // Verify Email
-    'activateemail'         =>  'Verify your email address',
-    'activateemaildesc'     =>  'We have sent a confirmation link to :email. Please verify your email address to proceed the registration process. In case you have not received an email, please check your junk folder or click <a href="#">here</a> to resend the confirmation email.',
+    'activateemail'         =>  'Bestätige deine Email-Adresse',
+    'activateemaildesc'     =>  'Wir haben einen Bestätigungslink an :email gesendet. Bestätige bitte Deine Email-Adresse um die Registrierung fortzusetzen. Falls Du keine Bestätigungsmail erhalten hast, kannst du hier eine neue anfordern.',
 
     // Verification Email
-    'dear'                  =>  'Dear customer,',
-    'msgbody'               =>  'Please verify your email address to continue your registration with Cocobrico Commercial Customers:',
-    'button'                =>  'Click here to verify your email address',
-    'troubleshooting'       =>  'If you have trouble activating your account, please contact us at info@cocobrico.com.',
+    'dear'                  =>  'Lieber Benutzer,',
+    'msgbody'               =>  'Bitte bestätige Deine Email-Adresse, um die Registrierung bei Cocobrico fortzusetzen:',
+    'button'                =>  'Bestätigen',
+    'troubleshooting'       =>  'Falls Du Probleme bei der Aktivierung hast, kannst Du Dich jederzeit an europe@cocobrico.com wenden.',
 
 ];

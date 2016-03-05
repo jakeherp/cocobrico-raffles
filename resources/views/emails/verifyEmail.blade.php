@@ -10,7 +10,7 @@
 			</span>
 		</p>
 
-		<p>Falls du Probleme bei der Aktivierung hast, kannst du dich jederzeit an info@cocobrico.com wenden. Wir helfen dir gern weiter.</p>
+		<p>Falls du Probleme bei der Aktivierung hast, kannst du dich jederzeit an europe@cocobrico.com wenden. Wir helfen dir gern weiter.</p>
 	</div>
 	<div style="text-align: center; color: #fff;">&copy; <?=date("Y");?> {{ trans('global.company') }}</div>
 </body>
