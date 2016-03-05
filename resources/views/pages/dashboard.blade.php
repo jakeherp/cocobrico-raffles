@@ -46,9 +46,10 @@
                       @endif
                     @endif
 
-                    <p>{{ $raffle->body }}</p>
+                    <p>{!! $raffle->body !!}</p>
 
-                    <button class="alert button" 
+                      <div class="pull-right">Läuft noch bis {{ date(trans('global.dateformat'), $raffle->end) }}</div>
+                      <button class="alert button" 
                         @if($user->hasRaffle($raffle->id))
                           disabled>Bereits angemeldet
                         @elseif($raffle->imageReq == 1 && $file == null)
@@ -86,8 +87,9 @@
                       @endif
                     @endif
 
-                    <p>{{ $raffle->body }}</p>
+                    <p>{!! $raffle->body !!}</p>
 
+                    <div class="pull-right">Abgelaufen seit {{ date(trans('global.dateformat'), $raffle->end) }}</div>
                     <button class="alert button" 
                         @if($user->hasRaffle($raffle->id))
                           disabled>Bereits angemeldet
@@ -131,8 +133,9 @@
                             @endif
                         @endif
 
-                        <p>{{ $raffle->body }}</p>
+                        <p>{!! $raffle->body !!}</p>
 
+                        <div class="pull-right">Läuft noch bis {{ date(trans('global.dateformat'), $raffle->end) }}</div>
                         <button class="alert button" 
                         @if($user->hasRaffle($raffle->id))
                           disabled>Bereits angemeldet

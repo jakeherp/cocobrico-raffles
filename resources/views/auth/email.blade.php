@@ -23,7 +23,7 @@
                 <div class="large-12 columns">
                 
                   <div class="input-group">
-                    <span class="input-group-label"><i class="fa fa-envelope"></i></span>
+                    <span class="input-group-label hide-for-small-only"><i class="fa fa-envelope"></i></span>
                     {!! Form::email('email', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.email')]) !!}
                     <div class="input-group-button">
                       {!! Form::submit(trans('auth.validate'), ['class' => 'button alert']) !!}

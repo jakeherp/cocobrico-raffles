@@ -8,7 +8,7 @@
         <div class="callout">
           <p><strong>Start:</strong> {{ date(trans('global.datetimeformat'), $raffle->start) }}, 
           <strong>Ende:</strong> {{ date(trans('global.datetimeformat'), $raffle->end) }}</p>
-          <p>{{ $raffle->body }}</p>
+          <p>{!! $raffle->body !!}</p>
           <a class="button secondary" href="{{ URL('admin/raffles') }}">Zurück</a>
         </div>
       </div>
