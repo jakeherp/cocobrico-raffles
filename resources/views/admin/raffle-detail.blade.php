@@ -10,6 +10,7 @@
           <strong>Ende:</strong> {{ date(trans('global.datetimeformat'), $raffle->end) }}</p>
           <p>{!! $raffle->body !!}</p>
           <a class="button secondary" href="{{ URL('admin/raffles') }}">Zurück</a>
+          <a class="button secondary" href="{{ URL('admin/raffles/'.$raffle->id.'/pdf') }}">PDF Vorschau</a>
         </div>
       </div>
 
