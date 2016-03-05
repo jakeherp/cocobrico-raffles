@@ -15,6 +15,7 @@ use App\Raffle;
 use Auth;
 use DB;
 use Mail;
+use QrCode;
 use PDF;
 
 class RafflesController extends Controller
@@ -173,6 +174,9 @@ class RafflesController extends Controller
         //$file->raffle_id = $raffle->id;
         $file->path = 'files/user_' . $user->id . '/' . md5($file->slug . microtime()) . '.pdf';
         $user->files()->save($file);
+
+        $qrstring = $user->raffles()->where('raffle_id', $raffle->id)->first()->pivot->code . ', ' . $user->firstname . ' ' . $user->lastname . ', ' . date(trans('global.dateformat'),$user->birthday);
+        QrCode::format('png')->margin(0)->size(200)->generate($qrstring, '../public/files/user_'.$user->id.'/qrcode.png');
         $pdf = PDF::loadView('pdf.info', compact('user','raffle'))->save($file->path);
 
         // Sends Confirmation Email

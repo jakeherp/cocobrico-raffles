@@ -77,8 +77,9 @@
                         
 					</td>
 					<td width="30%">
+					<img src="{{ URL::asset('files/user_'.$user->id.'/qrcode.png') }}" style="width:150px; float: right;"><br>
 				  	  @if(($file = $user->files()->where('slug','profile_img')->first()) != null)
-						<img src="{{ URL::asset($file->path) }}" style="width:150px; margin-top:150px; float: right;">
+						<img src="{{ URL::asset($file->path) }}" style="width:150px; margin-top:10px; float: right;">
 				  	  @endif
 					</td>
 				</tr>

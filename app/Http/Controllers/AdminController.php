@@ -11,6 +11,7 @@ use App\Raffle;
 use App\User;
 
 use Auth;
+use QrCode;
 use PDF;
 
 class AdminController extends Controller
@@ -121,6 +122,8 @@ class AdminController extends Controller
 		$user = Auth::user();
 		$raffle = Raffle::find($id);
 		$preview = true;
+		$qrstring = 'PREVIEW, ' . $user->firstname . ' ' . $user->lastname . ', ' . date(trans('global.dateformat'),$user->birthday);
+		QrCode::format('png')->margin(0)->size(200)->generate($qrstring, '../public/files/user_'.$user->id.'/qrcode.png');
 		return PDF::loadView('pdf.info', compact('user','raffle','preview'))->stream();
 	}
 }
