@@ -5,7 +5,7 @@
     <section class="row" id="content">
 
   	  <div class="large-12 column">
-        <h1><i class="fa fa-trophy"></i> Gewinnspiel bearbeiten</h1>
+        <h1><i class="fa fa-trophy"></i> Aktion bearbeiten</h1>
         <div class="callout">
 		  {!! Form::open(['url' => 'admin/raffles/save', 'method' => 'post', 'files' => true]) !!}
       {!! Form::hidden('_method', 'PUT', []) !!}

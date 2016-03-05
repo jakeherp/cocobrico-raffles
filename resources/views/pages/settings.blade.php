@@ -34,12 +34,17 @@
                 {!! Form::hidden('register_token', $user->register_token, []) !!}
                 @if(($file = $user->files()->where('slug','profile_img')->first()) != null)
                   <img src="{{ URL::asset($file->path) }}" style="max-width:200px;">
-                  <p>Profilbild ändern:</p>
+                  <p style="margin-top: 1em;">Profilbild ändern:</p>
                 @else
                   <p>Profilbild hochladen:</p>
                 @endif
-                {!! Form::file('profilePicture'); !!}
-                {!! Form::submit(trans('auth.continue') . ' &raquo;', ['class' => 'button alert']) !!}
+
+                @if(count($user->raffles()->where('start','<=',time())->where('end','>=',time())->get()) > 0)
+                  <div class="callout warning">Dein Profilbild kann nicht geändert werden, solange du an einer laufenden Aktion teilnimmst.</div> 
+                @else
+                  {!! Form::file('profilePicture'); !!}
+                  {!! Form::submit(trans('auth.continue') . ' &raquo;', ['class' => 'button alert']) !!}
+                @endif
             {!! Form::close() !!}
         </div>
       </div>
@@ -63,10 +68,13 @@
               <strong>Name:</strong> {{ $user->firstname }} {{ $user->lastname }}<br>
               <strong>Email:</strong> {{ $user->email }}<br>
               <strong>Passwort:</strong> ******** <a 
-                class="tiny secondary button" 
+                class="tiny alert button" 
                 aria-haspopup="true" 
                 data-open="changePasswordModal" 
-                >ändern</a>
+                >ändern</a><br><br>
+              @if(count($user->raffles()->where('start','<=',time())->where('end','>=',time())->get()) > 0)
+                <div class="callout warning">Deine Benutzerdaten können nicht geändert werden, solange du an einer laufenden Aktion teilnimmst.</div>
+              @endif
             </div>
           </div>
         </div>

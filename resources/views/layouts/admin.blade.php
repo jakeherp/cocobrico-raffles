@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Order Cocobrico from Cocobrico Commercial as a wholesaler, retailer or other commercial customer.">
     <meta name="keywords" content="Cocobrico, Charcoal, Coconut, Indonesia, Europe, Shisha, Hookah, Coal">
-    <meta name="publisher" content="Cocobrico Europe Ltd">
+    <meta name="publisher" content="Cocobrico Ltd">
     <meta name="author" content="PCServe Media Ltd">
     <title>{{ trans('global.title') }}</title>
     <link rel="stylesheet" href="{{ URL::asset('css/foundation.css') }}" />
@@ -19,9 +19,10 @@
       $(document).ready(function() {
 
         $('#table').dataTable( {
+            "order": [ [ $('th.orderby').index(),  'desc' ] ],
             "columnDefs": [ {
               "targets": 'no-sort',
-              "orderable": false,
+              "orderable": false
             } ],
             "language": {
               "url": "{{ URL::asset('lang/German.json') }}"
@@ -59,8 +60,8 @@
 
             <li class="title"><i class="fa fa-cog"></i> Einstellungen</li>
             <li><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> Zum Dashboard</a></li>
+              <li><a href="{{ url('admin/raffles') }}"><i class="fa fa-trophy"></i> Aktionen</a></li>
               <li><a href="{{ url('admin/users') }}"><i class="fa fa-user-secret"></i> Benutzer</a></li>
-              <li><a href="{{ url('admin/raffles') }}"><i class="fa fa-trophy"></i> Gewinnspiele</a></li>
           </ul>
 
         </div>

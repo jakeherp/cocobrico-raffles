@@ -51,6 +51,7 @@
                       <div class="input-group">
                         <span class="input-group-label"><i class="fa fa-venus-mars"></i></span>
                         <select name="gender" class="input-group-field">
+                          <option value="" disabled selected>Bitte auswählen</option>
                           <option value="0">Männlich</option>
                           <option value="1">Weiblich</option>
                         </select>

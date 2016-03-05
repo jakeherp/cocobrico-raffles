@@ -31,12 +31,13 @@
           <table id="table" class="full-table">
             <thead>
               <tr>
-                <th></th>
+                <th class="no-sort"></th>
                 <th>Name</th>
                 <th>Geburtsdatum</th>
                 <th>Mitglied seit</th>
-                <th>Gewinnspiel Teilnahmen</th>
-                <th>Optionen</th>
+                <th class="orderby">Teilnahme</th>
+                <th>Aktionen</th>
+                <th class="no-sort">Optionen</th>
               </tr>
             </thead>
             <tbody>
@@ -53,9 +54,12 @@
                       {{ $member->firstname }} {{ $member->lastname }}
                     </td>
                     <td>
-                      {{ date(trans('global.dateformat'),$member->birthday) }} ({{ floor((time() - $member->birthday) / 31556926) }} Jahre)</td>
+                      {{ floor((time() - $member->birthday) / 31556926) }} Jahre - {{ date(trans('global.dateformat'),$member->birthday) }}</td>
                     <td>
                       {{ date(trans('global.dateformat'),strtotime($member->created_at)) }}
+                    </td>
+                    <td>
+                      {{ date(trans('global.dateformat'),strtotime($raffle->created_at)) }}
                     </td>
                     <td><span class="has-tooltip" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="
                       @foreach($member->raffles AS $raffle)
