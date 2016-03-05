@@ -49,6 +49,13 @@
                         {!! Form::text('lastname', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.lastname')]) !!}
                       </div>
                       <div class="input-group">
+                        <span class="input-group-label"><i class="fa fa-venus-mars"></i></span>
+                        <select name="gender" class="input-group-field">
+                          <option value="0">Männlich</option>
+                          <option value="1">Weiblich</option>
+                        </select>
+                      </div>
+                      <div class="input-group">
                         <span class="input-group-label"><i class="fa fa-phone"></i></span>
                         {!! Form::text('phone', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.phone')]) !!}
                       </div>

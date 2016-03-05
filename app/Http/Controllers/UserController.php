@@ -161,6 +161,7 @@ class UserController extends Controller
 		   	$user->register_token = '';
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
+        $user->gender = $request->gender;
         $user->birthday = strtotime($request->birthday);
 			  $user->save();
 
