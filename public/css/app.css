@@ -21,7 +21,7 @@ h1 > img{
 }
 
 section#login{
-	margin: 3em auto;
+	margin: 1em auto;
 }
 
 .button.alert {
@@ -36,6 +36,16 @@ section#login{
     position: relative;
     top: -35px;
     right: 0;
+}
+@media screen and (max-width: 460px) {
+  .nobutton{
+    position: initial;
+  }
+}
+
+.callout.large{
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
 
 a {
