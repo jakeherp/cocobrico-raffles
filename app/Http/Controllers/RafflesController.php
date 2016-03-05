@@ -36,9 +36,27 @@ class RafflesController extends Controller
     	$raffle->body = $request->body;
     	$raffle->start = strtotime($request->start);
     	$raffle->end = strtotime($request->end);
-        $raffle->imageReq = $request->imageReq ;
-        $raffle->legalAgeReq = $request->legalAgeReq;
+      if($request->imageReq == null){ $raffle->imageReq = 0; } else { $raffle->imageReq = 1; }
+      if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; } else { $raffle->legalAgeReq = 1; }
     	$raffle->save();
+
+        if ($request->hasFile('rafflePicture')) {  
+          if ($request->file('rafflePicture')->isValid()) {
+            $file = $request->file('rafflePicture');
+            $destinationPath = '/files/raffle_' . $raffle->id;
+            $upload = new File();
+            $filename = $upload->uploadFile($file, $destinationPath);
+            if(!$filename){
+              return redirect()->back()->withInput()->withErrors(['Fileupload went wrong!']);
+            }
+            else{
+              $upload->slug = 'raffle_img';
+              $upload->name = 'Aktionsgrafik';
+              $upload->path = 'files/raffle_' . $raffle->id . '/' . $filename;
+              $raffle->files()->save($upload);
+            }
+          }
+        }
 
     	return redirect('admin/raffles');
     }
@@ -68,9 +86,32 @@ class RafflesController extends Controller
         $raffle->body = $request->body;
         $raffle->start = strtotime($request->start);
         $raffle->end = strtotime($request->end);
-        $raffle->imageReq = $request->imageReq;
-        $raffle->legalAgeReq = $request->legalAgeReq;
+        if($request->imageReq == null){ $raffle->imageReq = 0; } else { $raffle->imageReq = 1; }
+        if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; } else { $raffle->legalAgeReq = 1; }
         $raffle->save();
+
+        if ($request->hasFile('rafflePicture')) { 
+          if ($request->file('rafflePicture')->isValid()) {
+            $file = $request->file('rafflePicture');
+            $destinationPath = '/files/raffle_' . $raffle->id;
+            if(($upload = $raffle->files()->where('slug','raffle_img')->first()) == null){
+              $upload = new File();
+            }
+            else{
+              unlink(public_path($upload->path));
+            }
+            $filename = $upload->uploadFile($file, $destinationPath);
+            if(!$filename){
+              return redirect()->back()->withInput()->withErrors(['Fileupload went wrong!']);
+            }
+            else{
+              $upload->slug = 'raffle_img';
+              $upload->name = 'Aktionsgrafik';
+              $upload->path = 'files/raffle_' . $raffle->id . '/' . $filename;
+              $raffle->files()->save($upload);
+            }
+          }
+        }
 
         return redirect('admin/raffles/'.$raffle->id);
     }
@@ -129,6 +170,7 @@ class RafflesController extends Controller
         $file = new File();
         $file->slug = 'raffle_'.$raffle->id;
         $file->name = 'Teilnahmezertifikat für Gewinnspiel '.$raffle->title;
+        //$file->raffle_id = $raffle->id;
         $file->path = 'files/user_' . $user->id . '/' . md5($file->slug . microtime()) . '.pdf';
         $user->files()->save($file);
         $pdf = PDF::loadView('pdf.info', compact('user','raffle'))->save($file->path);

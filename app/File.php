@@ -18,7 +18,15 @@ class File extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User','file_user');
+        return $this->belongsTo('App\User');
+    }
+
+    /**
+     * Get the raffle who uploaded the file.
+     */
+    public function raffle()
+    {
+        return $this->belongsTo('App\Raffle');
     }
 
     /**
