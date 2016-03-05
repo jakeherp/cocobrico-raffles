@@ -11,6 +11,7 @@ use App\Raffle;
 use App\User;
 
 use Auth;
+use PDF;
 
 class AdminController extends Controller
 {
@@ -108,5 +109,18 @@ class AdminController extends Controller
     	else{
     		return redirect('admin/raffles');
     	}
+	}
+
+	/**
+	 * Shows the preview PDF
+	 *
+	 * @param integer $id
+	 * @return Response
+	 */
+	public function pdfPreview($id){
+		$user = Auth::user();
+		$raffle = Raffle::find($id);
+		$preview = true;
+		return PDF::loadView('pdf.info', compact('user','raffle','preview'))->stream();
 	}
 }
