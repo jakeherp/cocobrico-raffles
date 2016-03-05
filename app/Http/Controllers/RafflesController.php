@@ -135,7 +135,7 @@ class RafflesController extends Controller
 
         // Sends Confirmation Email
         $email = Mail::send('emails.confirmRaffle', compact('user','raffle'), function ($m) use ($user, $file) {
-            $m->from('noreply@cocobrico.com', 'Cocobrico');
+            $m->from('noreply@cb.pcserve.eu', 'Cocobrico');
             $m->attach($file->path);
             $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject('Gewinnspiel Teilnahmebestätigung');
         });
