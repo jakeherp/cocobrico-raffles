@@ -36,12 +36,8 @@ class RafflesController extends Controller
     	$raffle->body = $request->body;
     	$raffle->start = strtotime($request->start);
     	$raffle->end = strtotime($request->end);
-        if($request->imageReq == null){
-            $raffle->imageReq = 0;
-        }
-        else{
-            $raffle->imageReq = 1;
-        }
+        $raffle->imageReq = $request->imageReq ;
+        $raffle->legalAgeReq = $request->legalAgeReq;
     	$raffle->save();
 
     	return redirect('admin/raffles');
@@ -73,6 +69,7 @@ class RafflesController extends Controller
         $raffle->start = strtotime($request->start);
         $raffle->end = strtotime($request->end);
         $raffle->imageReq = $request->imageReq;
+        $raffle->legalAgeReq = $request->legalAgeReq;
         $raffle->save();
 
         return redirect('admin/raffles/'.$raffle->id);

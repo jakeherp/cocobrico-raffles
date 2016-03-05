@@ -33,8 +33,8 @@
               {!! Form::date('end', date('Y-m-d',$raffle->end), ['class' => 'input-group-field', 'placeholder' => 'End-Zeitpunkt']) !!}
             </div>
           </label>
+          <h4>Optionen</h4>
           <label>
-            Optionen
             <div class="input-group">
               <i class="fa fa-upload"></i>
               @if($raffle->imageReq == 1)
@@ -44,7 +44,18 @@
               @endif
             </div>
           </label>
+          <label>
+            <div class="input-group">
+              <i class="fa fa-child"></i>
+              @if($raffle->legalAgeReq == 1)
+                {!! Form::checkbox('legalAgeReq', '1', true) !!} Der Benutzer muss 18 Jahre alt sein.
+              @else
+                {!! Form::checkbox('legalAgeReq', '1', false) !!} Der Benutzer muss 18 Jahre alt sein.
+              @endif
+            </div>
+          </label>
           {!! Form::submit('Änderungen speichern', ['class' => 'button alert']) !!}
+          <a class="button secondary" href="{{ URL('admin/raffles') }}">Zurück</a>
 		  {!! Form::close() !!}
         </div>
       </div>

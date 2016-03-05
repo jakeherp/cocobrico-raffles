@@ -19,6 +19,7 @@ class CreateRafflesTable extends Migration
             $table->integer('start')->default(0);
             $table->integer('end')->default(0);
             $table->boolean('imageReq')->default(0);
+            $table->boolean('legalAgeReq')->default(0);
             $table->timestamps();
         });
     }
