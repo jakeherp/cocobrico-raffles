@@ -202,6 +202,21 @@ class UserController extends Controller
 		  }
     }
 
+    /**
+     * Resends the verification email.
+     *
+     * @param  Request $request
+     * @return Response
+     */
+    public function resendEmail(Request $request){
+      $user = User::find($request->user_id);
+      $sent = Mail::send('emails.verifyEmail', ['user' => $user], function ($m) use ($user) {
+        $m->from('noreply@cb.pcserve.eu', 'Cocobrico');
+        $m->to($user->email, $user->email)->subject('Bestätige deine Email-Adresse');
+      });
+      return view('auth.verifyEmail', compact('user'));
+    }
+
   /**
    * Edits the user details.
    *
