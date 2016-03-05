@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(($user == null) ? 'layouts.auth' : 'layouts.app')
 
 @section('content')
     
