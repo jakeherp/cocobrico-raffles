@@ -17,7 +17,17 @@
     <script type="text/javascript" src="{{ URL::asset('js/vendor/dataTables.foundation.min.js') }}"></script>
     <script type="text/javascript" language="javascript" class="init">
       $(document).ready(function() {
-        $('#table').DataTable();
+
+        $('#table').dataTable( {
+            "columnDefs": [ {
+              "targets": 'no-sort',
+              "orderable": false,
+            } ],
+            "language": {
+              "url": "{{ URL::asset('lang/German.json') }}"
+            }
+        } );
+
       } );
     </script>
   </head>

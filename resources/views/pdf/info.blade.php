@@ -91,7 +91,14 @@
 		<h3>{{ $raffle->title }}</h3>
 		<p>{!! $raffle->body !!}</p>
 		<p>&nbsp;</p>
-		<img src="{{ URL::asset($raffle->file()->path) }}" style="width: 700px; height:400px;">
+
+		<?php
+        	$file = $raffle->files()->where('slug','raffle_img')->first();
+        ?>
+
+        @if($file != null)
+        	<img src="{{ URL::asset($file->path) }}" style="width: 700px; height:400px;">
+        @endif
 	</div>
 </body>
 </html>

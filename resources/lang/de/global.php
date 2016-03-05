@@ -14,14 +14,15 @@ return [
     'dashboard'             => 'Aktionen',
     'imprint'               => 'Impressum',
     'settings'              => 'Einstellungen',
-    'logout'                => 'Logout',
+    'logout'                => 'Ausloggen',
     'welcome'               => 'Willkommen zurück',
     'commercialcustomers'   => 'Kundenportal',
     'company'               => 'Cocobrico Ltd',
-    'companies'             => 'Your companies',
+    'companies'             => 'Deine Firmen',
     'datetimeformat'        => 'd.m.Y H:i:s',
     'dateformat'            => 'd.m.Y',
     'timeformat'            => 'H:i:s',
-    'admin'                 => 'Adminbereich'
+    'admin'                 => 'Adminbereich',
+    'language'              => 'German',
 
 ];
