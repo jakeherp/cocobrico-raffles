@@ -49,6 +49,12 @@
               {!! Form::checkbox('legalAgeReq', '1') !!} Der Benutzer muss 18 Jahre alt sein.
             </div>
           </label>
+          <label>
+            <div class="input-group">
+              <i class="fa fa-envelope"></i>
+              {!! Form::checkbox('sendPdf', '1') !!} Teilnehmer erhalten eine Bestätigungs-PDF.
+            </div>
+          </label>
           {!! Form::submit('Gewinnspiel erstellen', ['class' => 'button alert']) !!}
 		  {!! Form::close() !!}
         </div>

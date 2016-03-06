@@ -60,6 +60,16 @@
               @endif
             </div>
           </label>
+          <label>
+            <div class="input-group">
+              <i class="fa fa-envelope"></i>
+              @if($raffle->sendPdf == 1)
+                {!! Form::checkbox('sendPdf', '1', true) !!} Teilnehmer erhalten eine Bestätigungs-PDF.
+              @else
+                {!! Form::checkbox('sendPdf', '1', false) !!} Teilnehmer erhalten eine Bestätigungs-PDF.
+              @endif
+            </div>
+          </label>
           {!! Form::submit('Änderungen speichern', ['class' => 'button alert']) !!}
           <a class="button secondary" href="{{ URL('admin/raffles') }}">Zurück</a>
 		  {!! Form::close() !!}
