@@ -8,7 +8,7 @@
         <div class="callout">
 
     @if(($file = $member->files()->where('slug','profile_img')->first()) != null)
-        <div class="round-image" style="background:url('{{ URL::asset($file->path) }}') no-repeat center center;background-size:cover;width:6rem;height:6rem;float:right;"></div>
+        <a href="{{ URL::asset($file->path) }}" target="_blank"><img src="{{ URL::asset($file->path) }}" class="pull-right" style="max-height: 200px;"></a>
     @endif
 
           <p>
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="large-12 column">
-        <h4>Der User hat an folgenden Gewinnspielen teilgenommen:</h4>
+        <h4>Der User hat an folgenden Aktionen teilgenommen:</h4>
         <div class="callout">
             @foreach($member->raffles as $raffle)
                 {{ $raffle->title }}

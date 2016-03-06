@@ -14,7 +14,7 @@
                 <th>Name</th>
                 <th>Geburtsdatum</th>
                 <th>Mitglied seit</th>
-                <th>Gewinnspiel Teilnahmen</th>
+                <th>Aktionsteilnahmen</th>
                 <th>Optionen</th>
               </tr>
             </thead>

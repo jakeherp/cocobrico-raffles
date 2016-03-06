@@ -5,8 +5,8 @@
     <section class="row" id="content">
 
   	  <div class="large-12 column">
-      	<a href="{{ url('admin/raffles/create') }}" class="pull-right success button"><i class="fa fa-plus"></i> Gewinnspiel hinzufügen</a>
-        <h1><i class="fa fa-trophy"></i> Gewinnspiele</h1>
+      	<a href="{{ url('admin/raffles/create') }}" class="pull-right success button"><i class="fa fa-plus"></i> Aktion hinzufügen</a>
+        <h1><i class="fa fa-trophy"></i> Aktionen</h1>
         <div class="horizontal-scroll">
           <table id="table" class="full-table">
             <thead>
@@ -56,8 +56,8 @@
 
     <!-- Modal for deleting raffles -->
     <div class="reveal" id="deleteRaffleModal" data-reveal>
-      <h3>Gewinnspiel löschen</h3>
-      <div class="callout alert">Wollen Sie das Gewinnspiel wirklich löschen?</div>
+      <h3>Aktion löschen</h3>
+      <div class="callout alert">Wollen Sie die Aktion wirklich löschen?</div>
       {!! Form::open(['url' => 'admin/raffles/delete', 'method' => 'post']) !!}
         <input type="hidden" id="raffleId" name="raffleId" value="">
         <button id="deleteRaffleButton" class="alert button">Löschen</button>
