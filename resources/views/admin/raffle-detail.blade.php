@@ -18,7 +18,7 @@
 
           <p>Aktionsgrafik:</p>
           @if($file != null)
-            <img src="{{ URL::asset($file->path) }}">
+            <img src="{{ URL::asset($file->path) }}" style="width:700px;height:400px;">
           @else
             Keine Grafik vorhanden
           @endif
@@ -59,7 +59,7 @@
                       {{ date(trans('global.dateformat'),strtotime($member->created_at)) }}
                     </td>
                     <td>
-                      {{ date(trans('global.dateformat'),strtotime($raffle->created_at)) }}
+                      {{ date(trans('global.datetimeformat'),strtotime($raffle->created_at)) }}
                     </td>
                     <td><span class="has-tooltip" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="
                       @foreach($member->raffles AS $raffle)

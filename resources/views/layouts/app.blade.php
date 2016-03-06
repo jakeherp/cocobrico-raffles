@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Order Cocobrico from Cocobrico Commercial as a wholesaler, retailer or other commercial customer.">
     <meta name="keywords" content="Cocobrico, Charcoal, Coconut, Indonesia, Europe, Shisha, Hookah, Coal">
-    <meta name="publisher" content="Cocobrico Europe Ltd">
+    <meta name="publisher" content="Cocobrico Ltd">
     <meta name="author" content="PCServe Media Ltd">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -23,23 +23,6 @@
     <link rel="shortcut icon" href="{{ URL::asset('img/favicon.png') }}" type="image/png">
 
     <script type="text/javascript" src="{{ URL::asset('js/vendor/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('js/vendor/jquery.dataTables.min.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('js/vendor/dataTables.foundation.min.js') }}"></script>
-    <script type="text/javascript" language="javascript" class="init">
-      $(document).ready(function() {
-
-        $('#table').dataTable( {
-            "columnDefs": [ {
-              "targets": 'no-sort',
-              "orderable": false,
-            } ],
-            "language": {
-              "url": "{{ URL::asset('lang/English.json') }}"
-            }
-        } );
-
-      } );
-    </script>
   </head>
   <body>
     <header class="top-bar">

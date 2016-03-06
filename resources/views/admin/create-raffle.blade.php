@@ -49,6 +49,12 @@
               {!! Form::checkbox('legalAgeReq', '1') !!} Der Benutzer muss 18 Jahre alt sein.
             </div>
           </label>
+          <label>
+            <div class="input-group">
+              <i class="fa fa-tag"></i>
+              {!! Form::checkbox('codeReq', '1') !!} Ein Code ist notwendig um teilnehmen zu können.
+            </div>
+          </label>
           {!! Form::submit('Aktion erstellen', ['class' => 'button alert']) !!}
 		  {!! Form::close() !!}
         </div>
