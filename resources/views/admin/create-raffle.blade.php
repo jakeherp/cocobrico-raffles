@@ -51,19 +51,11 @@
           </label>
           <label>
             <div class="input-group">
-<<<<<<< HEAD
               <i class="fa fa-envelope"></i>
               {!! Form::checkbox('sendPdf', '1') !!} Teilnehmer erhalten eine Bestätigungs-PDF.
             </div>
           </label>
-          {!! Form::submit('Gewinnspiel erstellen', ['class' => 'button alert']) !!}
-=======
-              <i class="fa fa-tag"></i>
-              {!! Form::checkbox('codeReq', '1') !!} Ein Code ist notwendig um teilnehmen zu können.
-            </div>
-          </label>
           {!! Form::submit('Aktion erstellen', ['class' => 'button alert']) !!}
->>>>>>> 79f5f45c728e4db8423a1f01b56b3389093cd40f
 		  {!! Form::close() !!}
         </div>
       </div>

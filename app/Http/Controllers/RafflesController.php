@@ -39,6 +39,7 @@ class RafflesController extends Controller
     	$raffle->end = strtotime($request->end);
       if($request->imageReq == null){ $raffle->imageReq = 0; } else { $raffle->imageReq = 1; }
       if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; } else { $raffle->legalAgeReq = 1; }
+      if($request->sendPdf == null){ $raffle->sendPdf = 0; } else { $raffle->sendPdf = 1; }
     	$raffle->save();
 
         if ($request->hasFile('rafflePicture')) {  
@@ -89,6 +90,7 @@ class RafflesController extends Controller
         $raffle->end = strtotime($request->end);
         if($request->imageReq == null){ $raffle->imageReq = 0; } else { $raffle->imageReq = 1; }
         if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; } else { $raffle->legalAgeReq = 1; }
+        if($request->sendPdf == null){ $raffle->sendPdf = 0; } else { $raffle->sendPdf = 1; }
         $raffle->save();
 
         if ($request->hasFile('rafflePicture')) { 
@@ -167,24 +169,32 @@ class RafflesController extends Controller
      * @return true
      */
     protected function participationSucceed($user, $raffle){
-        // Generates Confirmation PDF
-        $file = new File();
-        $file->slug = 'raffle_'.$raffle->id;
-        $file->name = 'Teilnahmezertifikat für Gewinnspiel '.$raffle->title;
-        //$file->raffle_id = $raffle->id;
-        $file->path = 'files/user_' . $user->id . '/' . md5($file->slug . microtime()) . '.pdf';
-        $user->files()->save($file);
+        if($raffle->sendPdf == 1){
+          // Generates Confirmation PDF
+          $file = new File();
+          $file->slug = 'raffle_'.$raffle->id;
+          $file->name = 'Teilnahmezertifikat für Aktion '.$raffle->title;
+          //$file->raffle_id = $raffle->id;
+          $file->path = 'files/user_' . $user->id . '/' . md5($file->slug . microtime()) . '.pdf';
+          $user->files()->save($file);
 
-        $qrstring = $user->raffles()->where('raffle_id', $raffle->id)->first()->pivot->code . ', ' . $user->firstname . ' ' . $user->lastname . ', ' . date(trans('global.dateformat'),$user->birthday);
-        QrCode::format('png')->margin(0)->size(200)->generate($qrstring, '../public/files/user_'.$user->id.'/qrcode.png');
-        $pdf = PDF::loadView('pdf.info', compact('user','raffle'))->save($file->path);
+          $qrstring = $user->raffles()->where('raffle_id', $raffle->id)->first()->pivot->code . ', ' . $user->firstname . ' ' . $user->lastname . ', ' . date(trans('global.dateformat'),$user->birthday);
+          QrCode::format('png')->margin(0)->size(200)->generate($qrstring, '../public/files/user_'.$user->id.'/qrcode.png');
+          $pdf = PDF::loadView('pdf.info', compact('user','raffle'))->save($file->path);
 
-        // Sends Confirmation Email
-        $email = Mail::send('emails.confirmRaffle', compact('user','raffle'), function ($m) use ($user, $file) {
-            $m->from('noreply@cb.pcserve.eu', 'Cocobrico');
-            $m->attach($file->path);
-            $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject('Gewinnspiel Teilnahmebestätigung');
-        });
+          // Sends Confirmation Email
+          $email = Mail::send('emails.confirmRaffle', compact('user','raffle'), function ($m) use ($user, $file) {
+              $m->from('noreply@cb.pcserve.eu', 'Cocobrico');
+              $m->attach($file->path);
+              $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject('Aktion Teilnahmebestätigung');
+          });
+        }
+        else {
+           $email = Mail::send('emails.confirmRaffleNoPdf', compact('user','raffle'), function ($m) use ($user, $file) {
+              $m->from('noreply@cb.pcserve.eu', 'Cocobrico');
+              $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject('Aktion Teilnahmebestätigung');
+          });
+        }
         return true;
     }
 }
