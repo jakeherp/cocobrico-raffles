@@ -31,6 +31,16 @@ class AdminController extends Controller
 	}
 
 	/**
+	 * Shows the codes.
+	 *
+	 * @return Response
+	 */
+    public function showCodesView(){
+    	$user = Auth::user();
+    	return view('admin.codes', compact('user'));
+	}
+
+	/**
 	 * Shows the raffles.
 	 *
 	 * @return Response
