@@ -132,7 +132,7 @@ class RafflesController extends Controller
         $raffleId = $request->id;
         $raffle = Raffle::find($raffleId);
         if(($raffle->legalAgeReq == 1) && (time() - $user->birthday) < 567648000){
-            return redirect('dashboard')->with('msg', 'Die Teilnahme am Gewinnspiel ist ab 18 Jahren freigegeben.')->with('msgState', 'alert');
+            return redirect('dashboard')->with('msg', 'Die Teilnahme an der Aktion ist ab 18 Jahren freigegeben.')->with('msgState', 'alert');
         }
         else{
             $check = null;
@@ -148,7 +148,7 @@ class RafflesController extends Controller
                     $this->participationSucceed($user, $raffle);
                 }
                 else{
-                    return redirect()->back()->withErrors(['Du benötigst ein Profilbild um an diesem Gewinnspiel teilzunehmen.']);
+                    return redirect()->back()->withErrors(['Du benötigst ein Profilbild um an dieser Aktion teilzunehmen.']);
                 }
             }
             else{
@@ -157,7 +157,7 @@ class RafflesController extends Controller
                 $this->participationSucceed($user, $raffle);
             }
 
-            return redirect('dashboard')->with('msg', 'Du hast erfolgreich am Gewinnspiel ' . $raffle->title . ' teilgenommen. Wir haben dir eine Bestätigungsemail geschickt. Überprüfe auch dein Spampostfach.')->with('msgState', 'success');
+            return redirect('dashboard')->with('msg', 'Du hast erfolgreich an der Aktion ' . $raffle->title . ' teilgenommen. Wir haben dir eine Bestätigungsemail geschickt. Überprüfe auch dein Spampostfach.')->with('msgState', 'success');
         }
     }
 
