@@ -19,7 +19,7 @@ class Raffle extends Model
      * @return array( Raffle )
      */
     public function users(){
-        return $this->belongsToMany('App\User','raffle_user');
+        return $this->belongsToMany('App\User','raffle_user')->withPivot('code','created_at');
     }
 
     /**

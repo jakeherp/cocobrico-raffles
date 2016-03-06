@@ -59,7 +59,7 @@
                       {{ date(trans('global.dateformat'),strtotime($member->created_at)) }}
                     </td>
                     <td>
-                      {{ date(trans('global.datetimeformat'),strtotime($raffle->created_at)) }}
+                      {{ date(trans('global.datetimeformat'),strtotime($raffle->users()->find($member->id)->pivot->created_at)) }}
                     </td>
                     <td><span class="has-tooltip" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="
                       @foreach($member->raffles AS $raffle)
