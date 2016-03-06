@@ -12,7 +12,7 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Startdatum</th>
+                <th class="orderby">Startdatum</th>
                 <th>Enddatum</th>
                 <th>Teilnehmer</th>
                 <th>Optionen</th>
