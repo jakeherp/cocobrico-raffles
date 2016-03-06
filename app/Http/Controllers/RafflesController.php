@@ -190,7 +190,7 @@ class RafflesController extends Controller
           });
         }
         else {
-           $email = Mail::send('emails.confirmRaffleNoPdf', compact('user','raffle'), function ($m) use ($user, $file) {
+           $email = Mail::send('emails.confirmRaffleNoPdf', compact('user','raffle'), function ($m) use ($user) {
               $m->from('noreply@cb.pcserve.eu', 'Cocobrico');
               $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject('Aktion Teilnahmebestätigung');
           });
