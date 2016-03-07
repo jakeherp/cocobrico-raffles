@@ -27,8 +27,6 @@
               <strong>Nummer:</strong> CH-170.3.035.395-8<br>
               <strong>Handelsregisteramt:</strong> Kanton Zug</p>
 
-              <h4>Technische Umsetzung</h4>
-              <a href="http://pcserve.net/" title="Web Design London">PCServe Media Ltd</a>
             </div>
           </div>
         </div>

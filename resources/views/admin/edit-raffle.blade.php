@@ -64,9 +64,9 @@
             <div class="input-group">
               <i class="fa fa-envelope"></i>
               @if($raffle->sendPdf == 1)
-                {!! Form::checkbox('sendPdf', '1', true) !!} Teilnehmer erhalten eine Bestätigungs-PDF.
+                {!! Form::checkbox('sendPdf', '1', true) !!} Bestätigungs-PDF automatisch versenden.
               @else
-                {!! Form::checkbox('sendPdf', '1', false) !!} Teilnehmer erhalten eine Bestätigungs-PDF.
+                {!! Form::checkbox('sendPdf', '1', false) !!} Bestätigungs-PDF automatisch versenden.
               @endif
             </div>
           </label>

@@ -36,7 +36,8 @@
                 <th>Geburtsdatum</th>
                 <th>Mitglied seit</th>
                 <th class="orderby">Teilnahme</th>
-                <th>Aktionen</th>
+                <th>Bestätigt</th>
+                <th>Code</th>
                 <th class="no-sort">Optionen</th>
               </tr>
             </thead>
@@ -61,15 +62,15 @@
                     <td>
                       {{ date(trans('global.datetimeformat'),strtotime($raffle->users()->find($member->id)->pivot->created_at)) }}
                     </td>
-                    <td><span class="has-tooltip" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="
-                      @foreach($member->raffles AS $raffle)
-                        {{ $raffle->title }} 
-                      @endforeach
-                    ">
-                      {{ count($member->raffles) }}
-                    </span></td>
+                    <td>
+                      
+                    </td>
+                    <td>
+                      
+                    </td>
                     <td>
                       <a href="{{ URL('admin/users/'.$member->id) }}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Details anzeigen"><i class="fa fa-search"></i></a>
+                      <a data-open="userWinModal" class="tiny success button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Bestätigen"><i class="fa fa-trophy"></i></a>
                     </td>
                   </tr>
               @endforeach
@@ -79,5 +80,17 @@
       </div>
 
     </section>
+
+    <!-- Modal for deleting raffles -->
+    <div class="reveal" id="userWinModal" data-reveal>
+      <h3>{{ $member->firstname }} {{ $member->lastname }} für {{ $raffle->title }} bestätigen?</h3>
+      <div class="callout alert">Wollen Sie {{ $member->firstname }} {{ $member->lastname }} wirklich bestätigen?</div>
+        <input type="hidden" id="raffleId" name="raffleId" value="">
+        <button id="userWinButton" class="success button">Bestätigen</button>
+        <button type="reset" class="secondary button" data-close>Abbrechen</button>
+      <button class="close-button" data-close aria-label="Close reveal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
 
 @endsection

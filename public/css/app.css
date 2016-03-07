@@ -451,3 +451,9 @@ tr.cancelled{
   text-decoration: line-through;
   color: #000;
 }
+tr.selected{
+  background: #ccc;
+}
+tr.selected:nth-child(even){
+  background: #bbb;
+}
