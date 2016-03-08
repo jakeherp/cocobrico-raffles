@@ -42,10 +42,10 @@ class PagesController extends Controller
     public function dashboard(){
     	$user = Auth::user();
     	$id = $user->id;
-    	$raffles_1 = $user->raffles()->where('start','<=',time())->where('end','>=',time())->orderBy('start', 'asc')->get();
+    	$raffles_1 = $user->raffles()->where('start','<=',time())->orderBy('start', 'asc')->get();
     	$raffles_2 = Raffle::whereDoesntHave('users', function($q) use ($id){
 		    $q->where('user_id', $id);
-		})->where('start','<=',time())->where('end','>=',time())->orderBy('start', 'asc')->get();
+		})->where('start','<=',time())->orderBy('start', 'asc')->get();
     	$raffles_3 = $user->raffles()->where('end','<',time())->orderBy('start', 'asc')->get();
     	return view('pages.dashboard', compact('user','raffles_1','raffles_2','raffles_3'));
 	}

@@ -36,10 +36,13 @@ class RafflesController extends Controller
     	$raffle->title = $request->title;
     	$raffle->body = $request->body;
     	$raffle->start = strtotime($request->start);
-    	$raffle->end = strtotime($request->end);
-      if($request->imageReq == null){ $raffle->imageReq = 0; } else { $raffle->imageReq = 1; }
-      if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; } else { $raffle->legalAgeReq = 1; }
-      if($request->sendPdf == null){ $raffle->sendPdf = 0; } else { $raffle->sendPdf = 1; }
+      $raffle->endState = $request->endState;
+      $raffle->maxpState = $request->maxpState;
+      if($raffle->maxpState == 0)      { $raffle->maxp = 0; }         else { $raffle->maxp = $request->maxp; }
+      if($raffle->endState == 0)       { $raffle->end = 0; }          else { $raffle->end = strtotime($request->end); }
+      if($request->imageReq == null)   { $raffle->imageReq = 0; }     else { $raffle->imageReq = 1; }
+      if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; }  else { $raffle->legalAgeReq = 1; }
+      if($request->sendPdf == null)    { $raffle->sendPdf = 0; }      else { $raffle->sendPdf = 1; }
     	$raffle->save();
 
         if ($request->hasFile('rafflePicture')) {  
@@ -87,10 +90,13 @@ class RafflesController extends Controller
         $raffle->title = $request->title;
         $raffle->body = $request->body;
         $raffle->start = strtotime($request->start);
-        $raffle->end = strtotime($request->end);
-        if($request->imageReq == null){ $raffle->imageReq = 0; } else { $raffle->imageReq = 1; }
-        if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; } else { $raffle->legalAgeReq = 1; }
-        if($request->sendPdf == null){ $raffle->sendPdf = 0; } else { $raffle->sendPdf = 1; }
+        $raffle->endState = $request->endState;
+        $raffle->maxpState = $request->maxpState;
+        if($raffle->maxpState == 0)      { $raffle->maxp = 0; }         else { $raffle->maxp = $request->maxp; }
+        if($raffle->endState == 0)       { $raffle->end = 0; }          else { $raffle->end = strtotime($request->end); }
+        if($request->imageReq == null)   { $raffle->imageReq = 0; }     else { $raffle->imageReq = 1; }
+        if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; }  else { $raffle->legalAgeReq = 1; }
+        if($request->sendPdf == null)    { $raffle->sendPdf = 0; }      else { $raffle->sendPdf = 1; }
         $raffle->save();
 
         if ($request->hasFile('rafflePicture')) { 
@@ -132,7 +138,10 @@ class RafflesController extends Controller
         $raffleId = $request->id;
         $raffle = Raffle::find($raffleId);
         if(($raffle->legalAgeReq == 1) && (time() - $user->birthday) < 567648000){
-            return redirect('dashboard')->with('msg', 'Die Teilnahme an der Aktion ist ab 18 Jahren freigegeben.')->with('msgState', 'alert');
+          return redirect('dashboard')->with('msg', 'Die Teilnahme an der Aktion ist ab 18 Jahren freigegeben.')->with('msgState', 'alert');
+        }
+        elseif($raffle->expired()){
+          return redirect('dashboard')->with('msg', 'Aktion ist bereits beendet.')->with('msgState', 'alert');
         }
         else{
             $check = null;

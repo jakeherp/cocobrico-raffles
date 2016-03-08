@@ -33,7 +33,22 @@
             End-Zeitpunkt
             <div class="input-group">
               <span class="input-group-label"><i class="fa fa-calendar"></i></span>
-              {!! Form::date('end', date('Y-m-d',$raffle->end), ['class' => 'input-group-field', 'placeholder' => 'End-Zeitpunkt']) !!}
+              {!! Form::date('end', date('Y-m-d',$raffle->end), ['id' => 'endTimeInput', 'class' => 'input-group-field', 'placeholder' => 'End-Zeitpunkt']) !!}
+              <div class="input-group-button">
+                {!! Form::hidden('endState', $raffle->endState, ['id' => 'endTimeState']) !!}
+                <a id="endTimeButton" class="button success">Deaktivieren</a>
+              </div>
+            </div>
+          </label>
+          <label>
+            Maximale Teilnehmeranzahl
+            <div class="input-group">
+              <span class="input-group-label"><i class="fa fa-group"></i></span>
+              {!! Form::number('maxp', $raffle->maxp, ['id' => 'maxpInput', 'disabled' => 'true', 'class' => 'input-group-field', 'placeholder' => 'Maximale Teilnehmeranzahl']) !!}
+              <div class="input-group-button">
+                {!! Form::hidden('maxpState', $raffle->maxpState, ['id' => 'maxpState']) !!}
+                <a id="maxpButton" class="button alert">Aktivieren</a>
+              </div>
             </div>
           </label>
           <label>
@@ -80,5 +95,86 @@
       </div>
 
     </section>
+
+     <script>
+      $(document).ready(function() {
+          var endState = $('#endTimeState').val();
+          var maxpState = $('#maxpState').val();
+
+          if(endState == 1){
+            $('#endTimeButton').removeClass('alert');
+            $('#endTimeButton').addClass('success');
+            $('#endTimeButton').text('Deaktivieren');
+            $('#endTimeInput').attr('disabled', false);
+          }
+          else{
+            $('#endTimeButton').removeClass('success');
+            $('#endTimeButton').addClass('alert');
+            $('#endTimeButton').text('Aktivieren');
+            $('#endTimeInput').attr('disabled', true);
+          }
+
+          if(maxpState == 1){
+            $('#maxpButton').removeClass('alert');
+            $('#maxpButton').addClass('success');
+            $('#maxpButton').text('Deaktivieren');
+            $('#maxpInput').attr('disabled', false);
+          }
+          else{
+            $('#maxpButton').removeClass('success');
+            $('#maxpButton').addClass('alert');
+            $('#maxpButton').text('Aktivieren');
+            $('#maxpInput').attr('disabled', true);
+          }
+
+          $('#endTimeButton').click( function() {
+            handleEndTime(this);
+          });
+
+          $('#maxpButton').click( function() {
+            handleMaxp(this);
+          });
+      });
+
+      function handleEndTime(obj){
+        var state = $('#endTimeState').val();
+        if(state == 1){
+          $(obj).removeClass('success');
+          $(obj).addClass('alert');
+          $(obj).text('Aktivieren');
+          $('#endTimeInput').attr('disabled', true);
+          $('#endTimeState').val(0);
+          state = 0;
+        }
+        else{
+          $(obj).addClass('success');
+          $(obj).removeClass('alert');
+          $(obj).text('Deaktivieren');
+          $('#endTimeInput').attr('disabled', false);
+          $('#endTimeState').val(1);
+          state = 1;
+        }
+      }
+
+      function handleMaxp(obj){
+        var state = $('#maxpState').val();
+        if(state == 1){
+          $(obj).removeClass('success');
+          $(obj).addClass('alert');
+          $(obj).text('Aktivieren');
+          $('#maxpInput').attr('disabled', true);
+          $('#maxpState').val(0);
+          state = 0;
+        }
+        else{
+          $(obj).addClass('success');
+          $(obj).removeClass('alert');
+          $(obj).text('Deaktivieren');
+          $('#maxpInput').attr('disabled', false);
+          $('#maxpState').val(1);
+          state = 1;
+        }
+      }
+    </script>
     
 @endsection

@@ -5,24 +5,47 @@
     <section class="row" id="content">
       <div class="large-12 column">
         <h1>{{ $raffle->title }}</h1>
+        @if($raffle->endState == 1 && $raffle->end < $raffle->start)
+          <div class="callout alert">
+            <p>Fehler: Die Endzeit liegt vor der Startzeit.</p>
+          </div>
+        @elseif($raffle->endState == 1 && time() >= $raffle->end)
+          <div class="callout alert">
+            <p>Die Akion ist beendet, da das Zeitlimit überschritten wurde.</p>
+          </div>
+        @endif
+        @if($raffle->maxpState == 1 && count($members) >= $raffle->maxp)
+          <div class="callout alert">
+          <p>Die Akion ist beendet, da das Teilnehmerlimit erreicht wurde.</p>
+          </div>
+        @endif
         <div class="callout">
           <p><strong>Start:</strong> {{ date(trans('global.datetimeformat'), $raffle->start) }}, 
-          <strong>Ende:</strong> {{ date(trans('global.datetimeformat'), $raffle->end) }}</p>
+          <strong>Ende:</strong> 
+            @if($raffle->endState == 0)
+              Unbegrenzt
+            @else
+              {{ date(trans('global.datetimeformat'), $raffle->end) }}
+            @endif
+          </p>
           <p>{!! $raffle->body !!}</p>
           <a class="button secondary" href="{{ URL('admin/raffles') }}">Zurück</a>
           <a class="button secondary" href="{{ URL('admin/raffles/'.$raffle->id.'/pdf') }}">PDF Vorschau</a>
-
-          <?php
-            $file = $raffle->files()->where('slug','raffle_img')->first();
-          ?>
-
-          <p>Aktionsgrafik:</p>
-          @if($file != null)
-            <img src="{{ URL::asset($file->path) }}" style="width:700px;height:400px;">
-          @else
-            Keine Grafik vorhanden
-          @endif
         </div>
+        @if($raffle->sendPdf == 1)
+          <div class="callout">
+            <?php
+              $file = $raffle->files()->where('slug','raffle_img')->first();
+            ?>
+
+            <p>Aktionsgrafik:</p>
+            @if($file != null)
+              <img src="{{ URL::asset($file->path) }}" style="width:700px;height:400px;">
+            @else
+              Keine Grafik vorhanden
+            @endif
+          </div>
+        @endif
       </div>
 
         <div class="large-12 column">
@@ -83,8 +106,8 @@
 
     <!-- Modal for deleting raffles -->
     <div class="reveal" id="userWinModal" data-reveal>
-      <h3>{{ $member->firstname }} {{ $member->lastname }} für {{ $raffle->title }} bestätigen?</h3>
-      <div class="callout alert">Wollen Sie {{ $member->firstname }} {{ $member->lastname }} wirklich bestätigen?</div>
+      <h3>Firstname Lastname für Title bestätigen?</h3>
+      <div class="callout alert">Wollen Sie Firstname Lastname wirklich bestätigen?</div>
         <input type="hidden" id="raffleId" name="raffleId" value="">
         <button id="userWinButton" class="success button">Bestätigen</button>
         <button type="reset" class="secondary button" data-close>Abbrechen</button>

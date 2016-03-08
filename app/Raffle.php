@@ -30,4 +30,18 @@ class Raffle extends Model
         return $this->hasMany('App\File');
     }
 
+    /**
+     * Checks if the raffle is expired.
+     *
+     * @return boolean
+     */
+    public function expired(){
+        if(($this->maxpState == 1 && count($this->users) >= $this->maxp) || ($this->endState == 1 && $this->end <= time())){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 }

@@ -27,7 +27,6 @@ class CreateRaffleRequest extends Request
             'title'          =>  ['required','max:255'],
             'body'           =>  ['required'],
             'start'          =>  ['required'],
-            'end'            =>  ['required'],
             'rafflePicture'  =>  ['image'],
         ];
     }

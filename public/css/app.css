@@ -466,3 +466,15 @@ tr.selected{
 tr.selected:nth-child(even){
   background: #bbb;
 }
+td.has-alert{
+  background: #fce6e2;
+}
+td.has-alert:nth-child(even){
+  background: #fcdbdd;
+}
+td.has-success{
+  background: #e1faea;
+}
+td.has-success:nth-child(even){
+  background: #e1faea;
+}

@@ -23,8 +23,23 @@
                  <tr>
                     <td>{{ $raffle->title }}</td>
                     <td>{{ date(trans('global.datetimeformat'), $raffle->start) }}</td>
-                    <td>{{ date(trans('global.datetimeformat'), $raffle->end) }}</td>
-                    <td>{{ count($raffle->users) }}</td>
+                    @if($raffle->endState == 0)
+                      <td>Unbegrenzt</td>
+                    @elseif($raffle->end <= $raffle->start)
+                      <td class="has-alert">{{ date(trans('global.datetimeformat'), $raffle->end) }}</td>
+                    @elseif(time() >= $raffle->end)
+                      <td class="has-success">{{ date(trans('global.datetimeformat'), $raffle->end) }}</td>
+                    @else
+                      <td>{{ date(trans('global.datetimeformat'), $raffle->end) }}</td>
+                    @endif
+                      @if($raffle->maxpState == 0)
+                        <td> {{ count($raffle->users) }} </td>
+                      @elseif(count($raffle->users) >= $raffle->maxp)
+                        <td class="has-success"> {{ count($raffle->users) }} / {{ $raffle->maxp }}</td>
+                      @else
+                        <td> {{ count($raffle->users) }} / {{ $raffle->maxp }}</td>
+                      @endif
+                    </td>
                     <td>
                       <a href="{{ url('admin/raffles/'. $raffle->id ) }}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Teilnehmer anzeigen"><i class="fa fa-search"></i></a>
                       <a 
