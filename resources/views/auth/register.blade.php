@@ -33,7 +33,7 @@
                       </label>
                       <div class="input-group">
                         <span class="input-group-label"><i class="fa fa-lock"></i></span>
-                        {!! Form::password('password_2', ['class' => 'input-group-field', 'placeholder' => trans('auth.passwordrepeat')]) !!}
+                        {!! Form::password('password_2', ['id' => 'password2Input', 'class' => 'input-group-field', 'placeholder' => trans('auth.passwordrepeat')]) !!}
                       </div>
                       <label>
                         Persönliche Daten
@@ -120,8 +120,41 @@
 
     <script>
       $(document).ready(function(){
+        // Check Password 1 Input:
         $('#passwordInput').on('input',function(e){
           var val = $(this).val();
+          state = isValidPassword(val);
+          if(state){
+            $(this).removeClass('has-error');
+            $(this).addClass('has-success');
+          }
+          else{
+            $(this).removeClass('has-success');
+            $(this).addClass('has-error');
+          }
+          if($(this).val() == $('#password2Input').val()){
+            $('#password2Input').removeClass('has-error');
+            $('#password2Input').addClass('has-success');
+          }
+          else{
+            $('#password2Input').removeClass('has-success');
+            $('#password2Input').addClass('has-error');
+          }
+        });
+
+        // Check Password 2 Input:
+        $('#password2Input').on('input',function(e){
+          if($(this).val() == $('#passwordInput').val()){
+            $(this).removeClass('has-error');
+            $(this).addClass('has-success');
+          }
+          else{
+            $(this).removeClass('has-success');
+            $(this).addClass('has-error');
+          }
+        });
+
+        function isValidPassword(val){
           var error = '';
           if((val.length < 8) || !(val.match(/[A-Z]/)) || !(val.match(/[a-z]/)) || !(val.match(/\d/))){
             if(val.length < 8){
@@ -137,12 +170,15 @@
               error = error + '<p>{{ trans('auth.rule4') }}</p>';
             }
             $('#password').show('slow');
+            var response = false;
           }
           else{
-             $('#password').hide('slow');
+            $('#password').hide('slow');
+            var response = true;
           }
           $('#password').html(error);
-        });
+          return response
+        }
       });
     </script>
 	
