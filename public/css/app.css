@@ -46,6 +46,15 @@ section#login{
   }
 }
 
+.has-error{
+  background:#fce6e2;
+  border-color:rgba(10,10,10,0.25);
+}
+.has-success{
+  background:#e1faea;
+  border-color:rgba(10,10,10,0.25);
+}
+
 .callout.large{
     padding-top: 2rem;
     padding-bottom: 2rem;
