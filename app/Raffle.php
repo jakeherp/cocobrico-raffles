@@ -44,4 +44,18 @@ class Raffle extends Model
         }
     }
 
+    /**
+     * Checks if the maximum number of users is reached.
+     *
+     * @return boolean
+     */
+    public function maxpReached(){
+        if($this->maxpState == 1 && count($this->users) >= $this->maxp){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 }

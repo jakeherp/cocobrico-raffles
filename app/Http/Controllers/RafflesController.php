@@ -43,6 +43,14 @@ class RafflesController extends Controller
       if($request->imageReq == null)   { $raffle->imageReq = 0; }     else { $raffle->imageReq = 1; }
       if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; }  else { $raffle->legalAgeReq = 1; }
       if($request->sendPdf == null)    { $raffle->sendPdf = 0; }      else { $raffle->sendPdf = 1; }
+
+      if($raffle->maxpState == 1 && count($raffle->users) >= $raffle->maxp){
+        $raffle->maxpReached = 1;
+      }
+      else{
+        $raffle->maxpReached = 0;
+      }
+
     	$raffle->save();
 
         if ($request->hasFile('rafflePicture')) {  
@@ -97,7 +105,15 @@ class RafflesController extends Controller
         if($request->imageReq == null)   { $raffle->imageReq = 0; }     else { $raffle->imageReq = 1; }
         if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; }  else { $raffle->legalAgeReq = 1; }
         if($request->sendPdf == null)    { $raffle->sendPdf = 0; }      else { $raffle->sendPdf = 1; }
-        $raffle->save();
+
+        if($raffle->maxpState == 1 && count($raffle->users) >= $raffle->maxp){
+          $raffle->maxpReached = 1;
+        }
+        else{
+          $raffle->maxpReached = 0;
+        }
+
+        $raffle->save(); 
 
         if ($request->hasFile('rafflePicture')) { 
           if ($request->file('rafflePicture')->isValid()) {
@@ -178,6 +194,10 @@ class RafflesController extends Controller
      * @return true
      */
     protected function participationSucceed($user, $raffle){
+        if($raffle->maxpReached()){
+          $raffle->maxpReached = 1;
+          $raffle->save();
+        }
         if($raffle->sendPdf == 1){
           // Generates Confirmation PDF
           $file = new File();

@@ -24,6 +24,7 @@ class CreateRafflesTable extends Migration
             $table->boolean('endState')->default(1);
             $table->boolean('maxpState')->default(0);
             $table->integer('maxp')->default(0);
+            $table->boolean('maxpReached')->default(0);
             $table->timestamps();
         });
     }

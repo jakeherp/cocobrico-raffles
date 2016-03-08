@@ -42,11 +42,51 @@ class PagesController extends Controller
     public function dashboard(){
     	$user = Auth::user();
     	$id = $user->id;
-    	$raffles_1 = $user->raffles()->where('start','<=',time())->orderBy('start', 'asc')->get();
+    	$raffles_1 = $user->raffles()
+    		->where('start','<=',time())
+    		->where('endState','=',0)
+    		->where('maxpState','=',0)
+    		->orWhere(function ($query) {
+	            $query->where('start','<=',time())
+	                  ->where('endState','=',1)
+	                  ->where('end','>',time());
+	        })
+	        ->orWhere(function ($query) {
+	            $query->where('start','<=',time())
+	                  ->where('maxpState','=',1)
+	                  ->where('maxpReached','=',0);
+	        })
+    		->orderBy('start', 'asc')->get();
+
     	$raffles_2 = Raffle::whereDoesntHave('users', function($q) use ($id){
-		    $q->where('user_id', $id);
-		})->where('start','<=',time())->orderBy('start', 'asc')->get();
-    	$raffles_3 = $user->raffles()->where('end','<',time())->orderBy('start', 'asc')->get();
+		    	$q->where('user_id', $id);
+			})
+    		->where(function($q) {
+    			$q->where('start','<=',time())
+				->where('endState','=',0)
+				->where('maxpState','=',0)
+				->orWhere(function ($query) {
+		            $query->where('start','<=',time())
+		                  ->where('endState','=',1)
+		                  ->where('end','>',time());
+	        	})
+	        	->orWhere(function ($query) {
+	            	$query->where('start','<=',time())
+	                  ->where('maxpState','=',1)
+	                  ->where('maxpReached','=',0);
+	        	});
+    		})
+			->orderBy('start', 'asc')->get();
+
+    	$raffles_3 = $user->raffles()
+	        ->where('endState','=',1)
+	        ->where('end','<=',time())
+	        ->orWhere(function ($query) {
+	            $query->where('maxpState','=',1)
+	                  ->where('maxpReached','=',1);
+	        })
+    		->orderBy('start', 'asc')->get();
+    	
     	return view('pages.dashboard', compact('user','raffles_1','raffles_2','raffles_3'));
 	}
 
