@@ -6,6 +6,9 @@
 
   	  <div class="large-12 column">
         <h1><i class="fa fa-trophy"></i> Aktion hinzufügen</h1>
+
+        @include ('errors.list')
+
         <div class="callout">
 		  {!! Form::open(['url' => 'admin/raffles/create', 'method' => 'post', 'files' => true]) !!}
 		  <div class="input-group">
@@ -24,6 +27,12 @@
             </div>
           </label>
           <label>
+            <div class="input-group">
+              <i class="fa fa-clock-o"></i> 
+              {!! Form::checkbox('endtime', '1', ['checked']) !!} Gewinnspiel ist zeitlich begrenzt.
+            </div>
+          </label>
+          <label>
             End-Zeitpunkt
             <div class="input-group">
               <span class="input-group-label"><i class="fa fa-calendar"></i></span>
@@ -39,19 +48,19 @@
           <h4>Optionen</h4>
           <label>
             <div class="input-group">
-              <i class="fa fa-upload"></i>
+              <i class="fa fa-upload"></i> 
               {!! Form::checkbox('imageReq', '1') !!} Der Benutzer muss ein Profilbild besitzen.
             </div>
           </label>
           <label>
             <div class="input-group">
-              <i class="fa fa-child"></i>
+              <i class="fa fa-child"></i> 
               {!! Form::checkbox('legalAgeReq', '1') !!} Der Benutzer muss 18 Jahre alt sein.
             </div>
           </label>
           <label>
             <div class="input-group">
-              <i class="fa fa-envelope"></i>
+              <i class="fa fa-envelope"></i> 
               {!! Form::checkbox('sendPdf', '1') !!} Teilnehmer erhalten eine Bestätigungs-PDF.
             </div>
           </label>

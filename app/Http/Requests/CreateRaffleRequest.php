@@ -24,10 +24,11 @@ class CreateRaffleRequest extends Request
     public function rules()
     {
         return [
-            'title'        =>  ['required','max:255'],
-            'body'         =>  ['required'],
-            'start'        =>  ['required'],
-            'end'          =>  ['required'],
+            'title'          =>  ['required','max:255'],
+            'body'           =>  ['required'],
+            'start'          =>  ['required'],
+            'end'            =>  ['required'],
+            'rafflePicture'  =>  ['image'],
         ];
     }
 }
