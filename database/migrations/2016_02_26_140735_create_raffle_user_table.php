@@ -17,6 +17,7 @@ class CreateRaffleUserTable extends Migration
             $table->integer('user_id')->default(0);
             $table->integer('raffle_id')->default(0);
             $table->string('code',6)->default('');
+            $table->boolean('confirmed')->default(0);
             $table->timestamps();
         });
     }
