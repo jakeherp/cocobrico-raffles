@@ -5,10 +5,16 @@
     <section class="row" id="content">
 
   	  <div class="large-12 column">
-        <a href="{{ url('admin/codes/create') }}" class="pull-right success button"><i class="fa fa-plus"></i> Codes hinzufügen</a>
-        <a href="{{ url('admin/codes/delete') }}" class="pull-right alert button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Codes annullieren"><i class="fa fa-ban"></i></a>
+        <input type="hidden" id="token" value="{{ csrf_token() }}">
+        <a href="{{ url('admin/codes/'.$raffle->id.'/create') }}" class="pull-right success button"><i class="fa fa-plus"></i> Codes hinzufügen</a>
+        <a id="deactivateSelectedCodes" class="pull-right alert button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Markierte Codes annullieren" disabled="true"><i class="fa fa-ban"></i></a>
         <a href="{{ url('admin/codes/print') }}" class="pull-right primary button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Druckansicht"><i class="fa fa-print"></i></a>
         <h1><i class="fa fa-tag"></i> Codes</h1>
+        @if(session()->has('msg'))
+          <div class="callout {{ session('msgState') }}">
+            <p>{{ session('msg') }}</p>
+          </div>
+        @endif
         <div class="horizontal-scroll">
           <table id="table" class="full-table">
             <thead>
@@ -21,43 +27,40 @@
               </tr>
             </thead>
             <tbody>
-              {{-- @foreach($codes as $code) --}}
-                 <tr>
-                    <td>W39CP0OPZ7</td>
-                    <td>VIP Tickets Freitag</td>
-                    <td>15.04.2016</td>
-                    <td></td>
+              @foreach($raffle->codes as $code)
+                @if($code->active == 0)
+                 <tr class="cancelled">
+                @else
+                 <tr codeid="{{ $code->id }}">
+                @endif
+                    <td>{{ $code->code }}</td>
+                    <td>{{ $code->remark }}</td>
+                    <td>{{ date(trans('global.dateformat'),$code->endtime) }}</td>
                     <td>
-                      <button href="{{-- url('admin/codes/'. $code->id ) --}}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Kundendetails anzeigen" disabled><i class="fa fa-search"></i></button>
-                      <a 
-                        href="{{-- url('admin/codes/'. $raffle->id . '/cancel' ) --}}"
-                        class="tiny button alert" 
+                      @if($code->user == null)
+                        Nicht zugewiesen
+                      @else
+                        {{ $code->user->firstname }} {{ $code->user->lastname }}
+                      @endif
+                    </td>
+                    <td>
+                      <button href="{{ url('admin/codes/detail/'. $code->id ) }}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Kundendetails anzeigen" disabled><i class="fa fa-search"></i></button>
+                      @if($code->active == 0 || $code->user != null)
+                        <a class="tiny button alert" disabled><i class="fa fa-ban"></i></a>
+                      @else
+                        <a 
+                        class="tiny button alert deactivateCodeButton" 
+                        codeId="{{ $code->id }}" 
                         data-tooltip aria-haspopup="true" 
                         data-disable-hover='false' 
                         tabindex=1 
-                        title="Annullieren"
-                      ><i class="fa fa-ban"></i></a>
+                        title="Annullieren" 
+                        data-open="deactivateCodeModal" 
+                        ><i class="fa fa-ban"></i></a>
+                      @endif
                     </td>
                   </tr>
-                 <tr>
-                    <td>CE9WLDC921</td>
-                    <td>VIP Tickets Samstag</td>
-                    <td>16.04.2016</td>
-                    <td></td>
-                    <td>
-                      <a href="{{-- url('admin/codes/'. $code->id ) --}}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Kundendetails anzeigen"><i class="fa fa-search"></i></a>
-                      <button 
-                        href="{{-- url('admin/codes/'. $raffle->id . '/cancel' ) --}}"
-                        class="tiny button alert" 
-                        data-tooltip aria-haspopup="true" 
-                        data-disable-hover='false' 
-                        tabindex=1 
-                        title="Annullieren"
-                        disabled
-                      ><i class="fa fa-ban"></i></a>
-                    </td>
-                  </tr>
-              {{-- @endforeach --}}
+              @endforeach
             </tbody>
           </table>
         </div>
@@ -65,13 +68,14 @@
 
     </section>
 
-    <!-- Modal for deleting raffles -->
-    <div class="reveal" id="deleteRaffleModal" data-reveal>
-      <h3>Aktion löschen</h3>
-      <div class="callout alert">Wollen Sie die Aktion wirklich löschen?</div>
-      {!! Form::open(['url' => 'admin/raffles/delete', 'method' => 'post']) !!}
-        <input type="hidden" id="raffleId" name="raffleId" value="">
-        <button id="deleteRaffleButton" class="alert button">Löschen</button>
+    <!-- Modal for deactivating codes -->
+    <div class="reveal" id="deactivateCodeModal" data-reveal>
+      <h3>Code Annulieren</h3>
+      <div class="callout alert">Wollen Sie den Code wirklich annulieren?</div>
+      {!! Form::open(['url' => 'admin/codes/deactivate', 'method' => 'post']) !!}
+        {!! Form::hidden('_method', 'PUT', []) !!}
+        <input type="hidden" id="codeId" name="code_id" value="">
+        <button id="deactivateCodeButton" class="alert button">Löschen</button>
         <button type="reset" class="secondary button" data-close>Abbrechen</button>
       {!! Form::close() !!}
       <button class="close-button" data-close aria-label="Close reveal" type="button">
@@ -79,27 +83,69 @@
       </button>
     </div>
 
-    <script>
+    <script type="text/javascript">
+      $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
       $(document).ready(function() {
-          // Functionality for deleting raffles:
-          $('#table').on('click', '.deleteRaffleButton', function() {
-            deleteRaffleModal(this);
+          // Functionality for deactivating codes:
+          $('#table').on('click', '.deactivateCodeButton', function() {
+            deactivateCodeModal(this);
           });
 
           var table = $('#table').DataTable();
+
+          var selectedLines = 0;
+          var codes = [];
        
           $('#table tbody').on( 'click', 'tr', function () {
-              $(this).toggleClass('selected');
+            if(!$(this).hasClass('selected')){
+              $(this).addClass('selected');
+              codes.push($(this).attr('codeid'));
+              selectedLines++;
+            }
+            else{
+              $(this).removeClass('selected');
+              codes.splice(codes.indexOf($(this).attr('codeid')), 1);
+              selectedLines--;
+            }
+            console.log(codes);
+            if($('#deactivateSelectedCodes').attr("disabled", true) && selectedLines > 0){
+              $('#deactivateSelectedCodes').attr("disabled", false);
+            }
+            else{
+              $('#deactivateSelectedCodes').attr("disabled", true);
+            }
           } );
        
-          $('#button').click( function () {
-              alert( table.rows('.selected').data().length +' Einträge annulliert' );
+          $('#deactivateSelectedCodes').click( function () {
+              jQuery.each( codes, function( i, val ) {
+                $.ajax({
+                  url: 'deactivateAction',
+                  type: "post",
+                  data: {'_method': 'PUT', 'code_id':val},
+                  success: function(data){
+                    alert('Bitte aktualisieren Sie die Seite!')
+                  }
+                });
+              });
           } );
       } );
 
-      function deleteRaffleModal(obj){
-        var raffleId = $(obj).attr('raffleId');
-        $('#raffleId').val(raffleId);
+      function deactivateCodeModal(obj){
+        var codeId = $(obj).attr('codeId');
+        $('#codeId').val(codeId);
+      }
+
+      function checkForDeactivateButton(){
+        return $('.selected').length;
+      }
+
+      function refreshDataTable(){
+
       }
     </script>
     

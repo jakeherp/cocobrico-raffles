@@ -23,6 +23,14 @@ class Raffle extends Model
     }
 
     /**
+     * Get the codes associated with the raffle.
+     */
+    public function codes()
+    {
+        return $this->hasMany('App\Code');
+    }
+
+    /**
      * Get the files the raffle has uploaded.
      */
     public function files()

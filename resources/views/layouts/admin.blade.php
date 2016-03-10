@@ -8,6 +8,7 @@
     <meta name="keywords" content="Cocobrico, Charcoal, Coconut, Indonesia, Europe, Shisha, Hookah, Coal">
     <meta name="publisher" content="Cocobrico Ltd">
     <meta name="author" content="PCServe Media Ltd">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ trans('global.title') }}</title>
     <link rel="stylesheet" href="{{ URL::asset('css/foundation.css') }}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">

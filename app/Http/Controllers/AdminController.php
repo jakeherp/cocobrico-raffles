@@ -38,17 +38,39 @@ class AdminController extends Controller
     public function showCodesView(){
     	$user = Auth::user();
     	$raffles = Raffle::all();
-    	return view('admin.codes', compact('user'));
+    	return view('admin.codes', compact('user','raffles'));
 	}
 
 	/**
-	 * Shows the codes.
+	 * Shows the code creation page.
 	 *
 	 * @return Response
 	 */
-    public function createCodesView(){
+    public function createCodesView($id){
     	$user = Auth::user();
-    	return view('admin.create-codes', compact('user'));
+    	$raffle = Raffle::find($id);
+    	if($raffle == null){
+    		return redirect('admin/codes');
+    	}
+    	else{
+    		return view('admin.create-codes', compact('user','raffle'));
+    	}
+	}
+
+	/**
+	 * Shows the code detail page.
+	 *
+	 * @return Response
+	 */
+    public function detailCodesView($id){
+    	$user = Auth::user();
+    	$raffle = Raffle::find($id);
+    	if($raffle == null){
+    		return redirect('admin/codes');
+    	}
+    	else{
+    		return view('admin.codes-detail', compact('user','raffle'));
+    	}
 	}
 
 	/**

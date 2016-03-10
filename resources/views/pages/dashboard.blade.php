@@ -74,25 +74,12 @@
         @foreach($raffles_3 as $raffle)
           <li class="accordion-item" data-accordion-item data-accordion>
             <a href="#" class="accordion-title">{{ $raffle->title }}</a>
-              <div class="accordion-content" data-tab-content>
-                {!! Form::open(['url' => 'dashboard', 'method' => 'post', 'files' => true]) !!}
-                  {!! Form::hidden('id', $raffle->id, []) !!}
+            <div class="accordion-content" data-tab-content>
+              <p>{!! $raffle->body !!}</p>
 
-                    @if($raffle->imageReq == 1)
-                      @if(($file = $user->files()->where('slug','profile_img')->first()) == null)
-                        <div class="callout alert">
-                          <p>Die Teilnahme am Gewinnspiel erfordert ein Profilbild.</p>
-                          <a href="settings">Bild hochladen</a>
-                        </div>
-                      @endif
-                    @endif
-
-                    <p>{!! $raffle->body !!}</p>
-
-                    <p><em>Abgelaufen seit {{ date(trans('global.dateformat'), $raffle->end) }}</em></p>
-                    {!! Form::close() !!}
-                  </div>
-                </li>
+              <p><em>Abgelaufen seit {{ date(trans('global.dateformat'), $raffle->end) }}</em></p>
+            </div>
+          </li>
         @endforeach
         </ul>
       @else
@@ -112,23 +99,9 @@
                 <li class="accordion-item" data-accordion-item data-accordion>
                   <a href="#" class="accordion-title">{{ $raffle->title }}</a>
                   <div class="accordion-content" data-tab-content>
-                    {!! Form::open(['url' => 'dashboard', 'method' => 'post', 'files' => true]) !!}
-                        {!! Form::hidden('id', $raffle->id, []) !!}
+                    <p>{!! $raffle->body !!}</p>
 
-                        @if($raffle->imageReq == 1)
-                            @if(($file = $user->files()->where('slug','profile_img')->first()) == null)
-                              <div class="callout alert">
-                                <p>Die Teilnahme am Gewinnspiel erfordert ein Profilbild.</p>
-                                  <a href="settings">Bild hochladen</a>
-                              </div>
-                            @endif
-                        @endif
-
-                        <p>{!! $raffle->body !!}</p>
-
-                        <p><em>Läuft noch bis {{ date(trans('global.dateformat'), $raffle->end) }}</em></p>
-
-                      {!! Form::close() !!}
+                    <p><em>Läuft noch bis {{ date(trans('global.dateformat'), $raffle->end) }}</em></p>
                   </div>
                 </li>
           @endforeach
