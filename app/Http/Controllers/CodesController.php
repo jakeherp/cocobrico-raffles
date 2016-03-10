@@ -85,8 +85,7 @@ class CodesController extends Controller
      *
      * @return string $code;
      */
-    public function generate($raffle)
-    {
+    public function generate($raffle){
     	$step1 = hash('sha256',time());
     	$step2 = hash('sha256',$raffle->id);
     	$step3 = hash('sha256',mt_rand());
@@ -99,4 +98,15 @@ class CodesController extends Controller
     	}
       return strtoupper($code.str_random(5));
     }
+
+  /**
+   * Print View for a code.
+   *
+   * @param integer $id
+   * @return Response
+   */
+    public function printCodes($id){
+      $raffle = Raffle::find($id);
+      return view('admin.codes-print',compact('raffle'));
+   }
 }

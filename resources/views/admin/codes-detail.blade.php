@@ -8,7 +8,11 @@
         <input type="hidden" id="token" value="{{ csrf_token() }}">
         <a href="{{ url('admin/codes/'.$raffle->id.'/create') }}" class="pull-right success button"><i class="fa fa-plus"></i> Codes hinzufügen</a>
         <a id="deactivateSelectedCodes" class="pull-right alert button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Markierte Codes annullieren" disabled="true"><i class="fa fa-ban"></i></a>
-        <a href="{{ url('admin/codes/print') }}" class="pull-right primary button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Druckansicht"><i class="fa fa-print"></i></a>
+        @if(count($raffle->codes) > 0)
+          <a href="{{ url('admin/codes/' . $raffle->id . '/print') }}" class="pull-right primary button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Druckansicht"><i class="fa fa-print"></i></a>
+        @else
+          <a class="pull-right primary button" disabled><i class="fa fa-print"></i></a>
+        @endif
         <h1><i class="fa fa-tag"></i> Codes</h1>
         @if(session()->has('msg'))
           <div class="callout {{ session('msgState') }}">
