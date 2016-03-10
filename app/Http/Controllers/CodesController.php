@@ -93,10 +93,10 @@ class CodesController extends Controller
     	$step4 = hash('sha256',$step1.$step2.$step3);
     	$length = strlen($step4);
     	$code = '';
-    	for($i = 1; $i <= 10; $i++){
+    	for($i = 1; $i <= 5; $i++){
     		$position = rand(0,$length);
     		$code .= substr($step4,$position,1);
     	}
-      return strtoupper($code);
+      return strtoupper($code.str_random(5));
     }
 }

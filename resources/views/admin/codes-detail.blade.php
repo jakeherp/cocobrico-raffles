@@ -65,7 +65,6 @@
           </table>
         </div>
       </div>
-
     </section>
 
     <!-- Modal for deactivating codes -->
@@ -126,12 +125,10 @@
                 $.ajax({
                   url: 'deactivateAction',
                   type: "post",
-                  data: {'_method': 'PUT', 'code_id':val},
-                  success: function(data){
-                    alert('Bitte aktualisieren Sie die Seite!')
-                  }
+                  data: {'_method': 'PUT', 'code_id':val}
                 });
               });
+              location.reload();
           } );
       } );
 
