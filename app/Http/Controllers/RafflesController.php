@@ -226,4 +226,18 @@ class RafflesController extends Controller
         }
         return true;
     }
+
+    /**
+     * Confirms a user for the raffle.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function confirmUser(Request $request){
+      $raffle = Raffle::find($request->raffle_id);
+      $user = $raffle->users()->find($request->user_id);
+      $raffle->users()->updateExistingPivot($user->id, ['confirmed' => 1]);
+
+      return redirect()->back()->with('msg', 'Der User ' . $user->firstname . ' ' . $user->lastname . ' wurde für die Aktion <strong>' . $raffle->title . '</strong> bestätigt.')->with('msgState', 'success');
+    }
 }
