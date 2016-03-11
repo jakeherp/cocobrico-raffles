@@ -96,7 +96,9 @@
                       @endif
                     </td>
                     <td>
-                      
+                      @if($member->pivot->code_id != 0)
+                        {{ $raffle->codes()->where('id',$member->pivot->code_id)->first()->code }}
+                      @endif
                     </td>
                     <td>
                       <a href="{{ URL('admin/users/'.$member->id) }}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Details anzeigen"><i class="fa fa-search"></i></a>

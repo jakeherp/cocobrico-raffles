@@ -59,14 +59,16 @@
                     </td>
 
                     <td>
-                      
+                      @if($raffle->pivot->code_id != 0)
+                        {{ $raffle->codes()->where('id',$raffle->pivot->code_id)->first()->code }}
+                      @endif
                     </td>
                     <td>
                       <a href="{{ URL('admin/raffles/'.$raffle->id) }}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Details anzeigen"><i class="fa fa-search"></i></a>
                       @if($raffle->pivot->confirmed == 1)
                         <a class="tiny success button" disabled><i class="fa fa-trophy"></i></a>
                       @else
-                        <a data-open="userWinModal" userId="{{ $member->id }}" class="tiny success button confirmUserButton" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Bestätigen"><i class="fa fa-trophy"></i></a>
+                        <a data-open="userWinModal" raffleId="{{ $raffle->id }}" class="tiny success button confirmUserButton" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Bestätigen"><i class="fa fa-trophy"></i></a>
                       @endif
                     </td>
                   </tr>
@@ -83,8 +85,8 @@
       <div class="callout alert" id="UserWinText">Soll der User wirklich bestätigt werden?</div>
       {!! Form::open(['url' => 'admin/raffles/confirm', 'method' => 'post']) !!}
         {!! Form::hidden('_method', 'PUT', []) !!}
-        <input type="hidden" id="userId" name="user_id" value="">
-        <input type="hidden" name="raffle_id" value="{{ $raffle->id }}">
+        <input type="hidden" name="user_id" value="{{ $member->id }}">
+        <input type="hidden" id="raffleId" name="raffle_id" value="">
         <button id="userWinButton" class="success button">Bestätigen</button>
         <button type="reset" class="secondary button" data-close>Abbrechen</button>
       {!! Form::close() !!}
@@ -102,8 +104,8 @@
       } );
 
       function userWinModal(obj){
-        var userId = $(obj).attr('userId');
-        $('#userId').val(userId);
+        var raffleId = $(obj).attr('raffleId');
+        $('#raffleId').val(raffleId);
       }
     </script>
 	

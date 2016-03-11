@@ -51,7 +51,6 @@
                       <label>
                         Hast du einen Code?
                         {!! Form::text('code', null, ['placeholder' => 'Code', 'maxlength' => '10']) !!}
-
                       </label>
                     </div>
 

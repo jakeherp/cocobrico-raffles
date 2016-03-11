@@ -44,7 +44,7 @@
                       @if($code->user == null)
                         Nicht zugewiesen
                       @else
-                        {{ $code->user->firstname }} {{ $code->user->lastname }}
+                        <a href="{{ url('admin/users/'. $code->user->id ) }}">{{ $code->user->firstname }} {{ $code->user->lastname }}</a>
                       @endif
                     </td>
                     <td>

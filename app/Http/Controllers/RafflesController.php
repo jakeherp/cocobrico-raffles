@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\CreateRaffleRequest;
 
+use App\Code;
 use App\File;
 use App\Raffle;
 
@@ -162,14 +163,38 @@ class RafflesController extends Controller
         else{
             $check = null;
             do{
-                $code = strtoupper(str_random(6));
-                $check = DB::table('raffle_user')->where('code', '=', $code)->get();
+                $pCode = strtoupper(str_random(6));
+                $check = DB::table('raffle_user')->where('code', '=', $pCode)->get();
             } while($check != null);
+
+            if(isset($request->code) && $request->code != ''){
+              $code = Code::where('code',$request->code)->where('raffle_id',$raffle->id)->first();
+              if($code == null){
+                return redirect('dashboard')->with('msg', 'Der eingegebene Code '.$request->code.' ist ungültig.')->with('msgState', 'alert');
+              }
+              elseif($code->active != 1){
+                return redirect('dashboard')->with('msg', 'Der eingegebene Code '.$request->code.' ist nicht mehr aktiv.')->with('msgState', 'alert');
+              }
+              elseif($code->user != null){
+                return redirect('dashboard')->with('msg', 'Der eingegebene Code '.$request->code.' ist bereits vergeben.')->with('msgState', 'alert');
+              }
+              else{
+                $codeCheck = true;
+              }
+            }
+            else{
+              $codeCheck = false;
+            }
 
             if($raffle->imageReq == 1){
                 if($user->files()->where('slug','profile_img')->first() != null){
                     $user->raffles()->attach($raffleId);
-                    $user->raffles()->updateExistingPivot($raffleId, ['code' => $code]);
+                    $user->raffles()->updateExistingPivot($raffleId, ['code' => $pCode]);
+                    if($codeCheck){
+                      $code->user_id = $user->id;
+                      $code->save();
+                      $user->raffles()->updateExistingPivot($raffleId, ['confirmed' => 1, 'code_id' => $code->id]);
+                    }
                     $this->participationSucceed($user, $raffle);
                 }
                 else{
@@ -178,7 +203,12 @@ class RafflesController extends Controller
             }
             else{
                 $user->raffles()->attach($raffleId);
-                $user->raffles()->updateExistingPivot($raffleId, ['code' => $code]);
+                $user->raffles()->updateExistingPivot($raffleId, ['code' => $pCode]);
+                if($codeCheck){
+                  $code->user_id = $user->id;
+                  $code->save();
+                  $user->raffles()->updateExistingPivot($raffleId, ['confirmed' => 1, 'code_id' => $code->id]);
+                }
                 $this->participationSucceed($user, $raffle);
             }
 
