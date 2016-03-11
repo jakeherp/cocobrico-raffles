@@ -2,6 +2,10 @@ body {
 	background: #202020;
 	color: #fff;
 }
+body.print{
+  background: #fff;
+  color: #000;
+}
 html{
   height: auto;
 }

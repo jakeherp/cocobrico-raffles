@@ -32,7 +32,6 @@
 
           <div class="callout alert">Dieses Gewinnspiel ist nur für Mitglieder ab 18 zugänglich.</div>
         @else
-      
 
                 {!! Form::open(['url' => 'dashboard', 'method' => 'post', 'files' => true]) !!}
                   {!! Form::hidden('id', $raffle->id, []) !!}
@@ -47,6 +46,14 @@
                     @endif
 
                     <p>{!! $raffle->body !!}</p>
+
+                    <div class="callout">
+                      <label>
+                        Hast du einen Code?
+                        {!! Form::text('code', null, ['placeholder' => 'Code', 'maxlength' => '10']) !!}
+
+                      </label>
+                    </div>
 
                       <div class="pull-right">Läuft noch bis {{ date(trans('global.dateformat'), $raffle->end) }}</div>
                       <button class="alert button" 
