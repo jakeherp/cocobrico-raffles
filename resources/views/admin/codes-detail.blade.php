@@ -13,7 +13,7 @@
         @else
           <a class="pull-right primary button" disabled><i class="fa fa-print"></i></a>
         @endif
-        <h1><i class="fa fa-tag"></i> Codes</h1>
+        <h1><i class="fa fa-tag"></i> Codes für {{ $raffle->title }}</h1>
         @if(session()->has('msg'))
           <div class="callout {{ session('msgState') }}">
             <p>{{ session('msg') }}</p>

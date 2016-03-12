@@ -4,9 +4,11 @@
 		<p>Hallo {{ $user->firstname }},</p>
 
 		<p>Dein Interesse an unserer Aktion {{ $raffle->title }} ist registriert. Du kriegst Bescheid, wenn's klappt.<br>
-		Falls Du einen Freischaltcode erhalten hast, gib diesen auf der Webseite ein und du erhältst Umgehend eine Bestätigung im PDF Format.<br><br>
+		Falls Du einen Freischaltcode erhalten hast, gib diesen auf der Webseite ein und du erhältst Umgehend eine Bestätigung im PDF Format.</p>
 
-		Viel Glück,<br>
+		<p><a href="http://www.cocobrico.info/">Hier geht's zurück zum Cocobrico Kundenportal</a></p>
+
+		<p>Viel Glück,<br>
 		Dein Cocobrico Team</p>
 	</div>
 	<div style="text-align: center; color: #fff;">&copy; <?=date("Y");?> {{ trans('global.company') }}</div>
