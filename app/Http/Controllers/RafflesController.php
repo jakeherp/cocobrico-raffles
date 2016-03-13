@@ -233,9 +233,21 @@ class RafflesController extends Controller
         $code->save();
         $user->raffles()->updateExistingPivot($raffle->id, ['confirmed' => 1, 'code_id' => $code->id]);
 
-          $email = Mail::send('emails.confirmCode', compact('user','raffle'), function ($m) use ($user) {
-              $m->from('noreply@cocobrico.com', 'Cocobrico');
-              $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject('Aktion Teilnahmebestätigung');
+        // Generates Confirmation PDF
+          $file = new File();
+          $file->slug = 'raffle_'.$raffle->id;
+          $file->name = 'Teilnahmezertifikat für Aktion '.$raffle->title;
+          $file->path = 'files/user_' . $user->id . '/' . md5($file->slug . microtime()) . '.pdf';
+          $user->files()->save($file);
+
+          $qrstring = $user->raffles()->where('raffle_id', $raffle->id)->first()->pivot->code . ', ' . $user->firstname . ' ' . $user->lastname . ', ' . date(trans('global.dateformat'),$user->birthday);
+          QrCode::format('png')->margin(0)->size(200)->generate($qrstring, '../public/files/user_'.$user->id.'/qrcode.png');
+          $pdf = PDF::loadView('pdf.info', compact('user','raffle'))->save($file->path);
+
+          $email = Mail::send('emails.confirmCode', compact('user','raffle'), function ($m) use ($user, $file) {
+            $m->from('noreply@cocobrico.com', 'Cocobrico');
+            $m->attach($file->path);
+            $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject('Aktion Teilnahmebestätigung');
           });
 
         return redirect('dashboard')->with('msg', 'Dein Code wurde für die Aktion <strong>' . $raffle->title . '</strong> bestätigt. Wir haben dir eine Bestätigungsemail gesendet.')->with('msgState', 'success');

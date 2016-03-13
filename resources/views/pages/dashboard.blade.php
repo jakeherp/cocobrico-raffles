@@ -110,7 +110,7 @@
                     <p>{!! $raffle->body !!}</p>
 
                     @if($raffle->pivot->confirmed == 1)
-                      <div class="callout">
+                      <div class="callout success">
                         Du wurdest für diese Aktion bestätigt.
                       </div>
                     @elseif(count($raffle->codes) != 0)
