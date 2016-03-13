@@ -45,6 +45,7 @@ Route::group(['middleware' => ['web']], function () {
 
     // Admin Routes
         Route::get('admin', 'AdminController@showRafflesView');
+        Route::get('admin/changelog', 'AdminController@showChangelog');
         Route::get('admin/codes', 'AdminController@showCodesView');
         Route::post('admin/codes/create', 'CodesController@create');
         Route::put('admin/codes/deactivate', 'CodesController@deactivate');

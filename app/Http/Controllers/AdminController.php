@@ -42,6 +42,16 @@ class AdminController extends Controller
 	}
 
 	/**
+	 * Shows the changelog.
+	 *
+	 * @return Response
+	 */
+    public function showChangelog(){
+    	$user = Auth::user();
+    	return view('admin.changelog', compact('user'));
+	}
+
+	/**
 	 * Shows the code creation page.
 	 *
 	 * @return Response

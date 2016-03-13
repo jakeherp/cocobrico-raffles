@@ -64,6 +64,7 @@
               <li><a href="{{ url('admin/raffles') }}"><i class="fa fa-trophy"></i> Aktionen</a></li>
               <li><a href="{{ url('admin/codes') }}"><i class="fa fa-tag"></i> Codes</a></li>
               <li><a href="{{ url('admin/users') }}"><i class="fa fa-user-secret"></i> Benutzer</a></li>
+              <li><a href="{{ url('admin/changelog') }}"><i class="fa fa-newspaper-o"></i> Changelog</a></li>
           </ul>
 
         </div>

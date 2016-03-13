@@ -33,7 +33,7 @@ class CodesController extends Controller
   			for($i = 1; $i <= $request->amount; $i++){
   				$code = new Code();
   				do{
-  					$code->code = $this->generate($raffle);
+  					$code->code = strtoupper(str_random(10));
   					$check = Code::where('code',$code->code)->first();
   					if($check == null){ $unique = true; } else { $unique = false; }
   				} while(!$unique);
