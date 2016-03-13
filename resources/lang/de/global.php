@@ -19,10 +19,11 @@ return [
     'commercialcustomers'   => 'Kundenportal',
     'company'               => 'Cocobrico Ltd',
     'companies'             => 'Deine Firmen',
+    'admin'                 => 'Adminbereich',
+    'language'              => 'German',
+
     'datetimeformat'        => 'd.m.Y H:i:s',
     'dateformat'            => 'd.m.Y',
     'timeformat'            => 'H:i:s',
-    'admin'                 => 'Adminbereich',
-    'language'              => 'German',
 
 ];

@@ -28,4 +28,18 @@ class Code extends Model
     {
         return $this->belongsTo('App\Raffle');
     }
+
+    /**
+     * Checks if the code is expired.
+     *
+     * @return boolean
+     */
+    public function expired(){
+        if($this->endtime <= time()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

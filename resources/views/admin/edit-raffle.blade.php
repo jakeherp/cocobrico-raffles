@@ -88,6 +88,16 @@
               @endif
             </div>
           </label>
+          <label>
+            <div class="input-group">
+              <i class="fa fa-trophy"></i>
+              @if($raffle->instWin == 1)
+                {!! Form::checkbox('instWin', '1', true) !!} Alle Teilnehmer gewinnen automatisch.
+              @else
+                {!! Form::checkbox('instWin', '1', false) !!} Alle Teilnehmer gewinnen automatisch.
+              @endif
+            </div>
+          </label>
           {!! Form::submit('Änderungen speichern', ['class' => 'button alert']) !!}
           <a class="button secondary" href="{{ URL('admin/raffles') }}">Zurück</a>
 		  {!! Form::close() !!}

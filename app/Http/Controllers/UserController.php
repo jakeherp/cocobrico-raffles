@@ -67,7 +67,7 @@ class UserController extends Controller
       $user->save();
       // Password Reset Email
       $sent = Mail::send('emails.password', ['user' => $user], function ($m) use ($user) {
-        $m->from('noreply@cb.pcserve.eu', 'Cocobrico');
+        $m->from('noreply@cocobrico.com', 'Cocobrico');
         $m->to($user->email, $user->email)->subject('Passwort Vergessen');
       });
       return view('auth.password',compact('user'));
@@ -128,7 +128,7 @@ class UserController extends Controller
 
    			// Verification-Email is send to user.
 			  $sent = Mail::send('emails.verifyEmail', ['user' => $user], function ($m) use ($user) {
-        		$m->from('noreply@cb.pcserve.eu', 'Cocobrico');
+        		$m->from('noreply@cocobrico.com', 'Cocobrico');
         		$m->to($user->email, $user->email)->subject('Bestätige deine Email-Adresse');
         });
 
@@ -211,7 +211,7 @@ class UserController extends Controller
     public function resendEmail(Request $request){
       $user = User::find($request->user_id);
       $sent = Mail::send('emails.verifyEmail', ['user' => $user], function ($m) use ($user) {
-        $m->from('noreply@cb.pcserve.eu', 'Cocobrico');
+        $m->from('noreply@cocobrico.com', 'Cocobrico');
         $m->to($user->email, $user->email)->subject('Bestätige deine Email-Adresse');
       });
       return view('auth.verifyEmail', compact('user'));

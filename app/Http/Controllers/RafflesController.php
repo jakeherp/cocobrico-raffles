@@ -44,6 +44,7 @@ class RafflesController extends Controller
       if($request->imageReq == null)   { $raffle->imageReq = 0; }     else { $raffle->imageReq = 1; }
       if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; }  else { $raffle->legalAgeReq = 1; }
       if($request->sendPdf == null)    { $raffle->sendPdf = 0; }      else { $raffle->sendPdf = 1; }
+      if($request->instWin == null)    { $raffle->instWin = 0; }      else { $raffle->instWin = 1; }
 
       if($raffle->maxpState == 1 && count($raffle->users) >= $raffle->maxp){
         $raffle->maxpReached = 1;
@@ -106,6 +107,7 @@ class RafflesController extends Controller
         if($request->imageReq == null)   { $raffle->imageReq = 0; }     else { $raffle->imageReq = 1; }
         if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; }  else { $raffle->legalAgeReq = 1; }
         if($request->sendPdf == null)    { $raffle->sendPdf = 0; }      else { $raffle->sendPdf = 1; }
+        if($request->instWin == null)    { $raffle->instWin = 0; }      else { $raffle->instWin = 1; }
 
         if($raffle->maxpState == 1 && count($raffle->users) >= $raffle->maxp){
           $raffle->maxpReached = 1;
@@ -150,70 +152,94 @@ class RafflesController extends Controller
      */
     public function participate(Request $request)
     {
-        $user = Auth::user();
+      $user = Auth::user();
 
-        $raffleId = $request->id;
-        $raffle = Raffle::find($raffleId);
-        if(($raffle->legalAgeReq == 1) && (time() - $user->birthday) < 567648000){
-          return redirect('dashboard')->with('msg', 'Die Teilnahme an der Aktion ist ab 18 Jahren freigegeben.')->with('msgState', 'alert');
+      $raffle = Raffle::find($request->id);
+      if(($raffle->legalAgeReq == 1) && (time() - $user->birthday) < 567648000){
+        return redirect('dashboard')->with('msg', 'Die Teilnahme an der Aktion ist ab 18 Jahren freigegeben.')->with('msgState', 'alert');
+      }
+      elseif($raffle->expired()){
+        return redirect('dashboard')->with('msg', 'Aktion ist bereits beendet.')->with('msgState', 'alert');
+      }
+      else{
+        do{
+          $pCode = strtoupper(str_random(6));
+          $check = DB::table('raffle_user')->where('code', '=', $pCode)->get();
+        } while($check != null);
+
+        // Error, if Profile Picture is required and User has none
+        if($raffle->imageReq == 1){
+          if($user->files()->where('slug','profile_img')->first() == null){
+            return redirect()->back()->withErrors(['Du benötigst ein Profilbild um an dieser Aktion teilzunehmen.']);
+          }
         }
-        elseif($raffle->expired()){
-          return redirect('dashboard')->with('msg', 'Aktion ist bereits beendet.')->with('msgState', 'alert');
+
+        if(isset($request->code) && $request->code != ''){
+          $code = Code::where('code',$request->code)->where('raffle_id',$raffle->id)->first();
+          if($code == null){
+            return redirect('dashboard')->with('msg', 'Der eingegebene Code '.$request->code.' ist ungültig.')->with('msgState', 'alert');
+          }
+          elseif($code->active != 1 || $code->expired()){
+            return redirect('dashboard')->with('msg', 'Der eingegebene Code '.$request->code.' ist nicht mehr aktiv.')->with('msgState', 'alert');
+          }
+          elseif($code->user != null){
+            return redirect('dashboard')->with('msg', 'Der eingegebene Code '.$request->code.' ist bereits vergeben.')->with('msgState', 'alert');
+          }
+          else{
+            $code->user_id = $user->id;
+            $code->save();
+            $user->raffles()->attach($raffle->id);
+            $user->raffles()->updateExistingPivot($raffle->id, ['code' => $pCode, 'confirmed' => 1, 'code_id' => $code->id]);
+            $confirmed = true;
+          }
+        }
+        elseif($raffle->instWin == 1){
+          $user->raffles()->attach($raffle->id);
+          $user->raffles()->updateExistingPivot($raffle->id, ['code' => $pCode, 'confirmed' => 1]);
+          $confirmed = true;
         }
         else{
-            $check = null;
-            do{
-                $pCode = strtoupper(str_random(6));
-                $check = DB::table('raffle_user')->where('code', '=', $pCode)->get();
-            } while($check != null);
-
-            if(isset($request->code) && $request->code != ''){
-              $code = Code::where('code',$request->code)->where('raffle_id',$raffle->id)->first();
-              if($code == null){
-                return redirect('dashboard')->with('msg', 'Der eingegebene Code '.$request->code.' ist ungültig.')->with('msgState', 'alert');
-              }
-              elseif($code->active != 1){
-                return redirect('dashboard')->with('msg', 'Der eingegebene Code '.$request->code.' ist nicht mehr aktiv.')->with('msgState', 'alert');
-              }
-              elseif($code->user != null){
-                return redirect('dashboard')->with('msg', 'Der eingegebene Code '.$request->code.' ist bereits vergeben.')->with('msgState', 'alert');
-              }
-              else{
-                $codeCheck = true;
-              }
-            }
-            else{
-              $codeCheck = false;
-            }
-
-            if($raffle->imageReq == 1){
-                if($user->files()->where('slug','profile_img')->first() != null){
-                    $user->raffles()->attach($raffleId);
-                    $user->raffles()->updateExistingPivot($raffleId, ['code' => $pCode]);
-                    if($codeCheck){
-                      $code->user_id = $user->id;
-                      $code->save();
-                      $user->raffles()->updateExistingPivot($raffleId, ['confirmed' => 1, 'code_id' => $code->id]);
-                    }
-                    $this->participationSucceed($user, $raffle);
-                }
-                else{
-                    return redirect()->back()->withErrors(['Du benötigst ein Profilbild um an dieser Aktion teilzunehmen.']);
-                }
-            }
-            else{
-                $user->raffles()->attach($raffleId);
-                $user->raffles()->updateExistingPivot($raffleId, ['code' => $pCode]);
-                if($codeCheck){
-                  $code->user_id = $user->id;
-                  $code->save();
-                  $user->raffles()->updateExistingPivot($raffleId, ['confirmed' => 1, 'code_id' => $code->id]);
-                }
-                $this->participationSucceed($user, $raffle);
-            }
-
-            return redirect('dashboard')->with('msg', 'Du hast erfolgreich an der Aktion ' . $raffle->title . ' teilgenommen. Wir haben dir eine Bestätigungsemail geschickt. Überprüfe auch dein Spampostfach.')->with('msgState', 'success');
+          $user->raffles()->attach($raffle->id);
+          $user->raffles()->updateExistingPivot($raffle->id, ['code' => $pCode]);
+          $confirmed = false;
         }
+        $this->participationSucceed($user, $raffle, $confirmed);
+
+        return redirect('dashboard')->with('msg', 'Du hast erfolgreich an der Aktion ' . $raffle->title . ' teilgenommen. Wir haben dir eine Bestätigungsemail geschickt. Überprüfe auch dein Spampostfach.')->with('msgState', 'success');
+      }
+    }
+
+    /**
+     * Confirms a user code, after the user already participated in an action.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function confirmUserCode(Request $request){
+      $user = Auth::user();
+      $raffle = Raffle::find($request->id);
+      $code = Code::where('code',$request->code)->where('raffle_id',$raffle->id)->first();
+      if($code == null){
+        return redirect('dashboard')->with('msg', 'Der eingegebene Code '.$request->code.' ist ungültig.')->with('msgState', 'alert');
+      }
+      elseif($code->active != 1 || $code->expired()){
+        return redirect('dashboard')->with('msg', 'Der eingegebene Code '.$request->code.' ist nicht mehr aktiv.')->with('msgState', 'alert');
+      }
+      elseif($code->user != null){
+        return redirect('dashboard')->with('msg', 'Der eingegebene Code '.$request->code.' ist bereits vergeben.')->with('msgState', 'alert');
+      }
+      else{
+        $code->user_id = $user->id;
+        $code->save();
+        $user->raffles()->updateExistingPivot($raffle->id, ['confirmed' => 1, 'code_id' => $code->id]);
+
+          $email = Mail::send('emails.confirmCode', compact('user','raffle'), function ($m) use ($user) {
+              $m->from('noreply@cocobrico.com', 'Cocobrico');
+              $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject('Aktion Teilnahmebestätigung');
+          });
+
+        return redirect('dashboard')->with('msg', 'Dein Code wurde für die Aktion <strong>' . $raffle->title . '</strong> bestätigt. Wir haben dir eine Bestätigungsemail gesendet.')->with('msgState', 'success');
+      }
     }
 
     /**
@@ -223,17 +249,16 @@ class RafflesController extends Controller
      * @param Raffle $raffle
      * @return true
      */
-    protected function participationSucceed($user, $raffle){
+    protected function participationSucceed($user, $raffle, $confirmed = false){
         if($raffle->maxpReached()){
           $raffle->maxpReached = 1;
           $raffle->save();
         }
-        if($raffle->sendPdf == 1){
+        if($raffle->sendPdf == 1 || $confirmed || $raffle->instWin == 1){
           // Generates Confirmation PDF
           $file = new File();
           $file->slug = 'raffle_'.$raffle->id;
           $file->name = 'Teilnahmezertifikat für Aktion '.$raffle->title;
-          //$file->raffle_id = $raffle->id;
           $file->path = 'files/user_' . $user->id . '/' . md5($file->slug . microtime()) . '.pdf';
           $user->files()->save($file);
 
@@ -241,16 +266,24 @@ class RafflesController extends Controller
           QrCode::format('png')->margin(0)->size(200)->generate($qrstring, '../public/files/user_'.$user->id.'/qrcode.png');
           $pdf = PDF::loadView('pdf.info', compact('user','raffle'))->save($file->path);
 
-          // Sends Confirmation Email
-          $email = Mail::send('emails.confirmRaffle', compact('user','raffle'), function ($m) use ($user, $file) {
-              $m->from('noreply@cb.pcserve.eu', 'Cocobrico');
+          if($confirmed){
+            $email = Mail::send('emails.confirmCode', compact('user','raffle'), function ($m) use ($user, $file) {
+              $m->from('noreply@cocobrico.com', 'Cocobrico');
               $m->attach($file->path);
               $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject('Aktion Teilnahmebestätigung');
-          });
+            });
+          }
+          else{
+            $email = Mail::send('emails.confirmRaffle', compact('user','raffle'), function ($m) use ($user, $file) {
+              $m->from('noreply@cocobrico.com', 'Cocobrico');
+              $m->attach($file->path);
+              $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject('Aktion Teilnahmebestätigung');
+            });
+          }
         }
         else {
            $email = Mail::send('emails.confirmRaffleNoPdf', compact('user','raffle'), function ($m) use ($user) {
-              $m->from('noreply@cb.pcserve.eu', 'Cocobrico');
+              $m->from('noreply@cocobrico.com', 'Cocobrico');
               $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject('Aktion Teilnahmebestätigung');
           });
         }
@@ -258,7 +291,7 @@ class RafflesController extends Controller
     }
 
     /**
-     * Confirms a user for the raffle.
+     * Confirms a user for the raffle manually.
      *
      * @param Request $request
      * @return Response

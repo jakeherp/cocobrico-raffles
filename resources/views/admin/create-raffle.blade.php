@@ -73,6 +73,12 @@
               {!! Form::checkbox('sendPdf', '1') !!} Teilnehmer erhalten eine Bestätigungs-PDF.
             </div>
           </label>
+          <label>
+            <div class="input-group">
+              <i class="fa fa-trophy"></i> 
+              {!! Form::checkbox('instWin', '1') !!} Alle Teilnehmer gewinnen automatisch.
+            </div>
+          </label>
           {!! Form::submit('Aktion erstellen', ['class' => 'button alert']) !!}
 		  {!! Form::close() !!}
         </div>

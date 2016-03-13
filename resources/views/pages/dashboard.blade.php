@@ -13,7 +13,7 @@
         <div class="row">
           <div class="large-12 small-12 columns">
             <div class="callout {{ session('msgState') }}">
-              <p>{{ session('msg') }}</p>
+              <p>{!! session('msg') !!}</p>
             </div>
           </div>
         </div>
@@ -47,12 +47,14 @@
 
                     <p>{!! $raffle->body !!}</p>
 
-                    <div class="callout">
-                      <label>
-                        Hast du einen Code?
-                        {!! Form::text('code', null, ['placeholder' => 'Code', 'maxlength' => '10']) !!}
-                      </label>
-                    </div>
+                    @if(count($raffle->codes) != 0)
+                      <div class="callout">
+                        <label>
+                          Hast du einen Code?
+                          {!! Form::text('code', null, ['placeholder' => 'Code', 'maxlength' => '10']) !!}
+                        </label>
+                      </div>
+                    @endif
 
                       <div class="pull-right">Läuft noch bis {{ date(trans('global.dateformat'), $raffle->end) }}</div>
                       <button class="alert button" 
@@ -106,6 +108,25 @@
                   <a href="#" class="accordion-title">{{ $raffle->title }}</a>
                   <div class="accordion-content" data-tab-content>
                     <p>{!! $raffle->body !!}</p>
+
+                    @if($raffle->pivot->confirmed == 1)
+                      <div class="callout">
+                        Du wurdest für diese Aktion bestätigt.
+                      </div>
+                    @elseif(count($raffle->codes) != 0)
+                      <div class="callout">
+                        {!! Form::open(['url' => 'dashboard/confirm', 'method' => 'post', 'files' => true]) !!}
+                        {!! Form::hidden('id', $raffle->id, []) !!}
+                        <label>
+                          Hast du einen Code?
+                          {!! Form::text('code', null, ['placeholder' => 'Code', 'maxlength' => '10']) !!}
+                        </label>
+                        <button class="alert button" role="submit">
+                        Code senden
+                        </button>
+                        {!! Form::close() !!}
+                      </div>
+                    @endif
 
                     <p><em>Läuft noch bis {{ date(trans('global.dateformat'), $raffle->end) }}</em></p>
                   </div>

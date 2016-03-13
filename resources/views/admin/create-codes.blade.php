@@ -21,7 +21,7 @@
             Ablaufdatum
             <div class="input-group">
               <span class="input-group-label"><i class="fa fa-calendar"></i></span>
-                  {!! Form::date('endtime', null, ['class' => 'input-group-field', 'placeholder' => 'End-Zeitpunkt']) !!}
+                  {!! Form::date('endtime', date('Y-m-d', $raffle->end), ['class' => 'input-group-field', 'placeholder' => 'End-Zeitpunkt']) !!}
             </div>
           </label>
               {!! Form::submit('Codes generieren', ['class' => 'button alert']) !!}
