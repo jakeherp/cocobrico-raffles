@@ -311,8 +311,17 @@ class RafflesController extends Controller
     public function confirmUser(Request $request){
       $raffle = Raffle::find($request->raffle_id);
       $user = $raffle->users()->find($request->user_id);
-      $raffle->users()->updateExistingPivot($user->id, ['confirmed' => 1]);
+      $code = $raffle->codes()->where('remark','MMM')->where('active',1)->where('user_id',0)->where('endtime','>=',time())->first();
 
-      return redirect()->back()->with('msg', 'Der User ' . $user->firstname . ' ' . $user->lastname . ' wurde für die Aktion <strong>' . $raffle->title . '</strong> bestätigt.')->with('msgState', 'success');
+      if($code == null){
+        return redirect()->back()->with('msg', 'Der User ' . $user->firstname . ' ' . $user->lastname . ' konnte nicht bestätigt werden, da kein verfügbarer Code mit dem Kommentar "MMM" für die Aktion <strong>' . $raffle->title . '</strong> vorhanden ist.')->with('msgState', 'alert');
+      }
+      else{
+        $code->user_id = $user->id;
+        $code->save();
+        $raffle->users()->updateExistingPivot($user->id, ['confirmed' => 1, 'code_id' => $code->id]);
+
+        return redirect()->back()->with('msg', 'Der User ' . $user->firstname . ' ' . $user->lastname . ' wurde für die Aktion <strong>' . $raffle->title . '</strong> bestätigt.')->with('msgState', 'success');
+      }
     }
 }

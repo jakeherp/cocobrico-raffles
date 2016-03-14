@@ -17,6 +17,7 @@
             <span class="input-group-label"><i class="fa fa-comment"></i></span>
                 {{ Form::text('remark', null, ['class' => 'input-group-field', 'placeholder' => 'Kommentar']) }}
           </div>
+          <p>MMM = Code wird für manuelle Bestätigung reserviert</p>
           <label>
             Ablaufdatum
             <div class="input-group">
