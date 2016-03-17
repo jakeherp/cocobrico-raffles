@@ -371,6 +371,31 @@ class RafflesController extends Controller
         $code->save();
         $raffle->users()->updateExistingPivot($user->id, ['confirmed' => 1, 'code_id' => $code->id]);
 
+        $email = $raffle->emails()->where('slug','confirmManual')->first();
+        if($email == null){
+          $email = Email::where('standard',1)->where('slug','confirmManual')->first();
+        }
+
+        if(count($email->confirmations) > 0){
+          $qrstring = $user->raffles()->where('raffle_id', $raffle->id)->first()->pivot->code . ', ' . $user->firstname . ' ' . $user->lastname . ', ' . date(trans('global.dateformat'),$user->birthday);
+          QrCode::format('png')->margin(0)->size(200)->generate($qrstring, '../public/files/user_'.$user->id.'/qrcode.png');
+        }
+
+          $send = Mail::send('emails.confirmCode', compact('user','raffle','email'), function ($m) use ($user, $email, $raffle) {
+            $m->from($email->email, $email->from);
+            foreach($email->confirmations as $confirmation){
+              $file = new File();
+              $file->slug = 'raffle_' . $raffle->id;
+              $file->name = $confirmation->title . ' (Aktion ' . $raffle->title . ')';
+              $file->path = 'files/user_' . $user->id . '/' . md5($file->slug . microtime()) . '.pdf';
+              $user->files()->save($file);
+              $confirmation->prepare($user, $raffle);
+              $pdf = PDF::loadView('pdf.info', compact('user','raffle','confirmation'))->save($file->path);
+              $m->attach($file->path);
+            }
+            $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject($email->subject);
+          });
+
         return redirect()->back()->with('msg', 'Der User ' . $user->firstname . ' ' . $user->lastname . ' wurde für die Aktion <strong>' . $raffle->title . '</strong> bestätigt.')->with('msgState', 'success');
       }
     }
