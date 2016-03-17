@@ -333,6 +333,8 @@ class RafflesController extends Controller
           QrCode::format('png')->margin(0)->size(200)->generate($qrstring, '../public/files/user_'.$user->id.'/qrcode.png');
         }
 
+        $email->prepare($user, $raffle);
+
           $send = Mail::send('emails.confirmCode', compact('user','raffle','email'), function ($m) use ($user, $email, $raffle) {
             $m->from($email->email, $email->from);
             foreach($email->confirmations as $confirmation){
@@ -381,6 +383,8 @@ class RafflesController extends Controller
           QrCode::format('png')->margin(0)->size(200)->generate($qrstring, '../public/files/user_'.$user->id.'/qrcode.png');
         }
 
+        $email->prepare($user, $raffle);
+        
           $send = Mail::send('emails.confirmCode', compact('user','raffle','email'), function ($m) use ($user, $email, $raffle) {
             $m->from($email->email, $email->from);
             foreach($email->confirmations as $confirmation){
