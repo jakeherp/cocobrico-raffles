@@ -60,8 +60,8 @@
             <thead>
               <tr>
                 <th class="no-sort"></th>
-                <th>Geschlecht</th>
                 <th>Name</th>
+                <th>Geschlecht</th>
                 <th>Geburtsdatum</th>
                 <th>Mitglied seit</th>
                 <th class="orderby">Teilnahme</th>
@@ -81,14 +81,14 @@
                       @endif
                     </td>
                     <td>
+                      {{ $member->firstname }} {{ $member->lastname }}
+                    </td>
+                    <td>
                       @if($member->gender == 0)
                         M
                       @elseif($member->gender == 1)
                         W
                       @endif
-                    </td>
-                    <td>
-                      {{ $member->firstname }} {{ $member->lastname }}
                     </td>
                     <td>
                       {{ floor((time() - $member->birthday) / 31556926) }} Jahre - {{ date(trans('global.dateformat'),$member->birthday) }}</td>
