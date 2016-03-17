@@ -56,7 +56,7 @@ class AdminController extends Controller
 	}
 
 	/**
-	 * Shows the pdf view.
+	 * Shows the confirmations view.
 	 *
 	 * @return Response
 	 */
@@ -286,6 +286,10 @@ class AdminController extends Controller
 		$preview = true;
 		$qrstring = 'PREVIEW, ' . $user->firstname . ' ' . $user->lastname . ', ' . date(trans('global.dateformat'),$user->birthday);
 		QrCode::format('png')->margin(0)->size(200)->generate($qrstring, '../public/files/user_'.$user->id.'/qrcode.png');
-		return PDF::loadView('pdf.info', compact('user','raffle','preview'))->stream();
+
+		$confirmation = Confirmation::where('standard',1)->first();
+		$confirmation->prepare($user, $raffle);
+
+		return PDF::loadView('pdf.info', compact('user','raffle','preview', 'confirmation'))->stream();
 	}
 }
