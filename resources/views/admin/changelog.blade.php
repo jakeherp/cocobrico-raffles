@@ -2,6 +2,12 @@
 
 @section('content')
 
+<!-- 
+# actionBody in PDF änderbar
+# Email-Resend-Buttons 
+# Geschlecht
+-->
+
 <section class="row" id="content">
 
   	  <div class="large-12 column">
@@ -9,6 +15,7 @@
         <div class="callout">
           <h4>17.03.2016 - Custom Emails Update</h4>
           <ul>
+            <li>Geschlecht der User wird in den Usertabellen angezeigt</li>
             <li>PDFs können im Adminbereich manuell erstellt werden</li>
             <li>Bestätigungsemails können im Adminbereich manuell erstellt werden</li>
             <li>Manuell erstellte PDFs können den Bestätigungsemails zugeordnet werden</li>

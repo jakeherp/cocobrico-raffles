@@ -11,6 +11,7 @@
             <thead>
               <tr>
                 <th class="no-sort"></th>
+                <th>Geschlecht</th>
                 <th>Name</th>
                 <th class="orderby">Geburtsdatum</th>
                 <th>Mitglied seit</th>
@@ -26,6 +27,13 @@
                       <div class="round-image" style="background:url('{{ URL::asset($file->path) }}') no-repeat center center;background-size:cover;"></div>
                       @else
                         Kein Foto
+                      @endif
+                    </td>
+                    <td>
+                      @if($member->gender == 0)
+                        M
+                      @elseif($member->gender == 1)
+                        W
                       @endif
                     </td>
                     <td>
