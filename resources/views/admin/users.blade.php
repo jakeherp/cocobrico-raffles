@@ -30,7 +30,11 @@
                       @endif
                     </td>
                     <td>
-                      {{ $member->firstname }} {{ $member->lastname }}
+                      @if($member->firstname == '' && $member->lastname == '')
+                        {{ $member->email }}
+                      @else
+                        {{ $member->firstname }} {{ $member->lastname }}
+                      @endif
                     </td>
                     <td>
                       @if($member->gender == 0)

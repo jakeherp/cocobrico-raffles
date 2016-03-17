@@ -15,6 +15,7 @@
         <div class="callout">
           <h4>17.03.2016 - Custom Emails Update</h4>
           <ul>
+            <li>Hat ein User nur seine Emailadresse registriert, wird diese anstelle des Namens im Adminbereich angezeigt.</li>
             <li>Geschlecht der User wird in den Usertabellen angezeigt</li>
             <li>PDFs können im Adminbereich manuell erstellt werden</li>
             <li>Bestätigungsemails können im Adminbereich manuell erstellt werden</li>

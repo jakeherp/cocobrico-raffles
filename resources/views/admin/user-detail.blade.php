@@ -18,10 +18,12 @@
 
           <p>
           <h4>Adresse:</h4>
+          @if($member->address != null)
             {{ $member->address->address1 }} {{ $member->address->address2 }}<br>
             {{ $member->address->zipcode }} {{ $member->address->city }}<br>
             {{ $member->address->country->name }}<br><br>
             <strong>Telefon:</strong> <a href="tel:{{ $member->address->phone }}">{{ $member->address->phone }}</a><br>
+          @endif
             <strong>Email:</strong> <a href="mailto:{{ $member->email }}"> {{ $member->email }}</a><br>
 
             <strong>Geburtstag:</strong> {{ date(trans('global.dateformat'),$member->birthday) }}<br>
