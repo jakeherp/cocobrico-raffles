@@ -7,6 +7,11 @@
   	  <div class="large-12 column">
       	<a href="{{ url('admin/raffles/create') }}" class="pull-right success button"><i class="fa fa-plus"></i> Aktion hinzufügen</a>
         <h1><i class="fa fa-trophy"></i> Aktionen</h1>
+        @if(session()->has('msg'))
+          <div class="callout {{ session('msgState') }}">
+            <p>{{ session('msg') }}</p>
+          </div>
+        @endif
         <div class="horizontal-scroll">
           <table id="table" class="full-table">
             <thead>
@@ -50,6 +55,7 @@
                         tabindex=1 
                         title="Bearbeiten"
                       ><i class="fa fa-pencil"></i></a>
+                      <a href="{{ url('admin/raffles/'. $raffle->id .'/emails' ) }}" class="tiny button success" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Emails zuordnen"><i class="fa fa-envelope"></i></a>
                       <a 
                         class="tiny button alert deleteRaffleButton" 
                         raffleId="{{ $raffle->id }}" 

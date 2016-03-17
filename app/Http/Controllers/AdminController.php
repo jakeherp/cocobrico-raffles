@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Confirmation;
+use App\Email;
+use App\File;
 use App\Raffle;
 use App\User;
 
@@ -41,6 +44,70 @@ class AdminController extends Controller
     	return view('admin.codes', compact('user','raffles'));
 	}
 
+	/**
+	 * Shows the emails view.
+	 *
+	 * @return Response
+	 */
+    public function showEmailsView(){
+    	$user = Auth::user();
+    	$emails = Email::all();
+    	return view('admin.emails', compact('user','emails'));
+	}
+
+	/**
+	 * Shows the pdf view.
+	 *
+	 * @return Response
+	 */
+    public function showConfirmationsView(){
+    	$user = Auth::user();
+    	$confirmations = Confirmation::all();
+    	return view('admin.pdf', compact('user','confirmations'));
+	}
+
+	/**
+	 * Shows the create pdf view.
+	 *
+	 * @return Response
+	 */
+    public function createPdfView(){
+    	$user = Auth::user();
+    	return view('admin.create-pdf', compact('user'));
+	}
+
+	/**
+	 * Shows the detail pdf view.
+	 *
+	 * @return Response
+	 */
+    public function pdfDetail($id){
+    	$user = Auth::user();
+    	$confirmation = Confirmation::find($id);
+    	return view('admin.pdf-detail', compact('user','confirmation'));
+	}
+
+	/**
+	 * Shows the edit pdf view.
+	 *
+	 * @return Response
+	 */
+    public function editPdfView($id){
+    	$user = Auth::user();
+    	$confirmation = Confirmation::find($id);
+    	return view('admin.edit-pdf', compact('user','confirmation'));
+	}
+
+	/**
+	 * Shows the edit pdf view.
+	 *
+	 * @return Response
+	 */
+    public function editEmailView($id){
+		$user = Auth::user();
+    	$email = Email::find($id);
+    	return view('admin.edit-email', compact('user','email'));
+	}
 	/**
 	 * Shows the changelog.
 	 *
@@ -105,6 +172,30 @@ class AdminController extends Controller
 	}
 
 	/**
+	 * Shows the create emails view.
+	 *
+	 * @return Response
+	 */
+    public function createEmailView(){
+    	$user = Auth::user();
+    	$raffles = Raffle::all();
+    	return view('admin.create-email', compact('user','raffles'));
+	}
+
+	/**
+	 * Shows the emails pdf view.
+	 *
+	 * @param  integer $id
+	 * @return Response
+	 */
+    public function emailPdfView($id){
+    	$user = Auth::user();
+    	$email = Email::find($id);
+    	$confirmations = Confirmation::all();
+    	return view('admin.email-pdf', compact('user','email','confirmations'));
+    }
+
+	/**
 	 * Shows the edit raffle form.
 	 *
 	 * @param integer $id
@@ -120,6 +211,24 @@ class AdminController extends Controller
     		return redirect('admin/raffles');
     	}
 	}
+
+	/**
+	 * Shows the emails view for a raffle.
+	 *
+	 * @param integer $id
+	 * @return Response
+	 */
+    public function raffleEmailsView($id){
+    	$user = Auth::user();
+    	$raffle = Raffle::find($id);
+    	$emails = Email::all();
+    	if($raffle != null){
+    		return view('admin.email-raffle', compact('user','raffle','emails'));
+    	}
+    	else{
+    		return redirect('admin/raffles');
+    	}
+    }
 
 	/**
 	 * Shows the raffles.

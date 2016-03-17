@@ -9,7 +9,7 @@
     <meta name="publisher" content="Cocobrico Ltd">
     <meta name="author" content="PCServe Media Ltd">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ trans('global.title') }}</title>
+    <title>{{ trans('global.admin') }}</title>
     <link rel="stylesheet" href="{{ URL::asset('css/foundation.css') }}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}" />
@@ -18,7 +18,6 @@
     <script type="text/javascript" src="{{ URL::asset('js/vendor/dataTables.foundation.min.js') }}"></script>
     <script type="text/javascript" language="javascript" class="init">
       $(document).ready(function() {
-
         $('#table').dataTable( {
             "order": [ [ $('th.orderby').index(),  'desc' ] ],
             "columnDefs": [ {
@@ -29,7 +28,6 @@
               "url": "{{ URL::asset('lang/German.json') }}"
             }
         } );
-
       } );
     </script>
   </head>
@@ -63,8 +61,8 @@
               <li><a href="{{ url('admin/raffles') }}"><i class="fa fa-trophy"></i> Aktionen</a></li>
               <li><a href="{{ url('admin/codes') }}"><i class="fa fa-tag"></i> Codes</a></li>
               <li><a href="{{ url('admin/users') }}"><i class="fa fa-user-secret"></i> Benutzer</a></li>
-              <!--<li><a href="{{ url('admin/emails') }}"><i class="fa fa-envelope"></i> Emails</a></li>
-              <li><a href="{{ url('admin/pdf') }}"><i class="fa fa-file-pdf-o"></i> PDFs</a></li>-->
+              <li><a href="{{ url('admin/emails') }}"><i class="fa fa-envelope"></i> Emails</a></li>
+              <li><a href="{{ url('admin/pdf') }}"><i class="fa fa-file-pdf-o"></i> PDFs</a></li>
               <li><a href="{{ url('admin/changelog') }}"><i class="fa fa-newspaper-o"></i> Changelog</a></li>
           </ul>
 

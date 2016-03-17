@@ -12,7 +12,6 @@
         <div class="callout">
 		  {!! Form::open(['url' => 'admin/raffles/save', 'method' => 'post', 'files' => true]) !!}
       {!! Form::hidden('_method', 'PUT', []) !!}
-      {!! Form::hidden('register_token', $user->register_token, []) !!}
       {!! Form::hidden('id', $raffle->id) !!}
 		  <div class="input-group">
             <span class="input-group-label"><i class="fa fa-pencil"></i></span>

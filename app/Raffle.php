@@ -38,6 +38,15 @@ class Raffle extends Model
         return $this->hasMany('App\File');
     }
 
+   /**
+     * Returns the emails associated with the raffle.
+     *
+     * @return array( Email )
+     */
+    public function emails(){
+        return $this->belongsToMany('App\Email','email_raffle');
+    }
+
     /**
      * Checks if the raffle is expired.
      *

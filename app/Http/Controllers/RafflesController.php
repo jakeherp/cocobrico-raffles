@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateRaffleRequest;
 
 use App\Code;
+use App\Email;
 use App\File;
 use App\Raffle;
 
@@ -145,6 +146,19 @@ class RafflesController extends Controller
     }
 
     /**
+     * Edits the emails of the raffle.
+     *
+     * @param  Request $request
+     * @return Response
+     */
+    public function emails(Request $request){
+      $raffle = Raffle::find($request->id);
+      $raffle->emails()->detach();
+      $raffle->emails()->attach([$request->confirmRaffle, $request->confirmRaffleNoPdf, $request->confirmCode, $request->confirmManual]);
+      return redirect('admin/raffles')->with('msg', 'Die Emails wurden erfolgreich zugeordnet.')->with('msgState', 'success');
+    }
+
+    /**
      * Participates in a raffle.
      *
      * @param Request $request
@@ -210,6 +224,82 @@ class RafflesController extends Controller
     }
 
     /**
+     * Handles PDF Creation and Confirmation Email
+     *
+     * @param User $user
+     * @param Raffle $raffle
+     * @return true
+     */
+    protected function participationSucceed($user, $raffle, $confirmed = false){
+        if($raffle->maxpReached()){
+          $raffle->maxpReached = 1;
+          $raffle->save();
+        }
+        if($raffle->sendPdf == 1 || $confirmed || $raffle->instWin == 1){
+
+          $qrstring = $user->raffles()->where('raffle_id', $raffle->id)->first()->pivot->code . ', ' . $user->firstname . ' ' . $user->lastname . ', ' . date(trans('global.dateformat'),$user->birthday);
+          QrCode::format('png')->margin(0)->size(200)->generate($qrstring, '../public/files/user_'.$user->id.'/qrcode.png');
+
+          if($confirmed){
+            $email = $raffle->emails()->where('slug','confirmCode')->first();
+            if($email == null){
+              $email = Email::where('standard',1)->where('slug','confirmCode')->first();
+            }
+            $email->prepare($user, $raffle);
+
+            $send = Mail::send('emails.confirmCode', compact('user','raffle','email'), function ($m) use ($user, $email, $raffle) {
+              $m->from($email->email, $email->from);
+              foreach($email->confirmations as $confirmation){
+                $file = new File();
+                $file->slug = 'raffle_' . $raffle->id;
+                $file->name = $confirmation->title . ' (Aktion ' . $raffle->title . ')';
+                $file->path = 'files/user_' . $user->id . '/' . md5($file->slug . microtime()) . '.pdf';
+                $user->files()->save($file);
+                $confirmation->prepare($user, $raffle);
+                $pdf = PDF::loadView('pdf.info', compact('user','raffle','confirmation'))->save($file->path);
+                $m->attach($file->path);
+              }
+              $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject($email->subject);
+            });
+          }
+          else{
+            $email = $raffle->emails()->where('slug','confirmRaffle')->first();
+            if($email == null){
+              $email = Email::where('standard',1)->where('slug','confirmRaffle')->first();
+            }
+            $email->prepare($user, $raffle);
+
+            $send = Mail::send('emails.confirmRaffle', compact('user','raffle','email'), function ($m) use ($user, $email, $raffle) {
+              $m->from($email->email, $email->from);
+              foreach($email->confirmations as $confirmation){
+                $file = new File();
+                $file->slug = 'raffle_' . $raffle->id;
+                $file->name = $confirmation->title . ' (Aktion ' . $raffle->title . ')';
+                $file->path = 'files/user_' . $user->id . '/' . md5($file->slug . microtime()) . '.pdf';
+                $user->files()->save($file);
+                $confirmation->prepare($user, $raffle);
+                $pdf = PDF::loadView('pdf.info', compact('user','raffle','confirmation'))->save($file->path);
+                $m->attach($file->path);
+              }
+              $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject($email->subject);
+            });
+          }
+        }
+        else {
+          $email = $raffle->emails()->where('slug','confirmRaffleNoPdf')->first();
+          if($email == null){
+            $email = Email::where('standard',1)->where('slug','confirmRaffleNoPdf')->first();
+          }
+          $email->prepare($user, $raffle);
+          $send = Mail::send('emails.confirmRaffleNoPdf', compact('user','raffle','email'), function ($m) use ($user, $email) {
+              $m->from($email->email, $email->from);
+              $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject($email->subject);
+          });
+        }
+        return true;
+    }
+
+    /**
      * Confirms a user code, after the user already participated in an action.
      *
      * @param Request $request
@@ -233,73 +323,33 @@ class RafflesController extends Controller
         $code->save();
         $user->raffles()->updateExistingPivot($raffle->id, ['confirmed' => 1, 'code_id' => $code->id]);
 
-        // Generates Confirmation PDF
-          $file = new File();
-          $file->slug = 'raffle_'.$raffle->id;
-          $file->name = 'Teilnahmezertifikat für Aktion '.$raffle->title;
-          $file->path = 'files/user_' . $user->id . '/' . md5($file->slug . microtime()) . '.pdf';
-          $user->files()->save($file);
+        $email = $raffle->emails()->where('slug','confirmCode')->first();
+        if($email == null){
+          $email = Email::where('standard',1)->where('slug','confirmCode')->first();
+        }
 
+        if(count($email->confirmations) > 0){
           $qrstring = $user->raffles()->where('raffle_id', $raffle->id)->first()->pivot->code . ', ' . $user->firstname . ' ' . $user->lastname . ', ' . date(trans('global.dateformat'),$user->birthday);
           QrCode::format('png')->margin(0)->size(200)->generate($qrstring, '../public/files/user_'.$user->id.'/qrcode.png');
-          $pdf = PDF::loadView('pdf.info', compact('user','raffle'))->save($file->path);
+        }
 
-          $email = Mail::send('emails.confirmCode', compact('user','raffle'), function ($m) use ($user, $file) {
-            $m->from('noreply@cocobrico.com', 'Cocobrico');
-            $m->attach($file->path);
-            $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject('Aktion Teilnahmebestätigung');
+          $send = Mail::send('emails.confirmCode', compact('user','raffle','email'), function ($m) use ($user, $email, $raffle) {
+            $m->from($email->email, $email->from);
+            foreach($email->confirmations as $confirmation){
+              $file = new File();
+              $file->slug = 'raffle_' . $raffle->id;
+              $file->name = $confirmation->title . ' (Aktion ' . $raffle->title . ')';
+              $file->path = 'files/user_' . $user->id . '/' . md5($file->slug . microtime()) . '.pdf';
+              $user->files()->save($file);
+              $confirmation->prepare($user, $raffle);
+              $pdf = PDF::loadView('pdf.info', compact('user','raffle','confirmation'))->save($file->path);
+              $m->attach($file->path);
+            }
+            $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject($email->subject);
           });
 
         return redirect('dashboard')->with('msg', 'Dein Code wurde für die Aktion <strong>' . $raffle->title . '</strong> bestätigt. Wir haben dir eine Bestätigungsemail gesendet.')->with('msgState', 'success');
       }
-    }
-
-    /**
-     * Handles PDF Creation and Confirmation Email
-     *
-     * @param User $user
-     * @param Raffle $raffle
-     * @return true
-     */
-    protected function participationSucceed($user, $raffle, $confirmed = false){
-        if($raffle->maxpReached()){
-          $raffle->maxpReached = 1;
-          $raffle->save();
-        }
-        if($raffle->sendPdf == 1 || $confirmed || $raffle->instWin == 1){
-          // Generates Confirmation PDF
-          $file = new File();
-          $file->slug = 'raffle_'.$raffle->id;
-          $file->name = 'Teilnahmezertifikat für Aktion '.$raffle->title;
-          $file->path = 'files/user_' . $user->id . '/' . md5($file->slug . microtime()) . '.pdf';
-          $user->files()->save($file);
-
-          $qrstring = $user->raffles()->where('raffle_id', $raffle->id)->first()->pivot->code . ', ' . $user->firstname . ' ' . $user->lastname . ', ' . date(trans('global.dateformat'),$user->birthday);
-          QrCode::format('png')->margin(0)->size(200)->generate($qrstring, '../public/files/user_'.$user->id.'/qrcode.png');
-          $pdf = PDF::loadView('pdf.info', compact('user','raffle'))->save($file->path);
-
-          if($confirmed){
-            $email = Mail::send('emails.confirmCode', compact('user','raffle'), function ($m) use ($user, $file) {
-              $m->from('noreply@cocobrico.com', 'Cocobrico');
-              $m->attach($file->path);
-              $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject('Aktion Teilnahmebestätigung');
-            });
-          }
-          else{
-            $email = Mail::send('emails.confirmRaffle', compact('user','raffle'), function ($m) use ($user, $file) {
-              $m->from('noreply@cocobrico.com', 'Cocobrico');
-              $m->attach($file->path);
-              $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject('Aktion Teilnahmebestätigung');
-            });
-          }
-        }
-        else {
-           $email = Mail::send('emails.confirmRaffleNoPdf', compact('user','raffle'), function ($m) use ($user) {
-              $m->from('noreply@cocobrico.com', 'Cocobrico');
-              $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject('Aktion Teilnahmebestätigung');
-          });
-        }
-        return true;
     }
 
     /**

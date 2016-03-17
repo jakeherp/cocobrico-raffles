@@ -53,16 +53,39 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('admin/codes/{id}', 'AdminController@detailCodesView');
         Route::get('admin/codes/{id}/create', 'AdminController@createCodesView');
         Route::get('admin/codes/{id}/print', 'CodesController@printCodes');
+        
+        Route::get('admin/emails', 'AdminController@showEmailsView');
+        Route::put('admin/emails', 'EmailsController@edit');
+        Route::get('admin/emails/create', 'AdminController@createEmailView');
+        Route::post('admin/emails/create', 'EmailsController@create');
+        Route::post('admin/emails/delete', 'EmailsController@delete');
+        Route::post('admin/emails/pdf', 'EmailsController@pdf');
+        Route::get('admin/emails/{id}/preview', 'EmailsController@preview');
+        Route::get('admin/emails/{id}/edit', 'AdminController@editEmailView');
+        Route::get('admin/emails/{id}/pdf', 'AdminController@emailPdfView');
+
+        Route::get('admin/pdf', 'AdminController@showConfirmationsView');
+        Route::put('admin/pdf', 'ConfirmationsController@edit');
+        Route::get('admin/pdf/create', 'AdminController@createPdfView');
+        Route::post('admin/pdf/create', 'ConfirmationsController@create');
+        Route::post('admin/pdf/delete', 'ConfirmationsController@delete');
+        Route::get('admin/pdf/{id}', 'AdminController@pdfDetail');
+        Route::get('admin/pdf/{id}/preview', 'ConfirmationsController@preview');
+        Route::get('admin/pdf/{id}/edit', 'AdminController@editPdfView');
+
         Route::get('admin/raffles', 'AdminController@showRafflesView');
         Route::put('admin/raffles/confirm', 'RafflesController@confirmUser');
         Route::get('admin/raffles/create', 'AdminController@createRafflesView');
         Route::post('admin/raffles/create', 'RafflesController@create');
         Route::post('admin/raffles/delete', 'RafflesController@delete');
+        Route::post('admin/raffles/emails', 'RafflesController@emails');
         Route::put('admin/raffles', 'RafflesController@edit');
         Route::get('admin/raffles/{id}', 'AdminController@raffleDetail');
         Route::get('admin/raffles/{id}/edit', 'AdminController@editRaffleView');
         Route::get('admin/raffles/{id}/pdf', 'AdminController@pdfPreview');
+        Route::get('admin/raffles/{id}/emails', 'AdminController@raffleEmailsView');
         Route::put('admin/raffles/save', 'RafflesController@edit');
+        
         Route::get('admin/users', 'AdminController@users');
         Route::post('admin/users/delete', 'UserController@delete');
         Route::get('admin/users/{id}', 'AdminController@userDetail');
