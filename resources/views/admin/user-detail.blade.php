@@ -68,7 +68,7 @@
                     <td>
                       <a href="{{ URL('admin/raffles/'.$raffle->id) }}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Details anzeigen"><i class="fa fa-search"></i></a>
                       @if($raffle->pivot->confirmed == 1)
-                        <a class="tiny success button" disabled><i class="fa fa-trophy"></i></a>
+                        <a data-open="resendModal" raffleId="{{ $raffle->id }}" class="tiny success button resendModalButton" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Erneut senden"><i class="fa fa-envelope"></i></a>
                       @else
                         <a data-open="userWinModal" raffleId="{{ $raffle->id }}" class="tiny success button confirmUserButton" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Bestätigen"><i class="fa fa-trophy"></i></a>
                       @endif
@@ -83,12 +83,27 @@
 
     <!-- Modal for confirm users -->
     <div class="reveal" id="userWinModal" data-reveal>
-      <h3 id="UserWinHeadline">Bestätigung</h3>
-      <div class="callout alert" id="UserWinText">Soll der User wirklich bestätigt werden?</div>
+      <h3>Bestätigung</h3>
+      <div class="callout alert">Soll der User wirklich bestätigt werden?</div>
       {!! Form::open(['url' => 'admin/raffles/confirm', 'method' => 'post']) !!}
         {!! Form::hidden('_method', 'PUT', []) !!}
         <input type="hidden" name="user_id" value="{{ $member->id }}">
         <input type="hidden" id="raffleId" name="raffle_id" value="">
+        <button id="userWinButton" class="success button">Bestätigen</button>
+        <button type="reset" class="secondary button" data-close>Abbrechen</button>
+      {!! Form::close() !!}
+        <button class="close-button" data-close aria-label="Close reveal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Modal for resend confirmation pdf -->
+    <div class="reveal" id="resendModal" data-reveal>
+      <h3>Bestätigung</h3>
+      <div class="callout alert">Soll die Bestätigungsemail mit PDF nochmal versendet werden?</div>
+      {!! Form::open(['url' => 'admin/raffles/resend', 'method' => 'post']) !!}
+        <input type="hidden" name="user_id" value="{{ $member->id }}">
+        <input type="hidden" id="raffleId2" name="raffle_id" value="">
         <button id="userWinButton" class="success button">Bestätigen</button>
         <button type="reset" class="secondary button" data-close>Abbrechen</button>
       {!! Form::close() !!}
@@ -103,11 +118,19 @@
           $('#table').on('click', '.confirmUserButton', function() {
             userWinModal(this);
           });
+          $('#table').on('click', '.resendModalButton', function() {
+            resendModal(this);
+          });
       } );
 
       function userWinModal(obj){
         var raffleId = $(obj).attr('raffleId');
         $('#raffleId').val(raffleId);
+      }
+
+      function resendModal(obj){
+        var raffleId = $(obj).attr('raffleId');
+        $('#raffleId2').val(raffleId);
       }
     </script>
 	

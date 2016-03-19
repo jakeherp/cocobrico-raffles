@@ -75,6 +75,7 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::get('admin/raffles', 'AdminController@showRafflesView');
         Route::put('admin/raffles/confirm', 'RafflesController@confirmUser');
+        Route::post('admin/raffles/resend', 'RafflesController@resendConfirmation');
         Route::get('admin/raffles/create', 'AdminController@createRafflesView');
         Route::post('admin/raffles/create', 'RafflesController@create');
         Route::post('admin/raffles/delete', 'RafflesController@delete');

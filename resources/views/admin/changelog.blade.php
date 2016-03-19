@@ -4,8 +4,6 @@
 
 <!-- 
 # actionBody in PDF änderbar
-# Email-Resend-Buttons 
-# Geschlecht
 -->
 
 <section class="row" id="content">
@@ -13,9 +11,15 @@
   	  <div class="large-12 column">
   	  	<h1><i class="fa fa-newspaper-o"></i> Changelog</h1>
         <div class="callout">
+          <h4>19.03.2016</h4>
+          <ul>
+            <li>Bestätigungsemails können erneut versendet werden</li>
+          </ul>
+        </div>
+        <div class="callout">
           <h4>17.03.2016 - Custom Emails Update</h4>
           <ul>
-            <li>Hat ein User nur seine Emailadresse registriert, wird diese anstelle des Namens im Adminbereich angezeigt.</li>
+            <li>Hat ein User nur seine Emailadresse registriert, wird diese anstelle des Namens im Adminbereich angezeigt</li>
             <li>Geschlecht der User wird in den Usertabellen angezeigt</li>
             <li>PDFs können im Adminbereich manuell erstellt werden</li>
             <li>Bestätigungsemails können im Adminbereich manuell erstellt werden</li>

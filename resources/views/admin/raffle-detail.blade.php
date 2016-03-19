@@ -111,7 +111,7 @@
                     <td>
                       <a href="{{ URL('admin/users/'.$member->id) }}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Details anzeigen"><i class="fa fa-search"></i></a>
                       @if($member->pivot->confirmed == 1)
-                        <a class="tiny success button" disabled><i class="fa fa-trophy"></i></a>
+                        <a data-open="resendModal" userId="{{ $member->id }}" class="tiny success button resendModalButton" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Erneut senden"><i class="fa fa-envelope"></i></a>
                       @else
                         <a data-open="userWinModal" userId="{{ $member->id }}" class="tiny success button confirmUserButton" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Bestätigen"><i class="fa fa-trophy"></i></a>
                       @endif
@@ -141,17 +141,40 @@
       </button>
     </div>
 
+    <!-- Modal for resend confirmation pdf -->
+    <div class="reveal" id="resendModal" data-reveal>
+      <h3>Bestätigung</h3>
+      <div class="callout alert">Soll die Bestätigungsemail mit PDF nochmal versendet werden?</div>
+      {!! Form::open(['url' => 'admin/raffles/resend', 'method' => 'post']) !!}
+        <input type="hidden" id="userId2" name="user_id" value="">
+        <input type="hidden" name="raffle_id" value="{{ $raffle->id }}">
+        <button id="userWinButton" class="success button">Bestätigen</button>
+        <button type="reset" class="secondary button" data-close>Abbrechen</button>
+      {!! Form::close() !!}
+        <button class="close-button" data-close aria-label="Close reveal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
     <script>
      $(document).ready(function() {
           // Functionality for confirming users:
           $('#table').on('click', '.confirmUserButton', function() {
             userWinModal(this);
           });
+          $('#table').on('click', '.resendModalButton', function() {
+            resendModal(this);
+          });
       } );
 
       function userWinModal(obj){
         var userId = $(obj).attr('userId');
         $('#userId').val(userId);
+      }
+
+      function resendModal(obj){
+        var userId = $(obj).attr('userId');
+        $('#userId2').val(userId);
       }
     </script>
 

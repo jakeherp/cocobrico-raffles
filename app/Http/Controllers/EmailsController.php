@@ -8,8 +8,10 @@ use App\Http\Requests;
 
 use App\Http\Requests\CreateEmailRequest;
 
+use App\Code;
 use App\Email;
 use App\Raffle;
+use App\User;
 
 use Auth;
 
@@ -100,7 +102,7 @@ class EmailsController extends Controller
         $body = $email->prepare($user, $raffle);
 
         if($email != null){
-            return view('emails.'.$email->slug, compact('user','raffle','email'));
+            return view('emails.confirmCode', compact('user','raffle','email'));
         }
         else{
             return redirect('admin/emails')->with('msg', 'Die Email konnte nicht gefunden werden.')->with('msgState', 'alert');
