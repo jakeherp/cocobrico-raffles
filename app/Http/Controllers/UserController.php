@@ -12,6 +12,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UploadProfileImageRequest;
 use App\Http\Requests\NewPasswordRequest;
+use App\Http\Requests\EditProfileRequest;
 
 use App\Address;
 use App\Country;
@@ -223,7 +224,7 @@ class UserController extends Controller
    * @param  Request $request
    * @return Response
    */
-    public function edit(Request $request){
+    public function edit(EditProfileRequest $request){
       $user = Auth::user();
       if ($user != null) {
         if(count($user->raffles()->where('start','<=',time())->where('end','>=',time())->get()) > 0){

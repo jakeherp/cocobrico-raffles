@@ -41,8 +41,6 @@
                          <span class="input-group-label"><i class="fa fa-user"></i></span>
                          {!! Form::text('firstname', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.firstname')]) !!}
                         </div>
-                        <div id="password" class="callout warning">
-                        </div>
                       </label>
                       <div class="input-group">
                         <span class="input-group-label"><i class="fa fa-user"></i></span>

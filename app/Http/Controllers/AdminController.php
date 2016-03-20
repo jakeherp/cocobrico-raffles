@@ -7,13 +7,17 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Http\Requests\EditUserRequest;
+
 use App\Confirmation;
+use App\Country;
 use App\Email;
 use App\File;
 use App\Raffle;
 use App\User;
 
 use Auth;
+use Mail;
 use QrCode;
 use PDF;
 
@@ -213,6 +217,24 @@ class AdminController extends Controller
 	}
 
 	/**
+	 * Shows the edit user form.
+	 *
+	 * @param integer $id
+	 * @return Response
+	 */
+    public function editUserView($id){
+    	$user = Auth::user();
+    	$member = User::find($id);
+    	$countries = Country::where('active',1)->get();
+    	if($member != null){
+    		return view('admin.edit-user', compact('user','member','countries'));
+    	}
+    	else{
+    		return redirect('admin/users');
+    	}
+    }
+
+	/**
 	 * Shows the emails view for a raffle.
 	 *
 	 * @param integer $id
@@ -292,4 +314,70 @@ class AdminController extends Controller
 
 		return PDF::loadView('pdf.info', compact('user','raffle','preview', 'confirmation'))->stream();
 	}
+
+  /**
+   * Edits the user details.
+   *
+   * @param  Request $request
+   * @return Response
+   */
+    public function updateUser(EditUserRequest $request){
+      $user = User::find($request->id);
+      if ($user != null) {
+      	$address = $user->address;
+
+      	$changes = [];
+      	$controle = false;
+
+      	if( $request->sendNotification == 1 ){
+      		if($request->email != $user->email){ $changes['Email'] = $user->email . ' zu ' . $request->email; $controle = true; }
+        	if($request->firstname != $user->firstname){ $changes['Vorname'] = $user->firstname . ' zu ' . $request->firstname; $controle = true; }
+        	if($request->lastname != $user->lastname){ $changes['Nachname'] = $user->lastname . ' zu ' . $request->lastname; $controle = true; }
+        	if($request->gender != $user->gender){ $changes['Geschlecht'] = trans('auth.gender_'.$user->gender) . ' zu ' . trans('auth.gender_'.$request->gender); $controle = true; }
+        	if(strtotime($request->birthday) != $user->birthday){ $changes['Geburtstag'] = date(trans('global.dateformat'),$user->birthday) . ' zu ' . date(trans('global.dateformat'),strtotime($request->birthday)); $controle = true; }
+
+        	if($request->address1 != $address->address1){ $changes['Addresse1'] = $address->address1 . ' zu ' . $request->address1; $controle = true; }
+        	if($request->address2 != $address->address2){ $changes['Addresse2'] = $address->address2 . ' zu ' . $request->address2; $controle = true; }
+        	if($request->zipcode != $address->zipcode){ $changes['Postleitzahl'] = $address->zipcode . ' zu ' . $request->zipcode; $controle = true; }
+        	if($request->city != $address->city){ $changes['Stadt'] = $address->city . ' zu ' . $request->city; }
+        	if($request->country != $address->country_id){ $changes['Land'] = Country::find($address->country_id)->name . ' zu ' . Country::find($request->country)->name; $controle = true; }
+        	if($request->phone != $address->phone){ $changes['Telefon'] = $address->phone . ' zu ' . $request->phone; $controle = true; }
+        	if($request->fax != $address->fax){ $changes['Fax'] = $address->fax . ' zu ' . $request->fax; $controle = true; }
+
+        	if($controle){
+	        	$body = '<p>Hallo '.$request->firstname.',</p><p>Wir haben Deine Profildaten angepasst. Bitte überprüfe die von uns vorgenommenen Änderungen bei Deinem nächsten Login und kontaktiere uns bei Fragen auf europe@cocobrico.com.</p>
+	        		<p>Vorgenommene Änderungen:</p><ul>';
+	        	foreach($changes as $key => $value){
+	        		$body .= '<li>'.$key.': '. $value .'</li>';
+	        	}
+	        	$body .= '</ul><p>Viele Grüße,<br>Dein Cocobrico Team</p>';
+
+	        	$send = Mail::send('emails.default', compact('body'), function ($m) use ($request) {
+	              $m->from('europe@cocobrico.com', 'Cocobrico');
+	              $m->to($request->email, $request->firstname . ' ' . $request->lastname)->subject('Änderung Deiner Daten');
+	          	});
+	        }
+        }
+
+        $user->email = $request->email;
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->gender = $request->gender;
+        $user->birthday = strtotime($request->birthday);
+        $user->save();
+
+        $address->firstname = $request->firstname;
+        $address->lastname = $request->lastname;
+        $address->address1 = $request->address1;
+        $address->address2 = $request->address2;
+        $address->zipcode = $request->zipcode;
+        $address->city = $request->city;
+        $address->country_id = $request->country;
+        $address->phone = $request->phone;
+        $address->fax = $request->fax;
+        $address->save();
+
+        return redirect('admin/users')->with('msg', 'Die Benutzerdaten wurden erfolgreich aktualisiert.')->with('msgState', 'success');
+      }
+    }
 }

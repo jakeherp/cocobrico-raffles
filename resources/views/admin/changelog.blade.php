@@ -11,6 +11,13 @@
   	  <div class="large-12 column">
   	  	<h1><i class="fa fa-newspaper-o"></i> Changelog</h1>
         <div class="callout">
+          <h4>20.03.2016</h4>
+          <ul>
+            <li>User können im Adminbereich editiert werden</li>
+            <li>Bei einem zweiten Aktionsteilnahmeversuch erscheint eine Fehlermeldung im Dashboard des Users (Es ist jedoch sowieso unmöglich ein zweites Mal auf den Teilnahmebutton zu klicken)</li>
+          </ul>
+        </div>
+        <div class="callout">
           <h4>19.03.2016</h4>
           <ul>
             <li>Bestätigungsemails können erneut versendet werden</li>

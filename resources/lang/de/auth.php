@@ -33,6 +33,8 @@ return [
     'firstname'             =>  'Vorname',
     'lastname'              =>  'Nachname',
     'birthday'              =>  'Geburtstag',
+    'gender_0'              =>  'Männlich',
+    'gender_1'              =>  'Weiblich',
     'address'               =>  'Adresse',
     'address1'              =>  'Adresse 1',
     'address2'              =>  'Addrese 2',

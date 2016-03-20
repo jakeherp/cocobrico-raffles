@@ -174,7 +174,10 @@ class RafflesController extends Controller
         return redirect('dashboard')->with('msg', 'Die Teilnahme an der Aktion ist ab 18 Jahren freigegeben.')->with('msgState', 'alert');
       }
       elseif($raffle->expired()){
-        return redirect('dashboard')->with('msg', 'Aktion ist bereits beendet.')->with('msgState', 'alert');
+        return redirect('dashboard')->with('msg', 'Die Aktion ist bereits beendet.')->with('msgState', 'alert');
+      }
+      elseif( $user->hasRaffle($raffle->id) ){
+        return redirect('dashboard')->with('msg', 'Du nimmst bereits an dieser Aktion teil.')->with('msgState', 'alert');
       }
       else{
         do{

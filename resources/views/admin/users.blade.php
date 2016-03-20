@@ -58,6 +58,14 @@
                     <td>
                       <a href="{{ URL('admin/users/'.$member->id) }}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Details anzeigen"><i class="fa fa-search"></i></a>
                       <a 
+                        href="{{ url('admin/users/'. $member->id . '/edit' ) }}"
+                        class="tiny button warning" 
+                        data-tooltip aria-haspopup="true" 
+                        data-disable-hover='false' 
+                        tabindex=1 
+                        title="Bearbeiten"
+                      ><i class="fa fa-pencil"></i></a>
+                      <a 
                         class="tiny button alert deleteUserButton" 
                         userId="{{ $member->id }}" 
                         data-tooltip aria-haspopup="true" 
