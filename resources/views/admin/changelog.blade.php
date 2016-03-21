@@ -11,6 +11,12 @@
   	  <div class="large-12 column">
   	  	<h1><i class="fa fa-newspaper-o"></i> Changelog</h1>
         <div class="callout">
+          <h4>21.03.2016</h4>
+          <ul>
+            <li>Bugfix: Bestätigungsemail konnte von der Aktionsdetail-Seite aus nicht gesendet werden</li>
+          </ul>
+        </div>
+        <div class="callout">
           <h4>20.03.2016</h4>
           <ul>
             <li>User können im Adminbereich editiert werden</li>

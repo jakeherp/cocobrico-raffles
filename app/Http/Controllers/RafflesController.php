@@ -415,10 +415,11 @@ class RafflesController extends Controller
      * @return Response
      */
     public function resendConfirmation(Request $request){
-        $raffle = Raffle::find($request->raffle_id);
         $user = User::find($request->user_id);
+        $raffle = $user->raffles()->where('raffle_id', $request->raffle_id)->first();
+        $code_id = $raffle->pivot->code_id;
 
-        $winCode = Code::find($user->raffles()->where('raffle_id', $raffle->id)->first()->pivot->code_id);
+        $winCode = Code::find($code_id);
         if($winCode->remark == 'MMM'){
             $emailtype = 'confirmManual';
         }
