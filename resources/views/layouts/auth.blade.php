@@ -8,6 +8,7 @@
     <meta name="keywords" content="Cocobrico, Charcoal, Coconut, Indonesia, Europe, Shisha, Hookah, Coal">
     <meta name="publisher" content="Cocobrico Europe Ltd">
     <meta name="author" content="PCServe Media Ltd">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ trans('global.title') }}</title>
 
@@ -49,7 +50,6 @@
 
       ga('create', 'UA-74888433-1', 'auto');
       ga('send', 'pageview');
-
     </script>
   </body>
 </html>

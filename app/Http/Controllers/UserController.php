@@ -206,16 +206,21 @@ class UserController extends Controller
     /**
      * Resends the verification email.
      *
-     * @param  Request $request
+     * @param  integer $id
      * @return Response
      */
-    public function resendEmail(Request $request){
-      $user = User::find($request->user_id);
-      $sent = Mail::send('emails.verifyEmail', ['user' => $user], function ($m) use ($user) {
-        $m->from('noreply@cocobrico.com', 'Cocobrico');
-        $m->to($user->email, $user->email)->subject('Bestätige deine Email-Adresse');
-      });
-      return view('auth.verifyEmail', compact('user'));
+    public function resendEmail($id){
+      $user = User::find($id);
+      if($user->firstname == ''){
+        $sent = Mail::send('emails.verifyEmail', ['user' => $user], function ($m) use ($user) {
+          $m->from('noreply@cocobrico.com', 'Cocobrico');
+          $m->to($user->email, $user->email)->subject('Bestätige deine Email-Adresse');
+        });
+        return true;
+      }
+      else{
+        return false;
+      }
     }
 
   /**

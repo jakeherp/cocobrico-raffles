@@ -2,14 +2,16 @@
 
 @section('content')
 
-<!-- 
-# actionBody in PDF änderbar
--->
-
 <section class="row" id="content">
 
   	  <div class="large-12 column">
   	  	<h1><i class="fa fa-newspaper-o"></i> Changelog</h1>
+        <div class="callout">
+          <h4>22.03.2016</h4>
+          <ul>
+            <li>Das Neuversenden der Registrierungs-Bestätigungsemail funktioniert nun per AJAX</li>
+          </ul>
+        </div>
         <div class="callout">
           <h4>21.03.2016</h4>
           <ul>
