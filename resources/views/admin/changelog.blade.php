@@ -9,6 +9,7 @@
         <div class="callout">
           <h4>22.03.2016</h4>
           <ul>
+            <li>Im Adminbereich können Kommentare zu den Benutzern erstellt werden.</li>
             <li>Das Neuversenden der Registrierungs-Bestätigungsemail funktioniert nun per AJAX</li>
           </ul>
         </div>

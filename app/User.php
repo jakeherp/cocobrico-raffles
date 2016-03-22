@@ -52,6 +52,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the remarks of the user.
+     */
+    public function remarks()
+    {
+        return $this->hasMany('App\Remark');
+    }
+
+    /**
      * Returns the raffles associated with the user.
      *
      * @return array( Raffle )

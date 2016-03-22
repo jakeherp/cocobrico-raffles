@@ -92,4 +92,9 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('admin/users/{id}/edit', 'AdminController@editUserView');
         Route::put('admin/users/edit', 'AdminController@updateUser');
         Route::get('admin/users/{id}', 'AdminController@userDetail');
+        Route::get('admin/users/{id}/remarks', 'RemarksController@remarksView');
+        Route::post('admin/users/remarks/create', 'RemarksController@create');
+        Route::post('admin/users/remarks/delete', 'RemarksController@delete');
+        Route::put('admin/users/remarks/edit', 'RemarksController@update');
+        Route::get('admin/users/remarks/{id}/edit', 'RemarksController@edit');
 });

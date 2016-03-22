@@ -17,17 +17,24 @@
     @endif
 
           <p>
-          <h4>Adresse:</h4>
-          @if($member->address != null)
-            {{ $member->address->address1 }} {{ $member->address->address2 }}<br>
-            {{ $member->address->zipcode }} {{ $member->address->city }}<br>
-            {{ $member->address->country->name }}<br><br>
-            <strong>Telefon:</strong> <a href="tel:{{ $member->address->phone }}">{{ $member->address->phone }}</a><br>
-          @endif
+            <h4>Adresse:</h4>
+            @if($member->address != null)
+              {{ $member->address->address1 }} {{ $member->address->address2 }}<br>
+              {{ $member->address->zipcode }} {{ $member->address->city }}<br>
+              {{ $member->address->country->name }}<br><br>
+              <strong>Telefon:</strong> <a href="tel:{{ $member->address->phone }}">{{ $member->address->phone }}</a><br>
+            @endif
             <strong>Email:</strong> <a href="mailto:{{ $member->email }}"> {{ $member->email }}</a><br>
 
             <strong>Geburtstag:</strong> {{ date(trans('global.dateformat'),$member->birthday) }}<br>
             <strong>Mitglied seit:</strong> {{ date(trans('global.dateformat'),strtotime($member->created_at)) }}<br>
+          </p>
+          <p>
+            @if(count($member->remarks) != 0)
+              <a class="button primary" href="{{ URL('admin/users/'.$member->id.'/remarks') }}">{{ count($member->remarks) }} Kommentar(e)</a>
+            @else
+              <a class="button primary" href="{{ URL('admin/users/'.$member->id.'/remarks') }}">Kommentar hinzufügen</a>
+            @endif
           </p>
         </div>
       </div>

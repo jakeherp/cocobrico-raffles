@@ -65,6 +65,7 @@
                         tabindex=1 
                         title="Bearbeiten"
                       ><i class="fa fa-pencil"></i></a>
+                      <a href="{{ URL('admin/users/'.$member->id.'/remarks') }}" class="tiny button success" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Kommentare"><i class="fa fa-comment"></i></a>
                       <a 
                         class="tiny button alert deleteUserButton" 
                         userId="{{ $member->id }}" 
