@@ -207,7 +207,7 @@ class UserController extends Controller
      * Resends the verification email.
      *
      * @param  integer $id
-     * @return Response
+     * @return boolean
      */
     public function resendEmail($id){
       $user = User::find($id);
@@ -216,10 +216,6 @@ class UserController extends Controller
           $m->from('noreply@cocobrico.com', 'Cocobrico');
           $m->to($user->email, $user->email)->subject('Bestätige deine Email-Adresse');
         });
-        return true;
-      }
-      else{
-        return false;
       }
     }
 
