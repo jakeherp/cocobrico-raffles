@@ -43,6 +43,8 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('impressum', 'PagesController@impressum');
 
+    Route::get('nachrichten', 'PagesController@nachrichten');
+
     // Admin Routes
         Route::get('admin', 'AdminController@showRafflesView');
         Route::get('admin/changelog', 'AdminController@showChangelog');
@@ -97,4 +99,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('admin/users/remarks/delete', 'RemarksController@delete');
         Route::put('admin/users/remarks/edit', 'RemarksController@update');
         Route::get('admin/users/remarks/{id}/edit', 'RemarksController@edit');
+
+        Route::get('admin/nachrichten', 'AdminController@nachrichten');
+        Route::get('admin/nachrichten/{id}', 'AdminController@nachricht');
 });

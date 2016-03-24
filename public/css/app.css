@@ -296,7 +296,7 @@ ul.dropdown.menu.success > li:hover {
     background: #22bb5b;
 }
 
-div.callout.secondary > em {
+div.callout.primary > em, div.callout.secondary > em {
     display: block;
     font-size: .75em;
     text-align: right;
@@ -323,6 +323,16 @@ div.callout.secondary > em {
 }
 .profilepicture{
     zoom: 1;
+}
+
+div.chat{
+    height: 60vh;
+    width: 100%;
+    overflow: auto;
+}
+
+a.divlink{
+    color: inherit;
 }
 
 .horizontal-scroll {
