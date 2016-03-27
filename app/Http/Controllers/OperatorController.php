@@ -11,6 +11,7 @@ use App\Raffle;
 use App\User;
 
 use Auth;
+use DateTime;
 
 class OperatorController extends Controller
 {
@@ -51,7 +52,10 @@ class OperatorController extends Controller
     		}
     	}
         if(count($member) == 0){
-            $member = User::whereBetween('birthday', [strtotime($search)-86400, strtotime($search)+86400])->get();
+            $d = DateTime::createFromFormat(trans('global.dateformat'), $search);
+            if($d && $d->format(trans('global.dateformat')) == $search){
+                $member = User::whereBetween('birthday', [strtotime($search)-86400, strtotime($search)+86400])->get();
+            }
         }
     	if(count($member) == 1){
     		return redirect('operator/'.$member[0]->id);
