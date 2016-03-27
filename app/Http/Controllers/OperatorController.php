@@ -12,6 +12,7 @@ use App\User;
 
 use Auth;
 use DateTime;
+use DB;
 
 class OperatorController extends Controller
 {
@@ -39,7 +40,10 @@ class OperatorController extends Controller
     	$user = Auth::user();
     	$search = $request->search;
     	$member = User::where('firstname','like','%'.$search.'%')
-    		->orWhere('lastname','like','%'.$search.'%')->get();
+    		->orWhere('lastname','like','%'.$search.'%')
+            ->orWhere(DB::raw("CONCAT(`firstname`, ' ', `lastname`)"), 'LIKE', "%".$search."%")
+            ->orWhere(DB::raw("CONCAT(`lastname`, ' ', `firstname`)"), 'LIKE', "%".$search."%")
+            ->get();
     	if(count($member) == 0){
     		$member = User::whereHas('raffles', function ($query) use ($search) {
 			    $query->where('code', $search);
