@@ -78,7 +78,6 @@ class OperatorController extends Controller
     public function user($id){
     	$user = Auth::user();
     	$member = User::find($id);
-    	return $member;
-    	return view('operator.index', compact('user'));
+    	return view('operator.user', compact('user','member'));
 	}
 }
