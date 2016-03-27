@@ -402,4 +402,14 @@ class AdminController extends Controller
         return redirect('admin/users')->with('msg', 'Die Benutzerdaten wurden erfolgreich aktualisiert.')->with('msgState', 'success');
       }
     }
+
+  /**
+   * Edits the messages.
+   *
+   */
+    public function nachrichten(){
+        $user = Auth::user();
+        return view('admin.nachrichten', compact('user'));
+    }
+
 }

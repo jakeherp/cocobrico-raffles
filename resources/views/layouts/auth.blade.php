@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Order Cocobrico from Cocobrico Commercial as a wholesaler, retailer or other commercial customer.">
-    <meta name="keywords" content="Cocobrico, Charcoal, Coconut, Indonesia, Europe, Shisha, Hookah, Coal">
-    <meta name="publisher" content="Cocobrico Europe Ltd">
+    <meta name="description" content="Cocobrico.info ist das Kundenportal von Cocobrico. Hier findest du verschiedene Aktionen und Verlosungen.">
+    <meta name="keywords" content="Cocobrico, Kohle, Kokosnuss, Indonesien, Europa, Shisha, Hookah">
+    <meta name="publisher" content="Cocobrico Ltd">
     <meta name="author" content="PCServe Media Ltd">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 

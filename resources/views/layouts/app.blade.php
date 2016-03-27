@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Order Cocobrico from Cocobrico Commercial as a wholesaler, retailer or other commercial customer.">
-    <meta name="keywords" content="Cocobrico, Charcoal, Coconut, Indonesia, Europe, Shisha, Hookah, Coal">
+    <meta name="description" content="Cocobrico.info ist das Kundenportal von Cocobrico. Hier findest du verschiedene Aktionen und Verlosungen.">
+    <meta name="keywords" content="Cocobrico, Kohle, Kokosnuss, Indonesien, Europa, Shisha, Hookah">
     <meta name="publisher" content="Cocobrico Ltd">
     <meta name="author" content="PCServe Media Ltd">
 
@@ -50,6 +50,7 @@
 
       <div class="top-bar-right">
         <ul class="dropdown menu" data-dropdown-menu>
+          <li><a href="{{ url('nachrichten') }}" class="iconlink" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="{{ trans('global.messages') }}"><i class="fa fa-envelope"></i><sup class="alert label">2</sup></a></li>
           <li><a href="{{ url('settings') }}" class="iconlink" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="{{ trans('global.settings') }}"><i class="fa fa-cog"></i></a></li>
           <li>
             <a href="javascript:;">
