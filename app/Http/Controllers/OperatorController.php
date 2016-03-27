@@ -38,12 +38,7 @@ class OperatorController extends Controller
     	$user = Auth::user();
     	$search = $request->search;
     	$member = User::where('firstname','like','%'.$search.'%')
-    		->orWhere('lastname','like','%'.$search.'%')
-    		->orWhere('birthday',strtotime($search))
-    		->orWhere(function ($query) use ($search) {
-    			$query->whereBetween('birthday', [strtotime($search)-86400, strtotime($search)+86400]);
-    		})
-    		->get();
+    		->orWhere('lastname','like','%'.$search.'%')->get();
     	if(count($member) == 0){
     		$member = User::whereHas('raffles', function ($query) use ($search) {
 			    $query->where('code', $search);
@@ -55,6 +50,9 @@ class OperatorController extends Controller
     			$member = User::find($code->user_id);
     		}
     	}
+        if(count($member) == 0){
+            $member = User::whereBetween('birthday', [strtotime($search)-86400, strtotime($search)+86400])->get();
+        }
     	if(count($member) == 1){
     		return redirect('operator/'.$member[0]->id);
     	}
