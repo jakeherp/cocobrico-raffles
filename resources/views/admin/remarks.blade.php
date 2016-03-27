@@ -73,12 +73,6 @@
               <span class="input-group-label"><i class="fa fa-comment"></i></span>
                   {{ Form::textarea('body', null, ['class' => 'input-group-field', 'placeholder' => 'Kommentartext']) }}
             </div>
-            <label>
-              <div class="input-group">
-                <i class="fa fa-eye-slash"></i> 
-                {!! Form::checkbox('visible', '1') !!} Der Kommentar ist für den Benutzer sichtbar.
-              </div>
-            </label>
             {!! Form::submit('Kommentar erstellen', ['class' => 'button alert']) !!}
           {!! Form::close() !!}
         </div>

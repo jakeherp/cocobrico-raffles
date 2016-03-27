@@ -13,6 +13,7 @@ use App\Confirmation;
 use App\Country;
 use App\Email;
 use App\File;
+use App\Permission;
 use App\Raffle;
 use App\User;
 
@@ -365,6 +366,27 @@ class AdminController extends Controller
         $user->gender = $request->gender;
         $user->birthday = strtotime($request->birthday);
         $user->save();
+
+        if(Auth::user()->id == $user->id && ($request->role == 'is_user' || $request->role == 'is_operator')){
+            return redirect('admin/users')->with('msg', 'Du kannst deinen eigenen Benutzerrang nicht bearbeiten!')->with('msgState', 'alert');
+        }
+        elseif($request->role == 'is_user'){
+            if($user->hasPermission('is_operator') || $user->hasPermission('is_admin')){
+                $user->permissions()->delete();
+            }
+        }
+        elseif($request->role == 'is_operator' && !$user->hasPermission('is_operator')){
+            $user->permissions()->delete();
+            $role = new Permission();
+            $role->slug = 'is_operator';
+            $user->permissions()->save($role);
+        }
+        elseif($request->role == 'is_admin' && !$user->hasPermission('is_admin')){
+            $user->permissions()->delete();
+            $role = new Permission();
+            $role->slug = 'is_admin';
+            $user->permissions()->save($role);
+        }
 
         $address->firstname = $request->firstname;
         $address->lastname = $request->lastname;

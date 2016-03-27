@@ -78,6 +78,19 @@
           </select>
         </div>
         <label>
+          Rolle
+          <div class="input-group">
+            <span class="input-group-label"><i class="fa fa-star"></i></span>
+            <select name="role" class="input-group-field">
+              <option value="is_user">Normaler Benutzer</option>
+              <option value="is_operator" 
+              @if(!$member->hasPermission('is_admin') && $member->hasPermission('is_operator')) selected @endif>Operator</option>
+              <option value="is_admin" 
+               @if($member->hasPermission('is_admin')) selected @endif>Administrator</option>
+            </select>
+          </div>
+        </label>
+        <label>
           <div class="input-group">
             {!! Form::checkbox('sendNotification', '1', true) !!} Benachrichtigt den Benutzer über die Änderungen per Email. 
           </div>

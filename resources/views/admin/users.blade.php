@@ -6,6 +6,11 @@
 
   	  <div class="large-12 column">
         <h1><i class="fa fa-user"></i> Mitglieder</h1>
+        @if(session()->has('msg'))
+          <div class="callout {{ session('msgState') }}">
+            <p>{{ session('msg') }}</p>
+          </div>
+        @endif
         <div class="horizontal-scroll">
           <table id="table" class="full-table">
             <thead>

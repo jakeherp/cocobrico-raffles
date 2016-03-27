@@ -21,16 +21,6 @@
             <span class="input-group-label"><i class="fa fa-comment"></i></span>
             {{ Form::textarea('body', $remark->body, ['class' => 'input-group-field', 'placeholder' => 'Kommentartext']) }}
           </div>
-          <label>
-            <div class="input-group">
-              <i class="fa fa-eye-slash"></i>
-              @if($remark->visible == 1)
-                {!! Form::checkbox('visible', '1', true) !!} Der Kommentar ist für den Benutzer sichtbar.
-              @else
-                {!! Form::checkbox('visible', '1', false) !!} Der Kommentar ist für den Benutzer sichtbar.
-              @endif
-            </div>
-          </label>
           {!! Form::submit('Änderungen speichern', ['class' => 'button alert']) !!}
           <a class="button secondary" href="{{ URL('admin/users/'.$remark->user_id.'/remarks') }}">Zurück</a>
 		  {!! Form::close() !!}

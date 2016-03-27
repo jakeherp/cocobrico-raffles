@@ -43,6 +43,11 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('impressum', 'PagesController@impressum');
 
+    // Operator Routes
+        Route::get('operator', 'OperatorController@index');
+        Route::post('operator/search', 'OperatorController@search');
+        Route::get('operator/{id}', 'OperatorController@user');
+
     // Admin Routes
         Route::get('admin', 'AdminController@showRafflesView');
         Route::get('admin/changelog', 'AdminController@showChangelog');

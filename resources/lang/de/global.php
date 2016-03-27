@@ -20,6 +20,7 @@ return [
     'company'               => 'Cocobrico Ltd',
     'companies'             => 'Deine Firmen',
     'admin'                 => 'Adminbereich',
+    'operator'              => 'Moderation',
     'language'              => 'German',
 
     'datetimeformat'        => 'd.m.Y H:i:s',

@@ -64,7 +64,6 @@ class RemarksController extends Controller
     		$remark = new Remark();
     		$remark->title = $request->title;
     		$remark->body = $request->body;
-    		if($request->visible == 0){ $remark->visible = 0; } else { $remark->visible = $request->visible; }
     		$member->remarks()->save($remark);
     		return redirect()->back()->with('msg', 'Der Kommentar wurde erfolgreich erstellt.')->with('msgState', 'success');
     	}
@@ -84,7 +83,6 @@ class RemarksController extends Controller
         if($remark != null){
             $remark->title = $request->title;
             $remark->body = $request->body;
-            if($request->visible == 0){ $remark->visible = 0; } else { $remark->visible = $request->visible; }
             $remark->save();
             return redirect('admin/users/'.$remark->user_id.'/remarks')->with('msg', 'Der Kommentar wurde erfolgreich bearbeitet.')->with('msgState', 'success');
         }

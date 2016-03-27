@@ -31,9 +31,9 @@
           </p>
           <p>
             @if(count($member->remarks) != 0)
-              <a class="button primary" href="{{ URL('admin/users/'.$member->id.'/remarks') }}">{{ count($member->remarks) }} Kommentar(e)</a>
+              <a class="button primary" href="{{ URL('admin/users/'.$member->id.'/remarks') }}"><i class="fa fa-comment"></i> {{ count($member->remarks) }} Kommentar(e)</a>
             @else
-              <a class="button primary" href="{{ URL('admin/users/'.$member->id.'/remarks') }}">Kommentar hinzufügen</a>
+              <a class="button primary" href="{{ URL('admin/users/'.$member->id.'/remarks') }}"><i class="fa fa-comment"></i> Kommentieren</a>
             @endif
           </p>
         </div>

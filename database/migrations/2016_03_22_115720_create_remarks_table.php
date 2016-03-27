@@ -17,7 +17,6 @@ class CreateRemarksTable extends Migration
             $table->integer('user_id')->default(0);
             $table->string('title',255)->default('');
             $table->text('body')->default('');
-            $table->boolean('visible')->default(0);
             $table->timestamps();
         });
     }

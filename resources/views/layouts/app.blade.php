@@ -42,6 +42,9 @@
           @if($user->hasPermission('is_admin'))
             <li><a href="{{ url('admin') }}"><i class="fa fa-star"></i> {{ trans('global.admin') }}</a></li>
           @endif
+          @if($user->hasPermission('is_admin') || $user->hasPermission('is_operator'))
+            <li><a href="{{ url('operator') }}"><i class="fa fa-star-half-o"></i> {{ trans('global.operator') }}</a></li>
+          @endif
         </ul>
       </div>
 
@@ -79,6 +82,7 @@
 
       ga('create', 'UA-74888433-1', 'auto');
       ga('send', 'pageview');
+      ga('set', 'anonymizeIp', true);
 
     </script>
   </body>

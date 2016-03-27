@@ -336,7 +336,7 @@ class UserController extends Controller
     {
     	if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
-	        return redirect('dashboard');
+	        return redirect('/');
         }
         else{
         	return redirect()->back()->withInput()->withErrors(['Something went wrong!']);

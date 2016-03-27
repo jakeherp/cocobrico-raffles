@@ -24,8 +24,11 @@ class PagesController extends Controller
 	 * @return Response
 	 */
     public function index(){
+    	if (Auth::check() && Auth::user()->hasPermission('is_operator')) {
+	    	return redirect('operator');
+		}
   		// User is logged in
-    	if (Auth::check()) {
+    	elseif (Auth::check()) {
 	    	return redirect('dashboard');
 		}
 		// User is not logged in
