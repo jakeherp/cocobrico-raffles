@@ -36,6 +36,13 @@ section#login{
 	flex: 1;
 }
 
+.button.extralarge{
+  font-size: 1.5rem;
+}
+.button.extralarge .fa{
+  font-size: 5em;
+}
+
 .nobutton{
     border: 0;
     background: transparent;
