@@ -7,9 +7,16 @@
   	  <div class="large-12 column">
   	  	<h1><i class="fa fa-newspaper-o"></i> Changelog</h1>
         <div class="callout">
+          <h4>29.03.2016</h4>
+          <ul>
+            <li>Neuanordnung der Admin-Navigation</li>
+            <li>Zuweisung der Operatorrolle an Benutzer</li>
+          </ul>
+        </div>
+        <div class="callout">
           <h4>22.03.2016</h4>
           <ul>
-            <li>Im Adminbereich können Kommentare zu den Benutzern erstellt werden.</li>
+            <li>Im Adminbereich können Kommentare zu den Benutzern erstellt werden</li>
             <li>Das Neuversenden der Registrierungs-Bestätigungsemail funktioniert nun per AJAX</li>
           </ul>
         </div>

@@ -52,7 +52,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('operator/{id}', 'OperatorController@user');
 
     // Admin Routes
-        Route::get('admin', 'AdminController@showRafflesView');
+        Route::get('admin', 'AdminController@dashboard');
+        Route::get('admin/dashboard', 'AdminController@dashboard');
         Route::get('admin/changelog', 'AdminController@showChangelog');
         Route::get('admin/codes', 'AdminController@showCodesView');
         Route::post('admin/codes/create', 'CodesController@create');
@@ -106,6 +107,6 @@ Route::group(['middleware' => ['web']], function () {
         Route::put('admin/users/remarks/edit', 'RemarksController@update');
         Route::get('admin/users/remarks/{id}/edit', 'RemarksController@edit');
 
-        Route::get('admin/nachrichten', 'AdminController@nachrichten');
-        Route::get('admin/nachrichten/{id}', 'AdminController@nachricht');
+        Route::get('admin/messages', 'AdminController@showMessagesView');
+        Route::get('admin/messages/{id}', 'AdminController@nachricht');
 });

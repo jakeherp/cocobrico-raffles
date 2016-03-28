@@ -55,14 +55,19 @@
         <div class="off-canvas position-left" id="offCanvasLeft" data-off-canvas>
 
           <ul class="vertical dropdown menu" data-dropdown-menu>
-            <li class="user">{{ $user->firstname }} {{ $user->lastname }}<em>Administrator</em></li>
-            <li><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> Zum Dashboard</a></li>
-            <li class="title"><i class="fa fa-cog"></i> Einstellungen</li>
+              <li class="user">{{ $user->firstname }} {{ $user->lastname }}<em>Administrator</em></li>
+              <li class="title"><i class="fa fa-cog"></i> Einstellungen</li>
               <li><a href="{{ url('admin/raffles') }}"><i class="fa fa-trophy"></i> Aktionen</a></li>
-              <li><a href="{{ url('admin/codes') }}"><i class="fa fa-tag"></i> Codes</a></li>
               <li><a href="{{ url('admin/users') }}"><i class="fa fa-user-secret"></i> Benutzer</a></li>
+              <li><a href="{{ url('admin/codes') }}"><i class="fa fa-tag"></i> Codes</a></li>
               <li><a href="{{ url('admin/emails') }}"><i class="fa fa-envelope"></i> Emails</a></li>
+              <li><a href="{{ url('admin/messages') }}"><i class="fa fa-comment"></i> Nachrichten</a></li>
               <li><a href="{{ url('admin/pdf') }}"><i class="fa fa-file-pdf-o"></i> PDFs</a></li>
+              <li class="title"><i class="fa fa-info"></i> Rollenansicht</li>
+              <li><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> Normaler User</a></li>
+              <li><a href="{{ url('operator') }}"><i class="fa fa-dashboard"></i> Operator</a></li>
+              <li class="title"><i class="fa fa-info"></i> Informationen</li>
+              <li><a href="{{ url('admin') }}"><i class="fa fa-star"></i> Admin-Dashboard</a></li>
               <li><a href="{{ url('admin/changelog') }}"><i class="fa fa-newspaper-o"></i> Changelog</a></li>
           </ul>
 

@@ -49,6 +49,16 @@ class AdminController extends Controller
     	return view('admin.codes', compact('user','raffles'));
 	}
 
+    /**
+     * Shows the messages.
+     *
+     * @return Response
+     */
+    public function showMessagesView(){
+        $user = Auth::user();
+        return view('admin.messages', compact('user'));
+    }
+
 	/**
 	 * Shows the emails view.
 	 *

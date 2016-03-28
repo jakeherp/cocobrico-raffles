@@ -24,7 +24,10 @@ class PagesController extends Controller
 	 * @return Response
 	 */
     public function index(){
-    	if (Auth::check() && Auth::user()->hasPermission('is_operator')) {
+    	if (Auth::check() && Auth::user()->hasPermission('is_admin')) {
+	    	return redirect('admin');
+		}
+    	elseif (Auth::check() && Auth::user()->hasPermission('is_operator')) {
 	    	return redirect('operator');
 		}
   		// User is logged in
