@@ -9,6 +9,12 @@
         <div class="callout">
           <h4>29.03.2016</h4>
           <ul>
+            <li>User können Nachrichten an Admins senden (diese können momentan noch nicht antworten)</li>
+          </ul>
+        </div>
+        <div class="callout">
+          <h4>28.03.2016</h4>
+          <ul>
             <li>Neuanordnung der Admin-Navigation</li>
             <li>Zuweisung der Operatorrolle an Benutzer</li>
           </ul>

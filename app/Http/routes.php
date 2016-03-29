@@ -43,8 +43,10 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('impressum', 'PagesController@impressum');
 
-    Route::get('nachrichten', 'PagesController@nachrichten');
+    Route::get('messages', 'PagesController@messages');
 
+    Route::get('messages/get', 'MessagesController@get');
+    Route::post('messages/send', 'MessagesController@send');
 
     // Operator Routes
         Route::get('operator', 'OperatorController@index');

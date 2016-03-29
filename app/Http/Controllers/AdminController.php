@@ -13,6 +13,7 @@ use App\Confirmation;
 use App\Country;
 use App\Email;
 use App\File;
+use App\Message;
 use App\Permission;
 use App\Raffle;
 use App\User;
@@ -56,7 +57,8 @@ class AdminController extends Controller
      */
     public function showMessagesView(){
         $user = Auth::user();
-        return view('admin.messages', compact('user'));
+        $messages = Message::all();
+        return view('admin.messages', compact('user','messages'));
     }
 
 	/**

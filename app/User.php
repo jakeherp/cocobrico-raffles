@@ -60,6 +60,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the messages sent and received by the user.
+     */
+    public function messages()
+    {
+        return $this->hasMany('App\Message');
+    }
+
+    /**
      * Returns the raffles associated with the user.
      *
      * @return array( Raffle )

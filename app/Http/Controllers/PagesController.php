@@ -117,8 +117,8 @@ class PagesController extends Controller
     	return view('pages.impressum', compact('user'));
 	}
 
-    public function nachrichten(){
+    public function messages(){
     	$user = Auth::user();
-    	return view('pages.nachrichten', compact('user'));
+    	return view('pages.messages', compact('user'));
 	}
 }

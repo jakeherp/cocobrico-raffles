@@ -5,7 +5,7 @@
     <section class="row" id="content">
 
       <div class="large-12 column">
-        <h1><i class="fa fa-envelope"></i> Nachrichten <div class="label">2</div></h1>
+        <h1><i class="fa fa-envelope"></i> Nachrichten <div class="label">{{ count($messages) }}</div></h1>
       </div>
 
       <div class="large-12 column">
