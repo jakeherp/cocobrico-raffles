@@ -8,19 +8,34 @@
         <div class="large-12 columns">
           <h1><i class="fa fa-envelope"></i> Neue Nachrichten</h1>
           <div class="callout">
+          @if( count($conv1) > 0)
+            @foreach($conv1 as $conv)
+              <?php
+                $message =  $conv->messages()->orderBy('sent_at', 'desc')->first();
+              ?>
+              <a href="{{ URL('admin/messages/'.$conv->id) }}" class="divlink">
+                <div class="row">
+                  <div class="medium-1 small-2 columns">
+                    @if(($file = $conv->files()->where('slug','profile_img')->first()) != null)
+                          <img src="{{ URL::asset($file->path) }}" style="border-radius: 50%; margin-right: 1rem;">
+                        @else
+                          <img src="http://placehold.it/50x50" style="border-radius: 50%; margin-right: 1rem;">
+                        @endif
+                  </div>
+                  <div class="medium-8 small-7 columns">
+                    <strong>{{ $conv->firstname }} {{ $conv->lastname }}</strong>
+                    <p>{{ substr($message->text,0,50) }} @if(strlen($message->text) > 50) ... @endif</p>
+                  </div>
+                  <div class="medium-3 small-3 columns text-right">
+                    <em>{{ date(trans('global.datetimeformat'),$message->sent_at) }}</em>
+                  </div>
+              </div>
+              </a>
+            @endforeach
+          @else
+            <p>Keine neuen Nachrichten.</p>
+          @endif
 
-      	  <a href="#" class="divlink"><div class="row">
-	      	  <div class="medium-1 small-2 columns">
-	      		<img src="http://placehold.it/50x50" style="border-radius: 50%; margin-right: 1rem;">
-	      	  </div>
-	      	  <div class="medium-8 small-7 columns">
-	      		<strong>Max Mustermann</strong>
-	      		<p>Lorem ipsum dolor sit amet ...</p>
-	      	  </div>
-	      	  <div class="medium-3 small-3 columns text-right">
-	      	  	<em>24.03.2016 15:23</em>
-	      	  </div>
-	      </div></a>
 	      </div>
         </div>
       </div>
@@ -56,16 +71,18 @@
           <table class="full-width">
             <thead>
               <th>
-                <td>Ausgegeben</td>
+                <td>Vorhanden</td>
                 <td>Verwendet</td>
               </th>
             </thead>
             <tbody>
-              <tr>
-                <td>VIP Tickets Samstag</td>
-                <td>120</td>
-                <td>49</td>
-              </tr>
+              @foreach($raffles as $raffle)
+                <tr>
+                  <td>{{ $raffle->title }}</td>
+                  <td>{{ count($raffle->codes) }}</td>
+                  <td>{{ count($raffle->codes()->where('user_id','!=',0)->get()) }}</td>
+                </tr>
+              @endforeach
             </tbody>
           </table>
         </div>

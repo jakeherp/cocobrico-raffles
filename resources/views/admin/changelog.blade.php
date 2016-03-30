@@ -9,7 +9,8 @@
         <div class="callout">
           <h4>30.03.2016</h4>
           <ul>
-            <li>Administratoren können auf Nachrichten antworten.</li>
+            <li>Admin-Dashboard Funktionalität</li>
+            <li>Administratoren können auf Nachrichten antworten</li>
           </ul>
         </div>
         <div class="callout">
