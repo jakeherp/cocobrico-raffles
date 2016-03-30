@@ -10,7 +10,13 @@
 
       <div class="chat large-12-column" id="chat">
 
-
+        @foreach($user->messages as $message)
+          @if($message->answer == 1)
+            <div class="callout secondary large-9 small-11 pull-left">{{ $message->text }}<em>{{ date('d.m.Y H:m:i', $message->sent_at) }}</em></div>
+          @else
+            <div class="callout primary large-9 small-11 pull-right">{{ $message->text }}<em>{{ date('d.m.Y H:m:i', $message->sent_at) }}</em></div>
+          @endif
+        @endforeach
 
       </div>
 
@@ -34,16 +40,14 @@
       });
 
       $(document).ready(function() {
-          $(".chat").scrollTop($(".chat")[0].scrollHeight);
-
-          getMessages();
-
           $("#sendMessage").click( function(){
             sendMessage();
           });
 
-          setInterval(function(){ getMessages(); }, 10000);
-      } )
+          scrollDown();
+
+          setInterval(function(){ getNewMessages(); }, 10000);
+      } );
 
       function sendMessage(){
         var message = $("#message").val();
@@ -54,7 +58,12 @@
             url: 'messages/send',
             data: {message: message},
             success: function( msg ) {
-              getMessages();
+              var jsDate = new Date();
+              var dateString = getFormattedDate(jsDate);
+
+              $('#chat').append('<div class="callout primary large-9 small-11 pull-right">'+message+'<em>'+dateString+'</em></div>');
+
+              $("#message").val('');
             }
           });
         }
@@ -63,8 +72,7 @@
         }
       }
 
-      function getMessages(){
-        $('#chat').empty();
+      function getNewMessages(){
         $.ajax({
           type: "GET",
           url : "messages/get",
@@ -74,13 +82,12 @@
               var jsDate = new Date(value['sent_at']*1000);
               var dateString = getFormattedDate(jsDate);
 
-              if(value['answer'] != 1){
+              if(value['answer'] == 1){
                 $('#chat').append('<div class="callout secondary large-9 small-11 pull-left">'+value['text']+'<em>'+dateString+'</em></div>');
               }
               else{
                 $('#chat').append('<div class="callout primary large-9 small-11 pull-right">'+value['text']+'<em>'+dateString+'</em></div>');
               }
-              console.log(value['text']);
             });
           }
         }, "json");
@@ -99,6 +106,12 @@
         var seconds = date.getSeconds().toString();
         seconds = seconds.length > 1 ? seconds : '0' + seconds;
         return day + '.' + month + '.' + year + ' ' + hours + ':' + minutes + ':' + seconds;
+      }
+
+      function scrollDown(){
+        var box = $('#chat');
+        var height = box[0].scrollHeight;
+        box.scrollTop(height);
       }
     </script>
 @endsection

@@ -24,6 +24,7 @@ class MessagesController extends Controller
     	$message = new Message();
     	$message->user_id = $user->id;
     	$message->text = $request->message;
+        $message->read = 0;
     	$message->sent_at = time();
     	$message->save();
     	return 1;
@@ -46,6 +47,7 @@ class MessagesController extends Controller
     	$message->text = $request->message;
     	$message->answer = 1;
     	$message->answered = 1;
+        $message->read = 0;
     	$message->sent_at = time();
     	$message->save();
     	return 1;
@@ -58,7 +60,20 @@ class MessagesController extends Controller
      */
     public function get(){
     	$user = Auth::user();
-    	$user->messages()->update(['read'=>1]);
-    	return $user->messages()->orderBy('sent_at', 'desc')->get();
+        $messages = $user->messages()->where('answer',1)->where('read',0)->orderBy('sent_at', 'asc')->get();
+    	$user->messages()->where('answer',1)->update(['read'=>1]);
+    	return $messages;
+    }
+
+    /**
+     * Get all messages.
+     *
+     * @return Response
+     */
+    public function adminGet($user){
+        $user = User::find($user);
+        $messages = $user->messages()->where('answer',0)->where('read',0)->orderBy('sent_at', 'asc')->get();
+        $user->messages()->where('answer',0)->update(['read'=>1]);
+        return $messages;
     }
 }

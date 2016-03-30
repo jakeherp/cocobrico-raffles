@@ -119,6 +119,7 @@ class PagesController extends Controller
 
     public function messages(){
     	$user = Auth::user();
+    	$user->messages()->update(['read'=>1]);
     	return view('pages.messages', compact('user'));
 	}
 }
