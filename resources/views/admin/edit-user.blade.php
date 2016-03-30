@@ -82,7 +82,7 @@
           <div class="input-group">
             <span class="input-group-label"><i class="fa fa-star"></i></span>
             <select name="role" class="input-group-field">
-              <option value="is_user">Normaler Benutzer</option>
+              <option value="is_user">Benutzer</option>
               <option value="is_operator" 
               @if(!$member->hasPermission('is_admin') && $member->hasPermission('is_operator')) selected @endif>Operator</option>
               <option value="is_admin" 

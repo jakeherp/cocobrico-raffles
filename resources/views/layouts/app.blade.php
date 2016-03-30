@@ -38,13 +38,13 @@
       <div class="top-bar-left" id="main-nav">
         <ul class="menu">
           <li><a href="{{ url('dashboard') }}"><i class="fa fa-trophy"></i> {{ trans('global.dashboard') }}</a></li>
-          <li><a href="{{ url('impressum') }}"><i class="fa fa-bank"></i> {{ trans('global.imprint') }}</a></li>
           @if($user->hasPermission('is_admin'))
             <li><a href="{{ url('admin') }}"><i class="fa fa-star"></i> {{ trans('global.admin') }}</a></li>
           @endif
           @if($user->hasPermission('is_admin') || $user->hasPermission('is_operator'))
             <li><a href="{{ url('operator') }}"><i class="fa fa-star-half-o"></i> {{ trans('global.operator') }}</a></li>
           @endif
+          <li><a href="{{ url('impressum') }}"><i class="fa fa-bank"></i> {{ trans('global.imprint') }}</a></li>
         </ul>
       </div>
 
