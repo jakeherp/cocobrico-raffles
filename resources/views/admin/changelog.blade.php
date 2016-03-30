@@ -7,6 +7,12 @@
   	  <div class="large-12 column">
   	  	<h1><i class="fa fa-newspaper-o"></i> Changelog</h1>
         <div class="callout">
+          <h4>30.03.2016</h4>
+          <ul>
+            <li>Administratoren können auf Nachrichten antworten.</li>
+          </ul>
+        </div>
+        <div class="callout">
           <h4>29.03.2016</h4>
           <ul>
             <li>User können Nachrichten an Admins senden (diese können momentan noch nicht antworten)</li>

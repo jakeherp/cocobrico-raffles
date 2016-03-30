@@ -19,6 +19,7 @@ use App\Raffle;
 use App\User;
 
 use Auth;
+use DB;
 use Mail;
 use QrCode;
 use PDF;
@@ -58,7 +59,18 @@ class AdminController extends Controller
     public function showMessagesView(){
         $user = Auth::user();
         $messages = Message::all();
-        return view('admin.messages', compact('user','messages'));
+
+        $conv1 = User::whereHas('messages', function ($query) {
+            $query->where('answered',0);
+        })->get();
+
+        $conv2 = User::whereDoesntHave('messages', function ($query) {
+            $query->where('answered',0);
+        })->whereHas('messages', function ($query) {
+            $query->where('answered',1);
+        })->get();
+        
+       return view('admin.messages', compact('user','conv1','conv2'));
     }
 
 	/**
@@ -416,12 +428,15 @@ class AdminController extends Controller
     }
 
   /**
-   * Edits the messages.
+   * Shows the messages with an User.
    *
+   * @param integer $id
+   * @return Response
    */
-    public function nachrichten(){
+    public function messages($id){
         $user = Auth::user();
-        return view('admin.nachrichten', compact('user'));
+        $member = User::find($id);
+        return view('admin.chat', compact('user','member'));
     }
 
 }

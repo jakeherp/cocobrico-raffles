@@ -43,10 +43,15 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('impressum', 'PagesController@impressum');
 
-    Route::get('messages', 'PagesController@messages');
+    // Messages Routes
+        Route::get('messages', 'PagesController@messages');
 
-    Route::get('messages/get', 'MessagesController@get');
-    Route::post('messages/send', 'MessagesController@send');
+        Route::get('messages/get', 'MessagesController@get');
+        Route::post('messages/send', 'MessagesController@send');
+        
+        Route::get('admin/messages', 'AdminController@showMessagesView');
+        Route::get('admin/messages/{id}', 'AdminController@messages');
+        Route::post('admin/messages/send', 'MessagesController@answer');
 
     // Operator Routes
         Route::get('operator', 'OperatorController@index');
@@ -108,7 +113,5 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('admin/users/remarks/delete', 'RemarksController@delete');
         Route::put('admin/users/remarks/edit', 'RemarksController@update');
         Route::get('admin/users/remarks/{id}/edit', 'RemarksController@edit');
-
-        Route::get('admin/messages', 'AdminController@showMessagesView');
-        Route::get('admin/messages/{id}', 'AdminController@nachricht');
+        
 });

@@ -17,6 +17,7 @@ class CreateMessagesTable extends Migration
             $table->integer('user_id')->default(0);
             $table->text('text')->default('');
             $table->boolean('answer')->default(0);
+            $table->boolean('answered')->default(0);
             $table->boolean('read')->default(0);
             $table->integer('sent_at')->default(0);
             $table->timestamps();
