@@ -41,12 +41,18 @@ class RafflesController extends Controller
     	$raffle->start = strtotime($request->start);
       $raffle->endState = $request->endState;
       $raffle->maxpState = $request->maxpState;
+      $raffle->hasEventDate = $request->hasEventDate;
       if($raffle->maxpState == 0)      { $raffle->maxp = 0; }         else { $raffle->maxp = $request->maxp; }
       if($raffle->endState == 0)       { $raffle->end = 0; }          else { $raffle->end = strtotime($request->end); }
+      if($raffle->hasEventDate == 0)   { $raffle->eventDate = 0; }    else { $raffle->eventDate = strtotime($request->eventDate); }
       if($request->imageReq == null)   { $raffle->imageReq = 0; }     else { $raffle->imageReq = 1; }
       if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; }  else { $raffle->legalAgeReq = 1; }
       if($request->sendPdf == null)    { $raffle->sendPdf = 0; }      else { $raffle->sendPdf = 1; }
       if($request->instWin == null)    { $raffle->instWin = 0; }      else { $raffle->instWin = 1; }
+
+      if($raffle->endState == 1 && $raffle->hasEventDate == 1 && $raffle->eventDate < $raffle->end){
+        return redirect()->back()->withInput()->withErrors(['Das Event-Datum kann nicht vor dem End-Datum liegen.']);
+      }
 
       if($raffle->maxpState == 1 && count($raffle->users) >= $raffle->maxp){
         $raffle->maxpReached = 1;
@@ -104,12 +110,18 @@ class RafflesController extends Controller
         $raffle->start = strtotime($request->start);
         $raffle->endState = $request->endState;
         $raffle->maxpState = $request->maxpState;
+        $raffle->hasEventDate = $request->hasEventDate;
         if($raffle->maxpState == 0)      { $raffle->maxp = 0; }         else { $raffle->maxp = $request->maxp; }
         if($raffle->endState == 0)       { $raffle->end = 0; }          else { $raffle->end = strtotime($request->end); }
+        if($raffle->hasEventDate == 0)   { $raffle->eventDate = 0; }    else { $raffle->eventDate = strtotime($request->eventDate); }
         if($request->imageReq == null)   { $raffle->imageReq = 0; }     else { $raffle->imageReq = 1; }
         if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; }  else { $raffle->legalAgeReq = 1; }
         if($request->sendPdf == null)    { $raffle->sendPdf = 0; }      else { $raffle->sendPdf = 1; }
         if($request->instWin == null)    { $raffle->instWin = 0; }      else { $raffle->instWin = 1; }
+
+        if($raffle->endState == 1 && $raffle->hasEventDate == 1 && $raffle->eventDate < $raffle->end){
+          return redirect()->back()->withInput()->withErrors(['Das Event-Datum kann nicht vor dem End-Datum liegen.']);
+        }
 
         if($raffle->maxpState == 1 && count($raffle->users) >= $raffle->maxp){
           $raffle->maxpReached = 1;

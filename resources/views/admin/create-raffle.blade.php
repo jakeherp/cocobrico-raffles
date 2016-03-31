@@ -38,6 +38,17 @@
             </div>
           </label>
           <label>
+            Event-Zeitpunkt
+            <div class="input-group">
+              <span class="input-group-label"><i class="fa fa-calendar"></i></span>
+              {!! Form::date('eventDate', null, ['id' => 'eventDateInput', 'disabled' => 'true', 'class' => 'input-group-field', 'placeholder' => 'Event-Zeitpunkt']) !!}
+              <div class="input-group-button">
+                {!! Form::hidden('hasEventDate', '0', ['id' => 'hasEventDate']) !!}
+                <a id="eventDateButton" class="button alert">Aktivieren</a>
+              </div>
+            </div>
+          </label>
+          <label>
             Maximale Teilnehmeranzahl
             <div class="input-group">
               <span class="input-group-label"><i class="fa fa-group"></i></span>
@@ -95,7 +106,31 @@
           $('#maxpButton').click( function() {
             handleMaxp(this);
           });
+
+          $('#eventDateButton').click( function() {
+            handleEventDate(this);
+          });
       });
+
+      function handleEventDate(obj){
+        var state = $('#hasEventDate').val();
+        if(state == 1){
+          $(obj).removeClass('success');
+          $(obj).addClass('alert');
+          $(obj).text('Aktivieren');
+          $('#eventDateInput').attr('disabled', true);
+          $('#hasEventDate').val(0);
+          state = 0;
+        }
+        else{
+          $(obj).addClass('success');
+          $(obj).removeClass('alert');
+          $(obj).text('Deaktivieren');
+          $('#eventDateInput').attr('disabled', false);
+          $('#hasEventDate').val(1);
+          state = 1;
+        }
+      }
 
       function handleEndTime(obj){
         var state = $('#endTimeState').val();

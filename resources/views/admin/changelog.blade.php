@@ -7,6 +7,12 @@
   	  <div class="large-12 column">
   	  	<h1><i class="fa fa-newspaper-o"></i> Changelog</h1>
         <div class="callout">
+          <h4>01.04.2016</h4>
+          <ul>
+            <li>Gewinnspielen kann ein Event-Datum hinzugefügt werden.</li>
+          </ul>
+        </div>
+        <div class="callout">
           <h4>30.03.2016</h4>
           <ul>
             <li>Admin-Dashboard Funktionalität</li>

@@ -40,6 +40,17 @@
             </div>
           </label>
           <label>
+            Event-Zeitpunkt
+            <div class="input-group">
+              <span class="input-group-label"><i class="fa fa-calendar"></i></span>
+              {!! Form::date('eventDate', date('Y-m-d',$raffle->eventDate), ['id' => 'eventDateInput', 'disabled' => 'true', 'class' => 'input-group-field', 'placeholder' => 'Event-Zeitpunkt']) !!}
+              <div class="input-group-button">
+                {!! Form::hidden('hasEventDate', $raffle->hasEventDate, ['id' => 'hasEventDate']) !!}
+                <a id="eventDateButton" class="button alert">Aktivieren</a>
+              </div>
+            </div>
+          </label>
+          <label>
             Maximale Teilnehmeranzahl
             <div class="input-group">
               <span class="input-group-label"><i class="fa fa-group"></i></span>
@@ -109,6 +120,7 @@
       $(document).ready(function() {
           var endState = $('#endTimeState').val();
           var maxpState = $('#maxpState').val();
+          var hasEventDate = $('#hasEventDate').val();
 
           if(endState == 1){
             $('#endTimeButton').removeClass('alert');
@@ -136,6 +148,19 @@
             $('#maxpInput').attr('disabled', true);
           }
 
+          if(hasEventDate == 1){
+            $('#eventDateButton').removeClass('alert');
+            $('#eventDateButton').addClass('success');
+            $('#eventDateButton').text('Deaktivieren');
+            $('#eventDateInput').attr('disabled', false);
+          }
+          else{
+            $('#eventDateButton').removeClass('success');
+            $('#eventDateButton').addClass('alert');
+            $('#eventDateButton').text('Aktivieren');
+            $('#eventDateInput').attr('disabled', true);
+          }
+
           $('#endTimeButton').click( function() {
             handleEndTime(this);
           });
@@ -143,7 +168,31 @@
           $('#maxpButton').click( function() {
             handleMaxp(this);
           });
+
+          $('#eventDateButton').click( function() {
+            handleEventDate(this);
+          });
       });
+
+      function handleEventDate(obj){
+        var state = $('#hasEventDate').val();
+        if(state == 1){
+          $(obj).removeClass('success');
+          $(obj).addClass('alert');
+          $(obj).text('Aktivieren');
+          $('#eventDateInput').attr('disabled', true);
+          $('#hasEventDate').val(0);
+          state = 0;
+        }
+        else{
+          $(obj).addClass('success');
+          $(obj).removeClass('alert');
+          $(obj).text('Deaktivieren');
+          $('#eventDateInput').attr('disabled', false);
+          $('#hasEventDate').val(1);
+          state = 1;
+        }
+      }
 
       function handleEndTime(obj){
         var state = $('#endTimeState').val();
