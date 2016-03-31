@@ -7,36 +7,15 @@
   	<div class="row">
         <div class="large-12 columns">
           <h1><i class="fa fa-envelope"></i> Neue Nachrichten</h1>
-          <div class="callout">
-          @if( count($conv1) > 0)
-            @foreach($conv1 as $conv)
-              <?php
-                $message =  $conv->messages()->orderBy('sent_at', 'desc')->first();
-              ?>
-              <a href="{{ URL('admin/messages/'.$conv->id) }}" class="divlink">
-                <div class="row">
-                  <div class="medium-1 small-2 columns">
-                    @if(($file = $conv->files()->where('slug','profile_img')->first()) != null)
-                          <img src="{{ URL::asset($file->path) }}" style="border-radius: 50%; margin-right: 1rem;">
-                        @else
-                          <img src="http://placehold.it/50x50" style="border-radius: 50%; margin-right: 1rem;">
-                        @endif
-                  </div>
-                  <div class="medium-8 small-7 columns">
-                    <strong>{{ $conv->firstname }} {{ $conv->lastname }}</strong>
-                    <p>{{ substr($message->text,0,50) }} @if(strlen($message->text) > 50) ... @endif</p>
-                  </div>
-                  <div class="medium-3 small-3 columns text-right">
-                    <em>{{ date(trans('global.datetimeformat'),$message->sent_at) }}</em>
-                  </div>
-              </div>
-              </a>
-            @endforeach
-          @else
-            <p>Keine neuen Nachrichten.</p>
-          @endif
-
-	      </div>
+          <a href="{{ url('admin/messages') }}">
+            <div class="callout">
+            @if( count($conv1) > 0)
+              <div class="ampel yellow">{{ count($conv1) }} neue Nachrichten.</div>
+            @else
+              <div class="ampel green"></div>Keine neuen Nachrichten.
+            @endif
+            </div>
+          </a>
         </div>
       </div>
       <div class="row">
@@ -45,22 +24,18 @@
           <table class="full-width">
             <thead>
               <th>
-                <td>Benutzer</td>
-                <td>Mitglied seit</td>
+                <td>Anzahl</td>
               </th>
             </thead>
             <tbody>
               @foreach($members as $member)
               <tr>
-                <td>
-                  @if(($file = $member->files()->where('slug','profile_img')->first()) != null)
-                    <div class="round-image" style="background:url('{{ URL::asset($file->path) }}') no-repeat center center;background-size:cover;"></div>
-                  @else
-                    Kein Foto
-                  @endif
-                </td>
-                <td>{{ $member->firstname }} {{ $member->lastname }}</td>
-                <td>{{ date(trans('global.dateformat'),strtotime($member->created_at)) }}</td>
+                <td>Benutzer gesamt</td>
+                <td>{{ count($member->where('id','!=',0)->get()) }}</td>
+              </tr>
+              <tr>
+                <td>Benutzer unvollständig</td>
+                <td>{{ count($member->where('firstname','==',0)->get()) }}</td>
               </tr>
               @endforeach
             </tbody>
@@ -71,16 +46,20 @@
           <table class="full-width">
             <thead>
               <th>
-                <td>Vorhanden</td>
-                <td>Verwendet</td>
+                <td colspan="2">Verwendete Codes</td>
               </th>
             </thead>
             <tbody>
               @foreach($raffles as $raffle)
                 <tr>
                   <td>{{ $raffle->title }}</td>
-                  <td>{{ count($raffle->codes) }}</td>
-                  <td>{{ count($raffle->codes()->where('user_id','!=',0)->get()) }}</td>
+                  <td colspan="2" class="codecount">{{ count($raffle->codes()->where('user_id','!=',0)->get()) }} / {{ count($raffle->codes) }}
+                  @if(count($raffle->codes) >= 1)
+                    <div class="@if((((count($raffle->codes)-count($raffle->codes()->where('user_id','!=',0)->get()))/count($raffle->codes))*100) >= 60) success @elseif((((count($raffle->codes)-count($raffle->codes()->where('user_id','!=',0)->get()))/count($raffle->codes))*100) >= 20) warning @else alert @endif progress"><div class="progress-meter" style="width: {{ ((count($raffle->codes)-count($raffle->codes()->where('user_id','!=',0)->get()))/count($raffle->codes))*100 }}%"></div></div>
+                  @else
+                    <div class="alert progress"><div class="progress-meter" style="width: 5%"></div></div>
+                  @endif
+                  </td>
                 </tr>
               @endforeach
             </tbody>

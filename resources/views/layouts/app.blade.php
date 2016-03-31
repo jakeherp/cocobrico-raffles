@@ -50,12 +50,7 @@
 
       <div class="top-bar-right">
         <ul class="dropdown menu" data-dropdown-menu>
-          <li><a href="{{ url('messages') }}" class="iconlink" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="{{ trans('global.messages') }}"><i class="fa fa-envelope"></i>
-          @if( count ( $messages = $user->messages()->where('read',0)->where('answer',1)->get() ) > 0 )
-            <sup class="alert label">
-              {{ count($messages) }}
-            </sup>
-          @endif
+          <li><a href="{{ url('messages') }}" class="iconlink @if( count ( $messages = $user->messages()->where('read',0)->where('answer',1)->get() ) > 0 ) newmsg @endif" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="{{ trans('global.messages') }}"><i class="fa fa-envelope"></i>          
           </a></li>
           <li><a href="{{ url('settings') }}" class="iconlink" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="{{ trans('global.settings') }}"><i class="fa fa-cog"></i></a></li>
           <li>

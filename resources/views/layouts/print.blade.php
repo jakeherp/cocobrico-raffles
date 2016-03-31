@@ -37,7 +37,7 @@
 
     <header class="row">
       <div class="large-12 columns text-center">
-        <h1><img src="{{ URL::asset('img/logo.svg') }}" alt="{{ trans('global.cocobrico') }}"> {{ trans('global.commercialcustomers') }}</h1>
+        <h1><img src="{{ URL::asset('img/logo_black.png') }}" alt="{{ trans('global.cocobrico') }}"></h1>
       </div>
     </header>
 
