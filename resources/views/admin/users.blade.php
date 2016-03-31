@@ -16,11 +16,12 @@
             <thead>
               <tr>
                 <th class="no-sort"></th>
+                <th class="no-sort"></th>
                 <th>Name</th>
-                <th>Geschlecht</th>
+                <th>M/W</th>
                 <th class="orderby">Geburtsdatum</th>
                 <th>Mitglied seit</th>
-                <th>Aktionsteilnahmen</th>
+                <th>Aktionen</th>
                 <th class="no-sort">Optionen</th>
               </tr>
             </thead>
@@ -33,6 +34,9 @@
                       @else
                         Kein Foto
                       @endif
+                    </td>
+                    <td>
+                      <a href="{{ URL('admin/messages/'.$member->id) }}" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Nachrichtenverlauf"><i class="fa fa-envelope"></i></a>
                     </td>
                     <td>
                       @if($member->firstname == '' && $member->lastname == '')

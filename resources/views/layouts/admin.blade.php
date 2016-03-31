@@ -64,9 +64,9 @@
               <li><a href="{{ url('admin/messages') }}"><i class="fa fa-comment"></i> Nachrichten</a></li>
               <li><a href="{{ url('admin/pdf') }}"><i class="fa fa-file-pdf-o"></i> PDFs</a></li>
               <li class="title"><i class="fa fa-info"></i> Dashboards</li>
-              <li><a href="{{ url('admin') }}"><i class="fa fa-star"></i> Admin Dashboard</a></li>
-              <li><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> User Dashboard</a></li>
-              <li><a href="{{ url('operator') }}"><i class="fa fa-dashboard"></i> Operator Dashboard</a></li>
+              <li><a href="{{ url('admin') }}"><i class="fa fa-star"></i> Admin</a></li>
+              <li><a href="{{ url('operator') }}"><i class="fa fa-dashboard"></i> Operator</a></li>
+              <li><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> User</a></li>
               <li class="title"><i class="fa fa-info"></i> Informationen</li>
               <li><a href="{{ url('admin/changelog') }}"><i class="fa fa-newspaper-o"></i> Changelog</a></li>
           </ul>

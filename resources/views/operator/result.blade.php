@@ -5,7 +5,7 @@
 <section class="row" id="content">
   	<div class="large-12 column">
         @foreach($members as $member)
-        <a href="#">
+        <a href="{{ URL('operator/'.$member->id) }}">
         	<div class="callout">
                 @if(($file = $member->files()->where('slug','profile_img')->first()) != null)
                     <div class="round-image" style="background:url('{{ URL::asset($file->path) }}') no-repeat center center;background-size:cover; float:left; margin-right:1em"></div>
