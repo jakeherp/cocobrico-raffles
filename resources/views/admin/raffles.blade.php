@@ -19,6 +19,7 @@
                 <th>Name</th>
                 <th class="orderby">Startdatum</th>
                 <th>Enddatum</th>
+                <th>Eventdatum</th>
                 <th>Teilnehmer</th>
                 <th>Optionen</th>
               </tr>
@@ -36,6 +37,11 @@
                       <td class="has-success">{{ date(trans('global.datetimeformat'), $raffle->end) }}</td>
                     @else
                       <td>{{ date(trans('global.datetimeformat'), $raffle->end) }}</td>
+                    @endif
+                    @if($raffle->eventDate == 0)
+                      <td>keines</td>
+                    @else
+                      <td>{{ date(trans('global.dateformat'), $raffle->eventDate) }}</td>
                     @endif
                       @if($raffle->maxpState == 0)
                         <td> {{ count($raffle->users) }} </td>
