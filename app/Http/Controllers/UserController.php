@@ -254,6 +254,21 @@ class UserController extends Controller
     }
 
     /**
+     * Edits the users announcement settings.
+     *
+     * @param  Request $request
+     * @return Response
+     */
+    public function saveEmailsChanges(Request $request){
+      $user = Auth::user();
+      if($request->aNewsletter == null) { $user->aNewsletter = 0; } else { $user->aNewsletter = 1; }
+      if($request->aRaffles == null) { $user->aRaffles = 0; } else { $user->aRaffles = 1; }
+      if($request->aMessages == null) { $user->aMessages = 0; } else { $user->aMessages = 1; }
+      $user->save();
+      return redirect('settings')->with('msg', 'Deine Benachrichtigungs-Einstellungen wurden erfolgreich editiert.')->with('msgState', 'success');
+    }
+
+  /**
    * Edits the users profile image
    *
    * @param  Request $request

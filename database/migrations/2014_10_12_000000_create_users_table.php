@@ -21,6 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('register_token', 255)->default('');
             $table->integer('birthday')->default(0);
             $table->integer('gender')->default(0);
+            $table->boolean('aNewsletter')->default(0);
+            $table->boolean('aRaffles')->default(1);
+            $table->boolean('aMessages')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

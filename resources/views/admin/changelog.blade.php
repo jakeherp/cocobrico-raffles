@@ -9,7 +9,10 @@
         <div class="callout">
           <h4>01.04.2016</h4>
           <ul>
-            <li>Admin-Dashboard zeigt die Mitgliederzahlen an</li>
+            <li>Benutzer können auswählen, ob sie Newsletter und Benachrichtigungen über neue Aktionen und Nachrichten erhalten wollen</li>
+            <li>Bei neuen Nachrichten und Aktionen werden Emails an die Benutzer versendet</li>
+            <li>Operator Funktionalität (Ampelsystem)</li>
+            <li>Admin-Dashboard zeigt die Mitgliederzahlen und nur aktive Aktionen an</li>
             <li>Codes-Druckansicht kann nach Suchbegriffen gefiltert werden</li>
             <li>Gewinnspielen kann ein Event-Datum hinzugefügt werden</li>
           </ul>

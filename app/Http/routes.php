@@ -40,6 +40,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::put('settings', 'UserController@edit');
     Route::put('settings/image', 'UserController@image');
     Route::put('settings/password', 'UserController@savePasswordChange');
+    Route::put('settings/emails', 'UserController@saveEmailsChanges');
 
     Route::get('impressum', 'PagesController@impressum');
 

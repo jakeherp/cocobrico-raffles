@@ -81,6 +81,17 @@ class RafflesController extends Controller
           }
         }
 
+      $members = User::where('aRaffles', 1)->get();
+
+      foreach($members as $member){
+        if($member->aRaffles == 1){
+          $sent = Mail::send('emails.aRaffles', ['user' => $member, 'raffle' => $raffle], function ($m) use ($member, $raffle) {
+            $m->from('noreply@cocobrico.com', 'Cocobrico');
+            $m->to($member->email, $member->email)->subject('Neue Aktion: ' . $raffle->title);
+          });
+        }
+      }
+
     	return redirect('admin/raffles');
     }
 

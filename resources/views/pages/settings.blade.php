@@ -77,6 +77,43 @@
               @endif
             </div>
           </div>
+          <div class="row">
+            <div class="large-12 column">
+              <h4>Benachrichtigungen</h4>
+              {!! Form::open(['url' => 'settings/emails', 'method' => 'post']) !!}
+                <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                 <label>
+                    <div class="input-group">
+                      @if($user->aNewsletter == 1)
+                        {!! Form::checkbox('aNewsletter', '1', true) !!} Cocobrico Newsletter aboniert
+                      @else
+                        {!! Form::checkbox('aNewsletter', '1', false) !!} Cocobrico Newsletter abonieren
+                      @endif
+                    </div>
+                  </label>
+                  <label>
+                    <div class="input-group">
+                      @if($user->aRaffles == 1)
+                        {!! Form::checkbox('aRaffles', '1', true) !!} Email bei neuen Aktionen
+                      @else
+                        {!! Form::checkbox('aRaffles', '1', false) !!} Email bei neuen Aktionen
+                      @endif
+                    </div>
+                  </label>
+                  <label>
+                    <div class="input-group">
+                      @if($user->aMessages == 1)
+                        {!! Form::checkbox('aMessages', '1', true) !!} Email bei neuen Chatnachrichten
+                      @else
+                        {!! Form::checkbox('aMessages', '1', false) !!} Email bei neuen Chatnachrichten
+                      @endif
+                    </div>
+                  </label>
+                  <button class="alert button" role="submit">Änderungen Speichern</button>
+              {!! Form::close() !!}
+            </div>
+          </div>
         </div>
       </div>
 
