@@ -20,12 +20,13 @@
       </div>
       <div class="row">
       	<div class="large-6 medium-6 small-12 columns">
-          <h1><i class="fa fa-user"></i>Neue Benutzer</h1>
+          <h1><i class="fa fa-user"></i>Benutzerstatistik</h1>
           <table class="full-width">
             <thead>
-              <th>
-                <td>Anzahl</td>
-              </th>
+              <tr>
+                <th></th>
+                <th>Anzahl</th>
+              </tr>
             </thead>
             <tbody>
               <tr>
@@ -36,6 +37,18 @@
                 <td>Benutzer unvollständig</td>
                 <td>{{ count($members->where('firstname','')) }}</td>
               </tr>
+              <tr>
+                <td>Newsletter abonniert</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Neue Aktionen abonniert</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Mail bei neuer Nachricht aktiviert</td>
+                <td></td>
+              </tr>
             </tbody>
           </table>
       	</div>
@@ -43,15 +56,18 @@
           <h1><i class="fa fa-tag"></i>Codes</h1>
           <table class="full-width">
             <thead>
-              <th>
-                <td colspan="2">Verwendete Codes</td>
-              </th>
+              <tr>
+                <th>Aktion</th>
+                <th>Registriert</th>
+                <th>Verwendete Codes</th>
+              </tr>
             </thead>
             <tbody>
               @foreach($raffles as $raffle)
                 <tr>
                   <td>{{ $raffle->title }}</td>
-                  <td colspan="2" class="codecount">{{ count($raffle->codes()->where('user_id','!=',0)->get()) }} / {{ count($raffle->codes) }}
+                  <td>{{ count($raffle->users) }}</td>
+                  <td class="codecount">{{ count($raffle->codes()->where('user_id','!=',0)->get()) }} / {{ count($raffle->codes) }}
                   @if(count($raffle->codes) >= 1)
                     <div class="@if((((count($raffle->codes)-count($raffle->codes()->where('user_id','!=',0)->get()))/count($raffle->codes))*100) >= 60) success @elseif((((count($raffle->codes)-count($raffle->codes()->where('user_id','!=',0)->get()))/count($raffle->codes))*100) >= 20) warning @else alert @endif progress"><div class="progress-meter" style="width: {{ ((count($raffle->codes)-count($raffle->codes()->where('user_id','!=',0)->get()))/count($raffle->codes))*100 }}%"></div></div>
                   @else
