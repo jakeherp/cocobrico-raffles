@@ -15,37 +15,20 @@
 				</div>
 				<div class="medium-9 small-12 columns">
 					<h5>Aktionen</h5>
-			          <table id="table" class="full-table">
+			          <table class="full-width">
 			            <thead>
 			              <tr>
 			                <th>Name</th>
-			                <th class="orderby">Startdatum</th>
-			                <th>Enddatum</th>
-			                <th>Teilnehmer</th>
+			                <th>Eventdatum</th>
+			                <th>Aktion</th>
 			              </tr>
 			            </thead>
 			            <tbody>
 			              @foreach($member->raffles as $raffle)
 			                 <tr>
 			                    <td>{{ $raffle->title }}</td>
-			                    <td>{{ date(trans('global.datetimeformat'), $raffle->start) }}</td>
-			                    @if($raffle->endState == 0)
-			                      <td>Unbegrenzt</td>
-			                    @elseif($raffle->end <= $raffle->start)
-			                      <td class="has-alert">{{ date(trans('global.datetimeformat'), $raffle->end) }}</td>
-			                    @elseif(time() >= $raffle->end)
-			                      <td class="has-success">{{ date(trans('global.datetimeformat'), $raffle->end) }}</td>
-			                    @else
-			                      <td>{{ date(trans('global.datetimeformat'), $raffle->end) }}</td>
-			                    @endif
-			                      @if($raffle->maxpState == 0)
-			                        <td> {{ count($raffle->users) }} </td>
-			                      @elseif(count($raffle->users) >= $raffle->maxp)
-			                        <td class="has-success"> {{ count($raffle->users) }} / {{ $raffle->maxp }}</td>
-			                      @else
-			                        <td> {{ count($raffle->users) }} / {{ $raffle->maxp }}</td>
-			                      @endif
-			                    </td>
+			                    <td>{{ $raffle->eventDate }}</td>
+			                    <td><button class="success button"><i class="fa fa-check-square-o"></i> Checkin</button></td>
 			                  </tr>
 			              @endforeach
 			            </tbody>
