@@ -17,7 +17,7 @@
 	                    {{ $member->firstname }} {{ $member->lastname }}
 	                @endif
 	            </h5>
-                <h6 style="display:inline-block">{{}}</h6>
+                <h6 style="display:inline-block"></h6>
         	</div>
         </a>
         @endforeach

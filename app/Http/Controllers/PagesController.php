@@ -48,6 +48,8 @@ class PagesController extends Controller
     public function dashboard(){
     	$user = Auth::user();
     	$id = $user->id;
+
+    	// ACTIVE RAFFLE THE USER IS PARTICIPATING IN
     	$raffles_1 = $user->raffles()
     		->where('start','<=',time())
     		->where(function($q) {
@@ -64,11 +66,17 @@ class PagesController extends Controller
 		       })
     		->orderBy('start', 'asc')->get();
 
+    	// ACTIVE RAFFLES
     	$raffles_2 = Raffle::whereDoesntHave('users', function($q) use ($id){
 		    	$q->where('user_id', $id);
 			})
     		->where(function($q) {
     			$q->where('start','<=',time())
+    			->where(function ($query) {
+    				$query->where('hasEventDate','=',1)
+    					  ->where('eventDate','>',time())
+    					  ->orWhere('hasEventDate','=',0);
+    			})
 				->where('endState','=',0)
 				->where('maxpState','=',0)
 				->orWhere(function ($query) {
@@ -84,6 +92,7 @@ class PagesController extends Controller
     		})
 			->orderBy('start', 'asc')->get();
 
+		// OLD RAFFLES THE USER WAS PARTICIPATING
     	$raffles_3 = $user->raffles()
 	        ->where('endState','=',1)
 	        ->where('end','<=',time())

@@ -82,6 +82,11 @@ class OperatorController extends Controller
     public function user($id){
     	$user = Auth::user();
     	$member = User::find($id);
-    	return view('operator.user', compact('user','member'));
+        if($member == null){
+            return redirect('operator')->with('msg', 'Es konnte kein entsprechender Benutzer gefunden werden.')->with('msgState', 'alert');
+        }
+        else{
+    	   return view('operator.user', compact('user','member'));
+        }
 	}
 }

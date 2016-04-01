@@ -22,11 +22,10 @@
 			                <th class="orderby">Startdatum</th>
 			                <th>Enddatum</th>
 			                <th>Teilnehmer</th>
-			                <th>Optionen</th>
 			              </tr>
 			            </thead>
 			            <tbody>
-			              @foreach($raffles as $raffle)
+			              @foreach($member->raffles as $raffle)
 			                 <tr>
 			                    <td>{{ $raffle->title }}</td>
 			                    <td>{{ date(trans('global.datetimeformat'), $raffle->start) }}</td>
@@ -47,27 +46,6 @@
 			                        <td> {{ count($raffle->users) }} / {{ $raffle->maxp }}</td>
 			                      @endif
 			                    </td>
-			                    <td>
-			                      <a href="{{ url('admin/raffles/'. $raffle->id ) }}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Teilnehmer anzeigen"><i class="fa fa-search"></i></a>
-			                      <a 
-			                        href="{{ url('admin/raffles/'. $raffle->id . '/edit' ) }}"
-			                        class="tiny button warning editRaffleButton" 
-			                        data-tooltip aria-haspopup="true" 
-			                        data-disable-hover='false' 
-			                        tabindex=1 
-			                        title="Bearbeiten"
-			                      ><i class="fa fa-pencil"></i></a>
-			                      <a href="{{ url('admin/raffles/'. $raffle->id .'/emails' ) }}" class="tiny button success" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Emails zuordnen"><i class="fa fa-envelope"></i></a>
-			                      <a 
-			                        class="tiny button alert deleteRaffleButton" 
-			                        raffleId="{{ $raffle->id }}" 
-			                        data-tooltip aria-haspopup="true" 
-			                        data-disable-hover='false' 
-			                        tabindex=1 
-			                        title="Löschen" 
-			                        data-open="deleteRaffleModal" 
-			                      ><i class="fa fa-trash"></i></a>
-			                    </td>
 			                  </tr>
 			              @endforeach
 			            </tbody>
@@ -77,7 +55,12 @@
 					Email Adresse: {{ $member->email }}<br>
 					Geburtsdatum: {{ date(trans('global.dateformat'),$member->birthday) }} ({{ floor((time() - $member->birthday) / 31556926) }} Jahre)<br>
 					Anschrift: <br>
-					Mitglied seit:
+					@if($member->address != null)
+		              {{ $member->address->address1 }} {{ $member->address->address2 }}<br>
+		              {{ $member->address->zipcode }} {{ $member->address->city }}<br>
+		              {{ $member->address->country->name }}<br><br>
+		            @endif
+					Mitglied seit: {{ date(trans('global.dateformat'),strtotime($member->created_at)) }}
 				</div>
 			</div>
 		</div>
