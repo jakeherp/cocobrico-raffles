@@ -5,8 +5,12 @@
 <section class="row" id="content">
 	<div class="large-12 column">
 		<h1>{{ $member->firstname }} {{ $member->lastname }}</h1>
-
-		<div class="callout">
+		@if(session()->has('msg'))
+          <div class="callout {{ session('msgState') }}">
+            <p>{!! session('msg') !!}</p>
+          </div>
+        @endif
+		<div class="callout">	
 			<div class="row">
 				<div class="medium-3 small-12 columns">
 					@if(($file = $member->files()->where('slug','profile_img')->first()) != null)
@@ -24,12 +28,38 @@
 			              </tr>
 			            </thead>
 			            <tbody>
-			              @foreach($member->raffles as $raffle)
+			              @foreach($raffles as $raffle)
 			                 <tr>
 			                    <td>{{ $raffle->title }}</td>
-			                    <td>{{ $raffle->eventDate }}</td>
-			                    <td><button class="success button"><i class="fa fa-check-square-o"></i> Checkin</button></td>
-			                  </tr>
+			                    <td>{{ date(trans('global.dateformat'),$raffle->eventDate) }}</td>
+			                    @if($raffle->hasUser($member->id) && $raffle->users()->find($member->id)->pivot->confirmed == 1)
+			                    	<td>
+			                    		<a 
+				                        class="alert button noActionButton" 
+				                        timestamp="{{ date(trans('global.datetimeformat'),strtotime($raffle->users()->find($member->id)->pivot->updated_at)) }}" 
+				                        data-tooltip aria-haspopup="true" 
+				                        data-disable-hover='false' 
+				                        tabindex=1 
+				                        title="Löschen" 
+				                        data-open="noActionModal" 
+				                      	><i class="fa fa-check-square-o"></i> Checkin</a>
+				                      </td>
+			                    @elseif($raffle->hasUser($member->id))
+				                    {!! Form::open(['url' => 'operator/checkin', 'method' => 'post']) !!}
+								        {!! Form::hidden('_method', 'PUT', []) !!}
+								        <input type="hidden" name="user_id" value="{{ $member->id }}">
+								        <input type="hidden" name="raffle_id" value="{{ $raffle->id }}">
+				                    	<td><button class="success button"><i class="fa fa-check-square-o"></i> Checkin</button></td>
+				                    {!! Form::close() !!}
+			                    @else
+			                    	{!! Form::open(['url' => 'operator/register', 'method' => 'post']) !!}
+								        {!! Form::hidden('_method', 'PUT', []) !!}
+								        <input type="hidden" name="user_id" value="{{ $member->id }}">
+								        <input type="hidden" name="raffle_id" value="{{ $raffle->id }}">
+				                    	<td><button class="warning button"><i class="fa fa-check-square-o"></i> Registrieren</button></td>
+				                    {!! Form::close() !!}
+			                    @endif
+			                 </tr>
 			              @endforeach
 			            </tbody>
 			          </table>
@@ -50,5 +80,23 @@
 	</div>
 
 </section>
+
+    <div class="reveal" id="noActionModal" data-reveal>
+      <h3>Code schon verwendet</h3>
+      <p id="timestamp"></p>
+      <div class="callout alert">Keine weitere Aktion möglich.</div>
+      <button class="close-button" data-close aria-label="Close reveal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+     <script>
+      $(document).ready(function() {
+          $('.noActionButton').click( function() {
+             	var timestamp = $(this).attr('timestamp');
+        		$('#timestamp').html(timestamp);
+          });
+      });
+    </script>
 
 @endsection

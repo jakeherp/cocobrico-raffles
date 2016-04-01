@@ -59,6 +59,9 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('operator/search', 'OperatorController@search');
         Route::get('operator/{id}', 'OperatorController@user');
 
+        Route::put('operator/register', 'OperatorController@register');
+        Route::put('operator/checkin', 'OperatorController@checkin');
+
     // Admin Routes
         Route::get('admin', 'AdminController@dashboard');
         Route::get('admin/dashboard', 'AdminController@dashboard');

@@ -19,7 +19,7 @@ class Raffle extends Model
      * @return array( Raffle )
      */
     public function users(){
-        return $this->belongsToMany('App\User','raffle_user')->withPivot('code','created_at','confirmed','code_id');
+        return $this->belongsToMany('App\User','raffle_user')->withPivot('code','created_at','confirmed','code_id','updated_at');
     }
 
     /**
@@ -68,6 +68,23 @@ class Raffle extends Model
      */
     public function maxpReached(){
         if($this->maxpState == 1 && count($this->users) >= $this->maxp){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    /**
+     * Gives back, if the user is already participating in the raffle.
+     *
+     * @param  integer  $id
+     * @return boolean
+     */
+    public function hasUser($id)
+    {
+        $check = $this->users()->find($id);
+        if(count($check) === 1){
             return true;
         }
         else{
