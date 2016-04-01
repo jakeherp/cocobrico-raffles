@@ -66,6 +66,10 @@ section#login{
   border-color:rgba(10,10,10,0.25);
 }
 
+strong + p {
+  margin-bottom:0;
+}
+
 .callout.large{
     padding-top: 2rem;
     padding-bottom: 2rem;
