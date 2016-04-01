@@ -16,6 +16,11 @@ header.row {
 h1 {
 	font-size: 1.75em;
 }
+@media screen and (max-width: 460px){
+  h1 {
+    font-size: 1.5em;
+  }
+}
 
 h1 > img{
 	width: 40%;

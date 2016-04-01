@@ -16,7 +16,9 @@
           @if($message->answer != 1)
             <div class="callout secondary large-9 small-11 pull-left">{{ $message->text }}<em>{{ date('d.m.Y H:m:i', $message->sent_at) }}</em></div>
           @else
-            <div class="callout primary large-9 small-11 pull-right">{{ $message->text }}<em>{{ date('d.m.Y H:m:i', $message->sent_at) }}</em></div>
+            <div class="callout primary large-9 small-11 pull-right">{{ $message->text }}<em>{{ date('d.m.Y H:m:i', $message->sent_at) }}</em>
+<button class="close-button tiny" aria-label="Dismiss alert" type="submit"><span aria-hidden="true">&times;</span></button>
+            </div>
           @endif
         @endforeach
       </div>
