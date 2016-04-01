@@ -9,7 +9,9 @@
         <div class="callout">
           <h4>01.04.2016</h4>
           <ul>
-            <li>Gewinnspielen kann ein Event-Datum hinzugefügt werden.</li>
+            <li>Admin-Dashboard zeigt die Mitgliederzahlen an</li>
+            <li>Codes-Druckansicht kann nach Suchbegriffen gefiltert werden</li>
+            <li>Gewinnspielen kann ein Event-Datum hinzugefügt werden</li>
           </ul>
         </div>
         <div class="callout">

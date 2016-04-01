@@ -37,7 +37,7 @@ class AdminController extends Controller
 	 */
     public function dashboard(){
     	$user = Auth::user();
-        $members = User::where('firstname','!=','')->orderBy('id','desc')->take(5)->get();
+        $members = User::all();
         $conv1 = User::whereHas('messages', function ($query) {
             $query->where('answered',0);
         })->get();

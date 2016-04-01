@@ -9,7 +9,14 @@
         <a href="{{ url('admin/codes/'.$raffle->id.'/create') }}" class="pull-right success button"><i class="fa fa-plus"></i> Codes hinzufügen</a>
         <a id="deactivateSelectedCodes" class="pull-right alert button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Markierte Codes annullieren" disabled="true"><i class="fa fa-ban"></i></a>
         @if(count($raffle->codes) > 0)
-          <a href="{{ url('admin/codes/' . $raffle->id . '/print') }}" class="pull-right primary button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Druckansicht"><i class="fa fa-print"></i></a>
+          <a 
+            id="preparePrintButton" 
+            class="pull-right primary button" 
+            data-tooltip aria-haspopup="true" 
+            data-disable-hover='false' 
+            tabindex=1 
+            title="Druckansicht" 
+            data-open="preparePrintModal"><i class="fa fa-print"></i></a>
         @else
           <a class="pull-right primary button" disabled><i class="fa fa-print"></i></a>
         @endif
@@ -79,6 +86,29 @@
         {!! Form::hidden('_method', 'PUT', []) !!}
         <input type="hidden" id="codeId" name="code_id" value="">
         <button id="deactivateCodeButton" class="alert button">Löschen</button>
+        <button type="reset" class="secondary button" data-close>Abbrechen</button>
+      {!! Form::close() !!}
+      <button class="close-button" data-close aria-label="Close reveal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Modal for filtering codes -->
+    <div class="reveal" id="preparePrintModal" data-reveal>
+      <h3>Auswahl der Codes</h3>
+      <p>Geben Sie Suchbegriffe, getrennt durch Kommata, ein! Lassen Sie das Suchfeld leer, um alle Codes auszuwählen.</p>
+      {!! Form::open(['url' => 'admin/codes/print', 'method' => 'post']) !!}
+        <input type="hidden" id="raffleId" name="raffle_id" value="{{ $raffle->id }}">
+        <div class="callout">
+          <span>Verfügbare Stichworte: </span>
+          @foreach($raffle->codes()->groupBy('remark')->get() as $code)
+              <label class="success label">{{ $code->remark }}</label>
+          @endforeach
+        </div>
+        <div class="input-group">
+          {{ Form::text('remark', null, ['class' => 'input-group-field', 'placeholder' => 'Suchbegriff']) }}
+        </div>
+        {!! Form::submit('Druckansicht', ['class' => 'button alert']) !!}
         <button type="reset" class="secondary button" data-close>Abbrechen</button>
       {!! Form::close() !!}
       <button class="close-button" data-close aria-label="Close reveal" type="button">

@@ -69,7 +69,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::put('admin/codes/deactivateAction', 'CodesController@deactivateAction');
         Route::get('admin/codes/{id}', 'AdminController@detailCodesView');
         Route::get('admin/codes/{id}/create', 'AdminController@createCodesView');
-        Route::get('admin/codes/{id}/print', 'CodesController@printCodes');
+        Route::post('admin/codes/print', 'CodesController@printCodes');
         
         Route::get('admin/emails', 'AdminController@showEmailsView');
         Route::put('admin/emails', 'EmailsController@edit');

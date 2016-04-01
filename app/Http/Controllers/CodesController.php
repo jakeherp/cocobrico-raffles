@@ -102,11 +102,32 @@ class CodesController extends Controller
   /**
    * Print View for a code.
    *
-   * @param integer $id
+   * @param  Request $request
    * @return Response
    */
-    public function printCodes($id){
-      $raffle = Raffle::find($id);
-      return view('admin.codes-print',compact('raffle'));
+    public function printCodes(Request $request){
+      $raffle = Raffle::find($request->raffle_id);
+      $searchFor = $request->remark;
+      if($searchFor == ''){
+        $codes = $raffle->codes;
+      }
+      else{
+        $search = explode(',', $searchFor);
+        $sql = $raffle->codes()->where( function($query) use($search) {
+          $i = 0;
+          foreach ($search as $value) {
+            if($i == 0){
+              $query->where('remark',$value);
+            }
+            else{
+              $query->orWhere('remark',$value);
+            }
+            $i++;
+          }
+        });
+        $codes = $sql->get();
+      }
+
+      return view('admin.codes-print',compact('raffle','codes'));
    }
 }

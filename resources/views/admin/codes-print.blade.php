@@ -12,7 +12,7 @@
     </tr>
   </thead>
   <tbody>
-    @foreach($raffle->codes as $code)
+    @foreach($codes as $code)
     <tr>
       <td>{{ $code->code }}</td>
       <td>{{ $code->remark }}</td>

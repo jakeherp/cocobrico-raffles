@@ -10,7 +10,7 @@
           <a href="{{ url('admin/messages') }}">
             <div class="callout">
             @if( count($conv1) > 0)
-              <div class="ampel yellow">{{ count($conv1) }} neue Nachrichten.</div>
+              <div class="ampel yellow"></div>{{ count($conv1) }} neue Nachricht/en.
             @else
               <div class="ampel green"></div>Keine neuen Nachrichten.
             @endif
@@ -28,16 +28,14 @@
               </th>
             </thead>
             <tbody>
-              @foreach($members as $member)
               <tr>
                 <td>Benutzer gesamt</td>
-                <td>{{ count($member->where('id','!=',0)->get()) }}</td>
+                <td>{{ count($members) }}</td>
               </tr>
               <tr>
                 <td>Benutzer unvollständig</td>
-                <td>{{ count($member->where('firstname','==',0)->get()) }}</td>
+                <td>{{ count($members->where('firstname','')) }}</td>
               </tr>
-              @endforeach
             </tbody>
           </table>
       	</div>
