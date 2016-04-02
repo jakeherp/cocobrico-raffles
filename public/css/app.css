@@ -36,6 +36,12 @@ section#login{
 	margin: 1em auto;
 }
 
+.button{
+  border-radius: 5px;
+  margin: .125rem;
+  padding: 0.4rem 0.5rem;
+  font-size: 1.2em;
+}
 .button.alert {
 	background: #ee1d23;
 	flex: 1;
@@ -138,7 +144,7 @@ a:hover, a:focus{
 
 td {
 	color: #000;
-	font-size: 12px;
+	font-size: .9rem;
 }
 
 section#content{
@@ -163,9 +169,6 @@ section#content{
     text-align: center;
     line-height: 1.5em;
     margin-right: 2px;
-}
-.button{
-	margin: 0;
 }
 
 .boxed-text{
@@ -530,4 +533,12 @@ td.has-success{
 }
 td.has-success:nth-child(even){
   background: #e1faea;
+}
+
+tbody th, tbody td{
+  padding: 0.25rem;
+}
+
+.button.expanded{
+  margin-bottom: 1rem;
 }

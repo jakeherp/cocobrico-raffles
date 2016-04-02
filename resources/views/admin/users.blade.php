@@ -22,15 +22,14 @@
                 <th class="orderby">Geburtsdatum</th>
                 <th>Mitglied seit</th>
                 <th>Aktionen</th>
-                <th class="no-sort">Optionen</th>
               </tr>
             </thead>
             <tbody>
               @foreach($members as $member)
                 @if($member->active == 0)
-                  <tr class="cancelled">
+                  <tr class="cancelled" onclick="document.location = '{{ URL('admin/users/'.$member->id) }}';" style="cursor:pointer;">
                 @else
-                 <tr>
+                  <tr onclick="document.location = '{{ URL('admin/users/'.$member->id) }}';" style="cursor:pointer;">
                 @endif
                     <td>
                       @if(($file = $member->files()->where('slug','profile_img')->first()) != null)
@@ -73,50 +72,6 @@
                     ">
                       {{ count($member->raffles) }}
                     </span></td>
-                    <td>
-                      <a href="{{ URL('admin/users/'.$member->id) }}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Details anzeigen"><i class="fa fa-search"></i></a>
-                      <a 
-                        href="{{ url('admin/users/'. $member->id . '/edit' ) }}"
-                        class="tiny button warning" 
-                        data-tooltip aria-haspopup="true" 
-                        data-disable-hover='false' 
-                        tabindex=1 
-                        title="Bearbeiten"
-                      ><i class="fa fa-pencil"></i></a>
-                      <a href="{{ URL('admin/users/'.$member->id.'/remarks') }}" class="tiny button success" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Kommentare"><i class="fa fa-comment"></i></a>
-                      <a 
-                        class="tiny button alert deleteUserButton" 
-                        userId="{{ $member->id }}" 
-                        data-tooltip aria-haspopup="true" 
-                        data-disable-hover='false' 
-                        tabindex=1 
-                        title="Löschen" 
-                        data-open="deleteUserModal" 
-                      ><i class="fa fa-trash"></i></a>
-                      @if($member->active == 1)
-                        <a 
-                          class="tiny button alert blockUserButton" 
-                          userId="{{ $member->id }}" 
-                          blockState=1 
-                          data-tooltip aria-haspopup="true" 
-                          data-disable-hover='false' 
-                          tabindex=1 
-                          title="Sperren" 
-                          data-open="blockUserModal" 
-                        ><i class="fa fa-ban"></i></a>
-                      @else
-                        <a 
-                          class="tiny button alert blockUserButton" 
-                          userId="{{ $member->id }}" 
-                          blockState=0 
-                          data-tooltip aria-haspopup="true" 
-                          data-disable-hover='false' 
-                          tabindex=1 
-                          title="Entsperren" 
-                          data-open="blockUserModal" 
-                        ><i class="fa fa-ban"></i></a>
-                      @endif
-                    </td>
                   </tr>
               @endforeach
             </tbody>
