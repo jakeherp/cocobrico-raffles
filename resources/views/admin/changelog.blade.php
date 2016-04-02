@@ -9,6 +9,7 @@
         <div class="callout">
           <h4>01.04.2016</h4>
           <ul>
+            <li>Ampelsystem für Aktionen</li>
             <li>Administratoren können neue Konversationen mit Benutzern beginnen</li>
             <li>Administratoren können Chatnachrichten als gelesen / ungelesen markieren</li>
             <li>Administratoren können ihre eigenen Chatnachrichten löschen</li>

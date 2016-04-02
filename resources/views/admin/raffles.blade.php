@@ -16,6 +16,7 @@
           <table id="table" class="full-table">
             <thead>
               <tr>
+                <th></th>
                 <th>Name</th>
                 <th class="orderby">Startdatum</th>
                 <th>Enddatum</th>
@@ -27,6 +28,27 @@
             <tbody>
               @foreach($raffles as $raffle)
                  <tr>
+                    <td>
+                      @if($raffle->endState == 1)
+                        @if( ($raffle->end - time()) < (2 * 24 * 3600) )
+                          <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="< 48h" ><div class="ampel red"></div></a>
+                        @elseif( ($raffle->end - time()) < (5 * 24 * 3600) )
+                          <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="< 5d" ><div class="ampel yellow"></div></a>
+                        @else
+                          <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="< {{ ceil(($raffle->end - time())/(3600*24)) }}d" ><div class="ampel green"></div></a>
+                        @endif
+                      @elseif($raffle->hasEventDate == 1)
+                        @if( ($raffle->eventDate - time()) < (2 * 24 * 3600) )
+                          <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="< 48h" ><div class="ampel red"></div></a>
+                        @elseif( ($raffle->eventDate - time()) < (5 * 24 * 3600) )
+                          <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="< 5d" ><div class="ampel yellow"></div></a>
+                        @else
+                          <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="< {{ ceil(($raffle->end - time())/(3600*24)) }}d" ><div class="ampel green"></div></a>
+                        @endif
+                      @else
+                        <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Nicht auslaufend" ><div class="ampel green"></div></a>
+                      @endif
+                    </td>
                     <td>{{ $raffle->title }}</td>
                     <td>{{ date(trans('global.datetimeformat'), $raffle->start) }}</td>
                     @if($raffle->endState == 0)
