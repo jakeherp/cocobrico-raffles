@@ -138,14 +138,19 @@ class UserController extends Controller
    		else{
    			// User is existing in the database
 		    $regUser = User::where('email', '=', $request->email)->where('password', '!=', '')->first();
-		    if ($regUser != null) {
-		   		// User is already registered
-		   		return redirect('login')->with('email', $request->email);
-		    }
-		    else{
-		   		// User is not registered yet
-		   		return view('auth.verifyEmail', compact('user'));
-		    }
+        if($regUser->active == 0){
+          return redirect('/')->withErrors(['Dein Benutzerkonto wurde gesperrt. Bei Fragen wende dich bitte an europe@cocobrico.com.']);
+        }
+        else{
+  		    if ($regUser != null) {
+  		   		// User is already registered
+  		   		return redirect('login')->with('email', $request->email);
+  		    }
+  		    else{
+  		   		// User is not registered yet
+  		   		return view('auth.verifyEmail', compact('user'));
+  		    }
+        }
    		}
    	}
 
@@ -329,7 +334,7 @@ class UserController extends Controller
 	 * @return Response
 	 */
     public function login(LoginRequest $request){
-		return $this->authenticate($request);
+		  return $this->authenticate($request);
     }
 
     /**
@@ -338,8 +343,8 @@ class UserController extends Controller
 	 * @return Response
 	 */
     public function logout(){
-		Auth::logout();
-		return redirect('/');
+		  Auth::logout();
+		  return redirect('/');
     }
 
     /**
@@ -371,6 +376,33 @@ class UserController extends Controller
         $member = User::find($id);
         $member->delete();
         return redirect()->back();
+      }
+      else{
+        return redirect()->back();
+      }
+    }
+
+    /**
+     * Blocks the user.
+     *
+     * @return Response
+     */
+    public function block(Request $request)
+    {
+      $user = Auth::user();
+      if($user->hasPermission('is_admin') && $user->id != $request->user_id){
+        $id = $request->user_id;
+        $member = User::find($id);
+        if($member->active == 0){
+          $member->active = 1;
+          $member->save();
+          return redirect('admin/users')->with('msg', 'Der Benutzer wurde erfolgreich entsperrt.')->with('msgState', 'success');
+        }
+        else{
+          $member->active = 0;
+          $member->save();
+          return redirect('admin/users')->with('msg', 'Der Benutzer wurde erfolgreich gesperrt.')->with('msgState', 'success');
+        }
       }
       else{
         return redirect()->back();

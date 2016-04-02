@@ -25,6 +25,11 @@ class Authenticate
             }
         }
 
+        if (Auth::user()->active == 0){
+            Auth::logout();
+            return redirect('/')->withErrors(['Dein Benutzerkonto wurde gesperrt. Bei Fragen wende dich bitte an europe@cocobrico.com.']);
+        }
+
         return $next($request);
     }
 }
