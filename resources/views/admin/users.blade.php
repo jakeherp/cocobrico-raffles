@@ -5,6 +5,7 @@
     <section class="row" id="content">
 
   	  <div class="large-12 column">
+        <a href="{{ url('admin/users/newsletter') }}" class="pull-right success button"><i class="fa fa-newspaper-o"></i> Newsletter-Abonnenten exportieren</a>
         <h1><i class="fa fa-user"></i> Mitglieder</h1>
         @if(session()->has('msg'))
           <div class="callout {{ session('msgState') }}">
