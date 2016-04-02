@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Broadcast;
 use App\Country;
 use App\Raffle;
 
@@ -48,6 +49,10 @@ class PagesController extends Controller
     public function dashboard(){
     	$user = Auth::user();
     	$id = $user->id;
+
+    	$broadcasts = Broadcast::where('expiryDate','>=',time())->whereDoesntHave('users', function($query) use ($user) {
+    		$query->where('user_id', $user->id);
+		})->get();
 
     	// ACTIVE RAFFLE THE USER IS PARTICIPATING IN
     	$raffles_1 = $user->raffles()
@@ -102,7 +107,7 @@ class PagesController extends Controller
 	        })
     		->orderBy('start', 'asc')->get();
     	
-    	return view('pages.dashboard', compact('user','raffles_1','raffles_2','raffles_3'));
+    	return view('pages.dashboard', compact('user','raffles_1','raffles_2','raffles_3','broadcasts'));
 	}
 
 	/**

@@ -44,6 +44,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the broadcasts deactivated by the user.
+     */
+    public function broadcasts()
+    {
+        return $this->belongsToMany('App\Broadcast','broadcast_user');
+    }
+
+    /**
      * Get the files the user has uploaded.
      */
     public function files()
