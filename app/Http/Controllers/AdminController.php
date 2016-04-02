@@ -63,19 +63,27 @@ class AdminController extends Controller
      */
     public function showMessagesView(){
         $user = Auth::user();
+        $members = DB::table('users')->orderBy('lastname', 'asc')->get();
         $messages = Message::all();
 
+        // Ungelesene Nachrichten
         $conv1 = User::whereHas('messages', function ($query) {
-            $query->where('answered',0);
+            $query->where('answered',0)->where('read',0);
         })->get();
 
-        $conv2 = User::whereDoesntHave('messages', function ($query) {
+        // Unbeantwortete Nachrichten
+        $conv2 = User::whereHas('messages', function ($query) {
+            $query->where('answered',0)->where('read',1);
+        })->get();
+
+        // Beantwortete Nachrichten
+        $conv3 = User::whereDoesntHave('messages', function ($query) {
             $query->where('answered',0);
         })->whereHas('messages', function ($query) {
             $query->where('answered',1);
         })->get();
         
-       return view('admin.messages', compact('user','conv1','conv2'));
+       return view('admin.messages', compact('user','members','conv1','conv2','conv3'));
     }
 
 	/**
@@ -441,6 +449,7 @@ class AdminController extends Controller
     public function messages($id){
         $user = Auth::user();
         $member = User::find($id);
+        $member->messages()->where('answer',0)->update(['read'=>1]);
         return view('admin.chat', compact('user','member'));
     }
 

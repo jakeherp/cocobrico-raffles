@@ -5,8 +5,11 @@
     <section class="row" id="content">
 
       <div class="large-12 column">
-        <button class="alert button pull-right" data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1" title="Als ungelesen markieren"><i class="fa fa-envelope"></i></button>
-        <button class="alert button pull-right" data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1" title="Als gelesen markieren"><i class="fa fa-envelope-o"></i></button>
+        {!! Form::open(['url' => 'admin/messages/changeState', 'method' => 'post']) !!}
+          <input type="hidden" name="member_id" value="{{ $member->id }}">
+          <button class="alert button pull-right" name="unread" data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1" title="Als ungelesen markieren"><i class="fa fa-envelope"></i></button>
+          <button class="alert button pull-right" name="read" data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1" title="Als gelesen markieren"><i class="fa fa-envelope-o"></i></button>
+        {!! Form::close() !!}
         <h1><i class="fa fa-envelope"></i> Nachrichtenverlauf</h1>
         <p>mit {{ $member->firstname }} {{ $member->lastname }}</p>
       </div>
@@ -17,7 +20,13 @@
             <div class="callout secondary large-9 small-11 pull-left">{{ $message->text }}<em>{{ date('d.m.Y H:m:i', $message->sent_at) }}</em></div>
           @else
             <div class="callout primary large-9 small-11 pull-right">{{ $message->text }}<em>{{ date('d.m.Y H:m:i', $message->sent_at) }}</em>
-<button class="close-button tiny" aria-label="Dismiss alert" type="submit"><span aria-hidden="true">&times;</span></button>
+            <a 
+              class="close-button tiny deleteMessageButton" 
+              aria-label="Dismiss alert" 
+              messageId="{{ $message->id }}" 
+              data-open="deleteMessageModal">
+              <span aria-hidden="true">&times;</span>
+            </a>
             </div>
           @endif
         @endforeach
@@ -34,6 +43,19 @@
 
     </section>
 
+    <!-- Modal for deleting messages -->
+    <div class="reveal" id="deleteMessageModal" data-reveal>
+      <h3>Nachricht löschen</h3>
+      <div class="callout alert">Wollen Sie die Nachricht wirklich löschen?</div>
+      {!! Form::open(['url' => 'admin/messages/delete', 'method' => 'post']) !!}
+        <input type="hidden" id="messageId" name="message_id" value="">
+        <button id="deleteMessageButton" class="alert button">Löschen</button>
+        <button type="reset" class="secondary button" data-close>Abbrechen</button>
+      {!! Form::close() !!}
+      <button class="close-button" data-close aria-label="Close reveal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
 
     <script type="text/javascript">
       $.ajaxSetup({
@@ -48,13 +70,23 @@
             sendMessage();
           });
 
+          $('#chat').on('click', '.deleteMessageButton', function() {
+            deleteMessageModal(this);
+          });
+
           scrollDown();
 
           setInterval(function(){ getNewMessages(); }, 10000);
       } )
 
+      function deleteMessageModal(obj){
+        var messageId = $(obj).attr('messageId');
+        $('#messageId').val(messageId);
+      }
+
       function sendMessage(){
         var message = $("#message").val();
+        var message_id = $("#message_id").val();
         var member = $("#sendMessage").attr('member');
         if(message != ''){
           $("#message").removeClass('has-error');
@@ -66,8 +98,7 @@
               var jsDate = new Date();
               var dateString = getFormattedDate(jsDate);
 
-              $('#chat').append('<div class="callout primary large-9 small-11 pull-right">'+message+'<em>'+dateString+'</em></div>');
-
+              $('#chat').append('<div class="callout primary large-9 small-11 pull-right">'+message+'<em>'+dateString+'</em><button class="close-button tiny" aria-label="Dismiss alert" message="'+message_id+'"><span aria-hidden="true">&times;</span></button></div>');
 
               $("#message").val('');
             }

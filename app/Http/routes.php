@@ -54,6 +54,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('admin/messages/{id}', 'AdminController@messages');
         Route::get('admin/messages/get/{user}', 'MessagesController@adminGet');
         Route::post('admin/messages/send', 'MessagesController@answer');
+        Route::post('admin/messages/delete', 'MessagesController@delete');
+        Route::post('admin/messages/changeState', 'MessagesController@changeState');
 
     // Operator Routes
         Route::get('operator', 'OperatorController@index');

@@ -9,6 +9,14 @@
         <div class="callout">
           <h4>01.04.2016</h4>
           <ul>
+            <li>Administratoren können neue Konversationen mit Benutzern beginnen</li>
+            <li>Administratoren können Chatnachrichten als gelesen / ungelesen markieren</li>
+            <li>Administratoren können ihre eigenen Chatnachrichten löschen</li>
+          </ul>
+        </div>
+        <div class="callout">
+          <h4>01.04.2016</h4>
+          <ul>
             <li>Benutzer können auswählen, ob sie Newsletter und Benachrichtigungen über neue Aktionen und Nachrichten erhalten wollen</li>
             <li>Bei neuen Nachrichten und Aktionen werden Emails an die Benutzer versendet</li>
             <li>Operator Funktionalität (Ampelsystem)</li>

@@ -13,6 +13,11 @@ use Auth;
 
 class MessagesController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('admin', ['except' => ['get','send']]);
+    }
+
     /**
      * Sends a message.
      *
@@ -83,5 +88,36 @@ class MessagesController extends Controller
         $messages = $user->messages()->where('answer',0)->where('read',0)->orderBy('sent_at', 'asc')->get();
         $user->messages()->where('answer',0)->update(['read'=>1]);
         return $messages;
+    }
+
+    /**
+     * Changes the read/unread state of the messages.
+     *
+     * @param  Request $request
+     * @return Response
+     */
+    public function changeState(Request $request){
+        $member = User::find($request->member_id);
+        if(isset($_POST['unread'])) {
+            $member->messages()->where('answer',0)->update(['read'=>0]);
+        }
+        elseif(isset($_POST['read'])) {
+            $member->messages()->where('answer',0)->update(['read'=>1]);
+        }
+
+        return redirect('admin/messages');
+    }
+
+    /**
+     * Delete a message.
+     *
+     * @param  Request $request
+     * @return Response
+     */
+    public function delete(Request $request){
+        $message = Message::find($request->message_id);
+        $user = $message->user;
+        $message->delete();
+        return redirect('admin/messages/'.$user->id);
     }
 }
