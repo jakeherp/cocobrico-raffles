@@ -53,7 +53,7 @@ class Raffle extends Model
      * @return boolean
      */
     public function expired(){
-        if(($this->maxpState == 1 && count($this->users) >= $this->maxp) || ($this->endState == 1 && $this->end <= time())){
+        if(($this->maxpState == 1 && count($this->users) >= $this->maxp) || ($this->endState == 1 && $this->end <= time()) || ($this->hasEventDate == 1 && $this->eventDate <= time())){
             return true;
         }
         else{

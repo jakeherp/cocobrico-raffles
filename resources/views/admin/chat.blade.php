@@ -17,9 +17,10 @@
       <div class="chat large-12-column" id="chat">
         @foreach($member->messages as $message)
           @if($message->answer != 1)
-            <div class="callout secondary large-9 small-11 pull-left">{{ $message->text }}<em>{{ date('d.m.Y H:m:i', $message->sent_at) }}</em></div>
+            <div class="callout secondary large-9 small-11 pull-left">{{ $message->text }}<em>{{ date('d.m.Y H:m:i', $message->sent_at) }}</em>
           @else
             <div class="callout primary large-9 small-11 pull-right">{{ $message->text }}<em>{{ date('d.m.Y H:m:i', $message->sent_at) }}</em>
+          @endif
             <a 
               class="close-button tiny deleteMessageButton" 
               aria-label="Dismiss alert" 
@@ -28,7 +29,6 @@
               <span aria-hidden="true">&times;</span>
             </a>
             </div>
-          @endif
         @endforeach
       </div>
 

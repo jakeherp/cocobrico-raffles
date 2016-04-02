@@ -7,10 +7,17 @@
   	  <div class="large-12 column">
   	  	<h1><i class="fa fa-newspaper-o"></i> Changelog</h1>
         <div class="callout">
-          <h4>01.04.2016</h4>
+          <h4>02.04.2016</h4>
           <ul>
+            <li>Benutzer können Broadcasts von ihrem Dashboard entfernen</li>
+            <li>Administratoren können Broadcasts erstellen, die den Benutzern auf der Startseite angezeigt werden</li>
             <li>Benutzer können vom Administrator gesperrt werden</li>
             <li>Ampelsystem für Aktionen</li>
+          </ul>
+        </div>
+        <div class="callout">
+          <h4>01.04.2016</h4>
+          <ul>
             <li>Administratoren können neue Konversationen mit Benutzern beginnen</li>
             <li>Administratoren können Chatnachrichten als gelesen / ungelesen markieren</li>
             <li>Administratoren können ihre eigenen Chatnachrichten löschen</li>

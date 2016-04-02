@@ -12,7 +12,7 @@
         <div class="callout">
 		  {!! Form::open(['url' => 'admin/raffles/save', 'method' => 'post', 'files' => true]) !!}
       {!! Form::hidden('_method', 'PUT', []) !!}
-      {!! Form::hidden('id', $raffle->id) !!}
+      {!! Form::hidden('id', $broadcast->id) !!}
 		  <div class="input-group">
             <span class="input-group-label"><i class="fa fa-pencil"></i></span>
                 {!! Form::text('title', $raffle->title, ['class' => 'input-group-field', 'placeholder' => 'Titel']) !!}
@@ -85,16 +85,6 @@
                 {!! Form::checkbox('legalAgeReq', '1', true) !!} Der Benutzer muss 18 Jahre alt sein.
               @else
                 {!! Form::checkbox('legalAgeReq', '1', false) !!} Der Benutzer muss 18 Jahre alt sein.
-              @endif
-            </div>
-          </label>
-          <label>
-            <div class="input-group">
-              <i class="fa fa-envelope"></i>
-              @if($raffle->sendPdf == 1)
-                {!! Form::checkbox('sendPdf', '1', true) !!} Bestätigungs-PDF automatisch versenden.
-              @else
-                {!! Form::checkbox('sendPdf', '1', false) !!} Bestätigungs-PDF automatisch versenden.
               @endif
             </div>
           </label>

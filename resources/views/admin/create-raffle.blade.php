@@ -80,12 +80,6 @@
           </label>
           <label>
             <div class="input-group">
-              <i class="fa fa-envelope"></i> 
-              {!! Form::checkbox('sendPdf', '1') !!} Teilnehmer erhalten eine Bestätigungs-PDF.
-            </div>
-          </label>
-          <label>
-            <div class="input-group">
               <i class="fa fa-trophy"></i> 
               {!! Form::checkbox('instWin', '1') !!} Alle Teilnehmer gewinnen automatisch.
             </div>

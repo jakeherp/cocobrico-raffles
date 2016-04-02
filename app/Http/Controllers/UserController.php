@@ -26,6 +26,10 @@ use Mail;
 
 class UserController extends Controller
 {
+    public function __construct(){
+        $this->middleware('admin', ['only' => ['delete','block','exportForNewsletter']]);
+    }
+
     /**
      * Shows the email input field to start the authentication process.
      *
@@ -407,5 +411,15 @@ class UserController extends Controller
       else{
         return redirect()->back();
       }
+    }
+
+    /**
+     * Exports all users, who wants to get the newsletter.
+     *
+     * @return Response
+     */
+    public function exportForNewsletter(){
+      $users = User::where('aNewsletter',1)->get();
+      return $users;
     }
 }

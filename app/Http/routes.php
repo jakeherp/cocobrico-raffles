@@ -36,6 +36,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('dashboard', 'PagesController@dashboard');
     Route::post('dashboard', 'RafflesController@participate');
     Route::post('dashboard/confirm', 'RafflesController@confirmUserCode');
+    Route::post('dashboard/broadcast', 'BroadcastsController@deactivate');
+
     Route::get('settings', 'PagesController@settings');
     Route::put('settings', 'UserController@edit');
     Route::put('settings/image', 'UserController@image');
@@ -111,6 +113,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::put('admin/raffles/save', 'RafflesController@edit');
         
         Route::get('admin/users', 'AdminController@users');
+        Route::get('admin/users/newsletter', 'UserController@exportForNewsletter');
         Route::post('admin/users/delete', 'UserController@delete');
         Route::post('admin/users/block', 'UserController@block');
         Route::get('admin/users/{id}/edit', 'AdminController@editUserView');
@@ -121,5 +124,12 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('admin/users/remarks/delete', 'RemarksController@delete');
         Route::put('admin/users/remarks/edit', 'RemarksController@update');
         Route::get('admin/users/remarks/{id}/edit', 'RemarksController@edit');
+
+        Route::get('admin/broadcasts', 'BroadcastsController@broadcastsView');
+        Route::get('admin/broadcasts/create', 'BroadcastsController@createView');
+        Route::post('admin/broadcasts/create', 'BroadcastsController@create');
+        Route::post('admin/broadcasts/delete', 'BroadcastsController@delete');
+        Route::put('admin/broadcasts/update', 'BroadcastsController@update');
+        Route::get('admin/broadcasts/{id}/edit', 'BroadcastsController@edit');
         
 });

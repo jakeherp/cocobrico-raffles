@@ -59,6 +59,7 @@
               <li class="title"><i class="fa fa-cog"></i> Einstellungen</li>
               <li><a href="{{ url('admin/raffles') }}"><i class="fa fa-trophy"></i> Aktionen</a></li>
               <li><a href="{{ url('admin/users') }}"><i class="fa fa-user-secret"></i> Benutzer</a></li>
+              <li><a href="{{ url('admin/broadcasts') }}"><i class="fa fa-microphone"></i> Broadcasts</a></li>
               <li><a href="{{ url('admin/codes') }}"><i class="fa fa-tag"></i> Codes</a></li>
               <li><a href="{{ url('admin/emails') }}"><i class="fa fa-envelope"></i> Emails</a></li>
               <li><a href="{{ url('admin/messages') }}"><i class="fa fa-comment"></i> Nachrichten</a></li>

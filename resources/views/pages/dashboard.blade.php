@@ -4,6 +4,30 @@
     
     <section id="content">
 
+      @if(count($broadcasts) > 0)
+      <div class="row">
+        <div class="large-12 columns">
+          <h1><i class="fa fa-microphone"></i> Broadcasts</h1>
+        </div>
+      </div>
+      <div class="row">
+          <div class="large-12 small-12 columns">
+            @foreach($broadcasts as $broadcast)
+              <div class="callout {{ $broadcast->slug }}">
+                <h5>{!! $broadcast->headline !!}</h5>
+                <p>{!! $broadcast->text !!}</p>
+                {!! Form::open(['url' => 'dashboard/broadcast', 'method' => 'post']) !!}
+                  <input type="hidden" name="broadcast_id" value="{{ $broadcast->id }}">
+                  <button class="close-button tiny" aria-label="Dismiss alert">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                {!! Form::close() !!}
+              </div>
+            @endforeach
+          </div>
+        </div>
+      @endif
+
       <div class="row">
         <div class="large-12 columns">
           <h1><i class="fa fa-trophy"></i> Aktionen</h1>
@@ -140,6 +164,6 @@
     </div>
   </div>
 
-    </section>
+  </section>
     
 @endsection
