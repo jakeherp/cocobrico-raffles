@@ -11,7 +11,13 @@
           <button class="alert button pull-right" name="read" data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1" title="Als gelesen markieren"><i class="fa fa-envelope-o"></i></button>
         {!! Form::close() !!}
         <h1><i class="fa fa-envelope"></i> Nachrichtenverlauf</h1>
-        <p>mit {{ $member->firstname }} {{ $member->lastname }}</p>
+        <p>mit 
+        @if($member->firstname != '')
+          {{ $member->firstname }} {{ $member->lastname }}
+        @else
+          {{ $member->email }}
+        @endif
+        </p>
       </div>
 
       <div class="chat large-12-column" id="chat">
