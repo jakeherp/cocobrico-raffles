@@ -47,7 +47,6 @@ class RafflesController extends Controller
       if($raffle->hasEventDate == 0)   { $raffle->eventDate = 0; }    else { $raffle->eventDate = strtotime($request->eventDate); }
       if($request->imageReq == null)   { $raffle->imageReq = 0; }     else { $raffle->imageReq = 1; }
       if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; }  else { $raffle->legalAgeReq = 1; }
-      if($request->sendPdf == null)    { $raffle->sendPdf = 0; }      else { $raffle->sendPdf = 1; }
       if($request->instWin == null)    { $raffle->instWin = 0; }      else { $raffle->instWin = 1; }
 
       if($raffle->endState == 1 && $raffle->hasEventDate == 1 && $raffle->eventDate < $raffle->end){
@@ -127,7 +126,6 @@ class RafflesController extends Controller
         if($raffle->hasEventDate == 0)   { $raffle->eventDate = 0; }    else { $raffle->eventDate = strtotime($request->eventDate); }
         if($request->imageReq == null)   { $raffle->imageReq = 0; }     else { $raffle->imageReq = 1; }
         if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; }  else { $raffle->legalAgeReq = 1; }
-        if($request->sendPdf == null)    { $raffle->sendPdf = 0; }      else { $raffle->sendPdf = 1; }
         if($request->instWin == null)    { $raffle->instWin = 0; }      else { $raffle->instWin = 1; }
 
         if($raffle->endState == 1 && $raffle->hasEventDate == 1 && $raffle->eventDate < $raffle->end){
@@ -262,7 +260,7 @@ class RafflesController extends Controller
           $raffle->maxpReached = 1;
           $raffle->save();
         }
-        if($raffle->sendPdf == 1 || $confirmed || $raffle->instWin == 1){
+        if($confirmed || $raffle->instWin == 1){
 
           $qrstring = $user->raffles()->where('raffle_id', $raffle->id)->first()->pivot->code . ', ' . $user->firstname . ' ' . $user->lastname . ', ' . date(trans('global.dateformat'),$user->birthday);
           QrCode::format('png')->margin(0)->size(200)->generate($qrstring, '../public/files/user_'.$user->id.'/qrcode.png');

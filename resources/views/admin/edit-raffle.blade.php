@@ -90,16 +90,6 @@
           </label>
           <label>
             <div class="input-group">
-              <i class="fa fa-envelope"></i>
-              @if($raffle->sendPdf == 1)
-                {!! Form::checkbox('sendPdf', '1', true) !!} Bestätigungs-PDF automatisch versenden.
-              @else
-                {!! Form::checkbox('sendPdf', '1', false) !!} Bestätigungs-PDF automatisch versenden.
-              @endif
-            </div>
-          </label>
-          <label>
-            <div class="input-group">
               <i class="fa fa-trophy"></i>
               @if($raffle->instWin == 1)
                 {!! Form::checkbox('instWin', '1', true) !!} Alle Teilnehmer gewinnen automatisch.
