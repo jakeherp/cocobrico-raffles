@@ -10,109 +10,48 @@
       </div>
 
       <div class="large-12 column">
-
-        <h4>Ungelesene Nachrichten</h4>
-      	
-      	<div class="callout">
-      		@foreach($conv1 as $conv)
-      			<?php
-      				$message =  $conv->messages()->orderBy('sent_at', 'desc')->first();
-      			?>
-      			<a href="{{ URL('admin/messages/'.$conv->id) }}" class="divlink">
-      				<div class="row">
-			      		<div class="medium-1 small-2 columns">
-                  @if(($file = $conv->files()->where('slug','profile_img')->first()) != null)
-                    <div class="round-image" style="background:url('{{ URL::asset($file->path) }}') no-repeat center center;background-size:cover;"></div>
-                  @else
-                    Kein Foto
-                  @endif
-				      	</div>
-				      	<div class="medium-8 small-7 columns">
-				      		<strong>{{ $conv->firstname }} {{ $conv->lastname }}</strong>
-				      		<p>{{ substr($message->text,0,50) }} @if(strlen($message->text) > 50) ... @endif</p>
-				      	</div>
-				      	<div class="medium-3 small-3 columns text-right">
-				      		<em>{{ date(trans('global.datetimeformat'),$message->sent_at) }}</em> 
-                  @if(time()-$message->sent_at > (48*3600))
-                    <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="> 48h" ><div class="ampel red"></div></a>
-                  @else
-                    <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="< 48h" ><div class="ampel yellow"></div></a>
-                  @endif
-				      	</div>
-			      </div>
-      			</a>
-      		@endforeach
-      	</div>
-      </div>
-
-      <div class="large-12 column">
-
-            <h4>Unbeantwortete Nachrichten</h4>
-            
-            <div class="callout">
-              @foreach($conv2 as $conv)
-                <?php
-                  $message =  $conv->messages()->orderBy('sent_at', 'desc')->first();
-                ?>
-                <a href="{{ URL('admin/messages/'.$conv->id) }}" class="divlink">
-                <div class="row">
-                  <div class="medium-1 small-2 columns">
-                    @if(($file = $conv->files()->where('slug','profile_img')->first()) != null)
-                      <img src="{{ URL::asset($file->path) }}" style="border-radius: 50%; margin-right: 1rem;">
-                    @else
-                      <img src="http://placehold.it/50x50" style="border-radius: 50%; margin-right: 1rem;">
-                    @endif
-                  </div>
-                  <div class="medium-8 small-7 columns">
-                    <strong>{{ $conv->firstname }} {{ $conv->lastname }}</strong>
-                    <p>{{ substr($message->text,0,50) }} @if(strlen($message->text) > 50) ... @endif</p>
-                  </div>
-                  <div class="medium-3 small-3 columns text-right">
-                    <em>{{ date(trans('global.datetimeformat'),$message->sent_at) }}</em>
-                    @if(time()-$message->sent_at > (48*3600))
-                      <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="> 48h" ><div class="ampel red"></div></a>
-                    @else
-                      <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="< 48h" ><div class="ampel yellow"></div></a>
-                    @endif
-                  </div>
-                </div>
-                </a>
-              @endforeach
-            </div>
-      </div>
-
-      <div class="large-12 column">
-
-            <h4>Beantwortete Nachrichten</h4>
-            
-            <div class="callout">
-
-                  @foreach($conv3 as $conv)
-                        <?php
-                          $message =  $conv->messages()->orderBy('sent_at', 'desc')->first();
-                        ?>
-                        <a href="{{ URL('admin/messages/'.$conv->id) }}" class="divlink">
-                              <div class="row">
-                                    <div class="medium-1 small-2 columns">
-                                          @if(($file = $conv->files()->where('slug','profile_img')->first()) != null)
-                                    <img src="{{ URL::asset($file->path) }}" style="border-radius: 50%; margin-right: 1rem;">
-                                  @else
-                                    <img src="http://placehold.it/50x50" style="border-radius: 50%; margin-right: 1rem;">
-                                  @endif
-                                    </div>
-                                    <div class="medium-8 small-7 columns">
-                                          <strong>{{ $conv->firstname }} {{ $conv->lastname }}</strong>
-                                          <p>{{ substr($message->text,0,50) }} @if(strlen($message->text) > 50) ... @endif</p>
-                                    </div>
-                                    <div class="medium-3 small-3 columns text-right">
-                                          <em>{{ date(trans('global.datetimeformat'),$message->sent_at) }}</em>
-                                    </div>
-                        </div>
-                        </a>
-                  @endforeach
-
-            </div>
-      </div>
+        <table class="full-width">
+          @foreach($conv1 as $conv)
+            <?php
+              $message =  $conv->messages()->orderBy('sent_at', 'desc')->first();
+            ?>
+            <tr onclick="document.location = '{{ URL('admin/messages/'.$message->user->id) }}';" style="cursor:pointer;">
+              <td>
+                @if(time()-$message->sent_at > (48*3600))
+                  <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="> 48h" ><div class="ampel red"></div></a>
+                @else
+                  <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="< 48h" ><div class="ampel yellow"></div></a>
+                @endif
+              </td>
+              <td>
+                <strong>{{ $conv->firstname }} {{ $conv->lastname }}</strong> {{ substr($message->text,0,50) }} @if(strlen($message->text) > 50) ... @endif
+              </td>
+              <td>
+                <em>{{ date(trans('global.datetimeformat'),$message->sent_at) }}</em> 
+              </td>
+            </tr>
+          @endforeach
+          @foreach($conv2 as $conv)
+            <?php
+              $message =  $conv->messages()->orderBy('sent_at', 'desc')->first();
+            ?>
+            <tr onclick="document.location = '{{ URL('admin/messages/'.$message->user->id) }}';" style="cursor:pointer;">
+              <td>
+                @if(time()-$message->sent_at > (48*3600))
+                  <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="> 48h" ><div class="ampel red"></div></a>
+                @else
+                  <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="< 48h" ><div class="ampel yellow"></div></a>
+                @endif
+              </td>
+              <td>
+                <strong>{{ $conv->firstname }} {{ $conv->lastname }}</strong> {{ substr($message->text,0,50) }} @if(strlen($message->text) > 50) ... @endif
+              </td>
+              <td>
+                <em>{{ date(trans('global.datetimeformat'),$message->sent_at) }}</em> 
+              </td>
+            </tr>
+          @endforeach
+        </table>
 
     </section>
 
