@@ -27,7 +27,13 @@
             </thead>
             <tbody>
               @foreach($raffles as $raffle)
-                 <tr>
+                @if($raffle->expired())
+                  <tr class="has-error">
+                @elseif($raffle->start <= time())
+                  <tr class="has-success">
+                @else
+                  <tr>
+                @endif
                     <td>
                       @if($raffle->endState == 1)
                         @if( ($raffle->end - time()) < (2 * 24 * 3600) )
