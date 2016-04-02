@@ -7,7 +7,6 @@
               @if($member->active == 1)
                 <a 
                   class="button small alert blockUserButton pull-right" 
-                  userId="{{ $member->id }}" 
                   blockState=1 
                   data-tooltip aria-haspopup="true" 
                   data-disable-hover='false' 
@@ -18,7 +17,6 @@
               @else
                 <a 
                   class="button small alert blockUserButton pull-right" 
-                  userId="{{ $member->id }}" 
                   blockState=0 
                   data-tooltip aria-haspopup="true" 
                   data-disable-hover='false' 
@@ -29,7 +27,6 @@
               @endif
               <a 
                 class="button small alert deleteUserButton pull-right" 
-                userId="{{ $member->id }}" 
                 data-tooltip aria-haspopup="true" 
                 data-disable-hover='false' 
                 tabindex=1 
@@ -64,7 +61,13 @@
                 href="{{ URL('admin/users/'. $member->id . '/edit' ) }}"
                 ><i class="fa fa-pencil"></i></a>
 
-        <h4>{{ $member->firstname }} {{ $member->lastname }}</h4>
+        <h4>
+        @if($member->firstname == '')
+          {{ $member->email }}
+        @else
+          {{ $member->firstname }} {{ $member->lastname }}
+        @endif
+        </h4>
          @if(session()->has('msg'))
           <div class="callout {{ session('msgState') }}">
             <p>{!! session('msg') !!}</p>
@@ -205,6 +208,34 @@
       </button>
     </div>
 
+    <!-- Modal for deleting users -->
+    <div class="reveal" id="deleteUserModal" data-reveal>
+      <h3>Benutzer löschen</h3>
+      <div class="callout alert">Wollen Sie den Benutzer wirklich löschen?</div>
+      {!! Form::open(['url' => 'admin/users/delete', 'method' => 'post']) !!}
+        <input type="hidden" id="userId" name="userId" value="{{ $member->id }}">
+        <button id="deleteUserButton" class="alert button">Löschen</button>
+        <button type="reset" class="secondary button" data-close>Abbrechen</button>
+      {!! Form::close() !!}
+      <button class="close-button" data-close aria-label="Close reveal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Modal for blocking users -->
+    <div class="reveal" id="blockUserModal" data-reveal>
+      <h3 id="blockUserHeadline">Benutzer sperren</h3>
+      <div class="callout alert" id="blockUserText">Wollen Sie den Benutzer wirklich sperren?</div>
+      {!! Form::open(['url' => 'admin/users/block', 'method' => 'post']) !!}
+        <input type="hidden" id="userId2" name="user_id" value="{{ $member->id }}">
+        <button id="blockUserButton" class="alert button">Bestätigen</button>
+        <button type="reset" class="secondary button" data-close>Abbrechen</button>
+      {!! Form::close() !!}
+      <button class="close-button" data-close aria-label="Close reveal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
     <script>
      $(document).ready(function() {
           // Functionality for confirming users:
@@ -213,6 +244,16 @@
           });
           $('#table').on('click', '.resendModalButton', function() {
             resendModal(this);
+          });
+
+          // Functionality for deleting user:
+          $('#table').on('click', '.deleteUserButton', function() {
+            deleteUserModal(this);
+          });
+
+          // Functionality for blocking user:
+          $('#table').on('click', '.blockUserButton', function() {
+            blockUserModal(this);
           });
       } );
 
@@ -224,6 +265,19 @@
       function resendModal(obj){
         var raffleId = $(obj).attr('raffleId');
         $('#raffleId2').val(raffleId);
+      }
+
+
+      function blockUserModal(obj){
+        var blockState = $(obj).attr('blockState');
+        if(blockState == 1){
+          $('#blockUserHeadline').html('Benutzer sperren');
+          $('#blockUserText').html('Wollen Sie den Benutzer wirklich sperren?');
+        }
+        else{
+          $('#blockUserHeadline').html('Benutzer entsperren');
+          $('#blockUserText').html('Wollen Sie den Benutzer wirklich entsperren?');
+        }
       }
     </script>
 	

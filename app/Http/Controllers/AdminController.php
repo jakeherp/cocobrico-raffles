@@ -265,10 +265,15 @@ class AdminController extends Controller
     	$member = User::find($id);
     	$countries = Country::where('active',1)->get();
     	if($member != null){
-    		return view('admin.edit-user', compact('user','member','countries'));
+            if($member->address == null){
+                return redirect('admin/users')->with('msg', 'Der User kann nicht bearbeitet werden, da seine Registrierung nicht abgeschlossen ist.')->with('msgState', 'alert');
+            }
+            else{
+    		  return view('admin.edit-user', compact('user','member','countries'));
+            }
     	}
     	else{
-    		return redirect('admin/users');
+    		return redirect('admin/users')->with('msg', 'Der User existiert nicht.')->with('msgState', 'alert');
     	}
     }
 
