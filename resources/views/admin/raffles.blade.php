@@ -16,13 +16,13 @@
           <table id="table" class="full-table">
             <thead>
               <tr>
-                <th></th>
+                <th class="no-sort"></th>
                 <th>Name</th>
                 <th class="orderby">Startdatum</th>
                 <th>Enddatum</th>
                 <th>Eventdatum</th>
                 <th>Teilnehmer</th>
-                <th>Optionen</th>
+                <th class="no-sort">Optionen</th>
               </tr>
             </thead>
             <tbody>
