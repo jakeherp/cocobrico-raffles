@@ -32,7 +32,12 @@
 				      		<p>{{ substr($message->text,0,50) }} @if(strlen($message->text) > 50) ... @endif</p>
 				      	</div>
 				      	<div class="medium-3 small-3 columns text-right">
-				      		<em>{{ date(trans('global.datetimeformat'),$message->sent_at) }}</em> <div class="ampel yellow"></div>
+				      		<em>{{ date(trans('global.datetimeformat'),$message->sent_at) }}</em> 
+                  @if(time()-$message->sent_at > (48*3600))
+                    <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="> 48h" ><div class="ampel red"></div></a>
+                  @else
+                    <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="< 48h" ><div class="ampel yellow"></div></a>
+                  @endif
 				      	</div>
 			      </div>
       			</a>
@@ -64,6 +69,11 @@
                   </div>
                   <div class="medium-3 small-3 columns text-right">
                     <em>{{ date(trans('global.datetimeformat'),$message->sent_at) }}</em>
+                    @if(time()-$message->sent_at > (48*3600))
+                      <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="> 48h" ><div class="ampel red"></div></a>
+                    @else
+                      <a data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="< 48h" ><div class="ampel yellow"></div></a>
+                    @endif
                   </div>
                 </div>
                 </a>
