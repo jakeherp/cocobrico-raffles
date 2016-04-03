@@ -10,6 +10,7 @@ use App\Message;
 use App\User;
 
 use Auth;
+use Mail;
 
 class MessagesController extends Controller
 {
