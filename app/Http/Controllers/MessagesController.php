@@ -58,10 +58,10 @@ class MessagesController extends Controller
     	$message->save();
 
         if($member->aMessages == 1){
-            $sent = Mail::send('emails.aMessage', ['user' => $member, 'message' => $message], function ($m) use ($member) {
-              $m->from('noreply@cocobrico.com', 'Cocobrico');
-              $m->to($member->email, $member->email)->subject('Neue Nachricht');
-            });
+          $sent = Mail::send('emails.aMessage', ['user' => $member], function ($m) use ($member) {
+            $m->from('noreply@cocobrico.com', 'Cocobrico');
+            $m->to($member->email, $member->email)->subject('Neue Nachricht');
+          });
         }
 
     	return 1;

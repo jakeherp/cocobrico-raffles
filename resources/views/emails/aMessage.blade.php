@@ -3,7 +3,6 @@
 	<div style="background: #fff; color: #000; padding: 20px; width: 90%; margin: 20px auto;">
 		<p>Hallo {{ $user->firstname }},</p>
 		<p>Du hast eine neue Nachricht auf <a href="http://www.cocobrico.info">Cocobrico</a>.</p>
-		<p>Die Nachricht lautet: "{{ $message->text }}".</p>
 		<p>Mit freundlichen Grüßen,<br>Dein Cocobrico Team</p>
 	</div>
 	<div style="text-align: center; color: #fff;">&copy; <?=date("Y");?> {{ trans('global.company') }}</div>
