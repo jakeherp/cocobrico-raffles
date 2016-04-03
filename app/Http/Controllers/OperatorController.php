@@ -43,34 +43,42 @@ class OperatorController extends Controller
 	 */
     public function search(Request $request){
     	$user = Auth::user();
-    	$search = $request->search;
-    	$member = User::where('firstname','like','%'.$search.'%')
-    		->orWhere('lastname','like','%'.$search.'%')
+      if(isset($request->searchCode)){
+        $search = $request->searchCode;
+        $member = User::whereHas('raffles', function ($query) use ($search) {
+          $query->where('code', $search);
+        })->get();
+        if(count($member) == 0){
+          $code = Code::where('code',$search)->first();
+          if($code != null){
+            $member = User::find($code->user_id);
+          }
+        }
+      }
+      elseif(isset($request->searchUser)){
+        $search = $request->searchUser;
+        $member = User::where('firstname','like','%'.$search.'%')
+        ->orWhere('lastname','like','%'.$search.'%')
             ->orWhere(DB::raw("CONCAT(`firstname`, ' ', `lastname`)"), 'LIKE', "%".$search."%")
             ->orWhere(DB::raw("CONCAT(`lastname`, ' ', `firstname`)"), 'LIKE', "%".$search."%")
             ->get();
-    	if(count($member) == 0){
-    		$member = User::whereHas('raffles', function ($query) use ($search) {
-			    $query->where('code', $search);
-			})->get();
-    	}
-    	if(count($member) == 0){
-    		$code = Code::where('code',$search)->first();
-    		if($code != null){
-    			$member = User::find($code->user_id);
-    		}
-    	}
         if(count($member) == 0){
-            $d = DateTime::createFromFormat(trans('global.dateformat'), $search);
-            if($d && $d->format(trans('global.dateformat')) == $search){
-                $member = User::whereBetween('birthday', [strtotime($search)-86400, strtotime($search)+86400])->get();
-            }
+          $d = DateTime::createFromFormat(trans('global.dateformat'), $search);
+          if($d && $d->format(trans('global.dateformat')) == $search){
+            $member = User::whereBetween('birthday', [strtotime($search)-86400, strtotime($search)+86400])->get();
+          }
         }
+      }
+      else{
+        return redirect('operator')->with('msg', 'Geben Sie einen Suchbegriff ein!')->with('msgState', 'alert');
+      }
+
     	if(count($member) == 1){
-    		return redirect('operator/'.$member[0]->id);
+        if($member[0] != null){ $member = $member[0]; }
+    		return redirect('operator/'.$member->id);
     	}
     	elseif(count($member) > 1){
-            $members = $member;
+        $members = $member;
     		return view('operator.result', compact('user','members'));
     	}
     	else{
