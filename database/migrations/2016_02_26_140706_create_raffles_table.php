@@ -22,6 +22,7 @@ class CreateRafflesTable extends Migration
             $table->boolean('imageReq')->default(0);
             $table->boolean('legalAgeReq')->default(0);
             $table->boolean('instWin')->default(0);
+            $table->boolean('announcement')->default(1);
             $table->boolean('hasEventDate')->default(0);
             $table->boolean('endState')->default(1);
             $table->boolean('maxpState')->default(0);

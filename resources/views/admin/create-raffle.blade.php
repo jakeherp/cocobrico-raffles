@@ -84,6 +84,12 @@
               {!! Form::checkbox('instWin', '1') !!} Alle Teilnehmer gewinnen automatisch.
             </div>
           </label>
+          <label>
+            <div class="input-group">
+              <i class="fa fa-microphone"></i> 
+              {!! Form::checkbox('announcement', '1', true) !!} Benutzer werden über neue Aktion per Email benachrichtigt.
+            </div>
+          </label>
           {!! Form::submit('Aktion erstellen', ['class' => 'button alert']) !!}
 		  {!! Form::close() !!}
         </div>

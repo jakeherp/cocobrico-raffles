@@ -48,6 +48,7 @@ class RafflesController extends Controller
       if($request->imageReq == null)   { $raffle->imageReq = 0; }     else { $raffle->imageReq = 1; }
       if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; }  else { $raffle->legalAgeReq = 1; }
       if($request->instWin == null)    { $raffle->instWin = 0; }      else { $raffle->instWin = 1; }
+      if($request->announcement == null)    { $raffle->announcement = 0; }      else { $raffle->announcement = 1; }
 
       if($raffle->endState == 1 && $raffle->hasEventDate == 1 && $raffle->eventDate < $raffle->end){
         return redirect()->back()->withInput()->withErrors(['Das Event-Datum kann nicht vor dem End-Datum liegen.']);
@@ -80,14 +81,16 @@ class RafflesController extends Controller
           }
         }
 
-      $members = User::where('aRaffles', 1)->get();
+      if($raffle->announcement == 1){
+        $members = User::where('aRaffles', 1)->get();
 
-      foreach($members as $member){
-        if($member->aRaffles == 1){
-          $sent = Mail::send('emails.aRaffles', ['user' => $member, 'raffle' => $raffle], function ($m) use ($member, $raffle) {
-            $m->from('noreply@cocobrico.com', 'Cocobrico');
-            $m->to($member->email, $member->email)->subject('Neue Aktion: ' . $raffle->title);
-          });
+        foreach($members as $member){
+          if($member->aRaffles == 1){
+            $sent = Mail::send('emails.aRaffles', ['user' => $member, 'raffle' => $raffle], function ($m) use ($member, $raffle) {
+              $m->from('noreply@cocobrico.com', 'Cocobrico');
+              $m->to($member->email, $member->email)->subject('Neue Aktion: ' . $raffle->title);
+            });
+          }
         }
       }
 
