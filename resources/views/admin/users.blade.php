@@ -5,7 +5,7 @@
     <section class="row" id="content">
 
   	  <div class="large-12 column">
-        <a href="{{ url('admin/users/newsletter') }}" class="pull-right success button"><i class="fa fa-newspaper-o"></i> Newsletter-Abonnenten exportieren</a>
+        <a href="{{ url('admin/users/newsletter') }}" class="pull-right small alert button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Newsletter Abonnenten CSV Download"><i class="fa fa-download"></i></a>
         <h1><i class="fa fa-user"></i> Mitglieder</h1>
         @if(session()->has('msg'))
           <div class="callout {{ session('msgState') }}">

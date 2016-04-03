@@ -94,7 +94,7 @@
                     @if(count($raffle->codes) >= 1)
                       <div class="@if((((count($raffle->codes)-count($raffle->codes()->where('user_id','!=',0)->get()))/count($raffle->codes))*100) >= 60) success @elseif((((count($raffle->codes)-count($raffle->codes()->where('user_id','!=',0)->get()))/count($raffle->codes))*100) >= 20) warning @else alert @endif progress"><div class="progress-meter" style="width: {{ ((count($raffle->codes)-count($raffle->codes()->where('user_id','!=',0)->get()))/count($raffle->codes))*100 }}%"></div></div>
                     @else
-                      <div class="alert progress"><div class="progress-meter" style="width: 5%"></div></div>
+                      <div class="alert progress"><div class="progress-meter" style="width: 0%"></div></div>
                     @endif
                     </td>
                   </tr>

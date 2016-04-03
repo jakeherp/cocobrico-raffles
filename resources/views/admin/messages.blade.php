@@ -5,7 +5,6 @@
     <section class="row" id="content">
 
       <div class="large-12 column">
-        <a class="success button pull-right" data-open="newMessageModal"><i class="fa fa-plus"></i> Neue Nachricht</a>
         <h1><i class="fa fa-envelope"></i> Nachrichten <div class="label">{{ count($conv1) }}</div></h1>
       </div>
 

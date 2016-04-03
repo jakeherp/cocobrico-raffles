@@ -19,8 +19,8 @@ return [
     'commercialcustomers'   => 'Kundenportal',
     'company'               => 'Cocobrico Ltd',
     'companies'             => 'Deine Firmen',
-    'admin'                 => 'Adminbereich',
-    'operator'              => 'Moderation',
+    'admin'                 => 'Admin',
+    'operator'              => 'Operator',
     'messages'              => 'Nachrichten',
     'language'              => 'German',
 

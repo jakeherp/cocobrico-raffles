@@ -519,8 +519,14 @@ tr.cancelled{
 tr.has-success{
   background: #e1faea;
 }
+tr.has-success:nth-child(even){
+  background: #e1f4e2;
+}
 tr.has-alert{
-  background: #fce6e2;
+  background: #fcddd9;
+}
+tr.has-alert:nth-child(even){
+  background: #e1f4e2;
 }
 tr.selected{
   background: #ccc;
