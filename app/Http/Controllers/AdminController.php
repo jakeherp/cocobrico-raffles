@@ -407,10 +407,11 @@ class AdminController extends Controller
         $user->lastname = $request->lastname;
         $user->gender = $request->gender;
         $user->birthday = strtotime($request->birthday);
+        $user->remark = $request->remark;
         $user->save();
 
         if(Auth::user()->id == $user->id && ($request->role == 'is_user' || $request->role == 'is_operator')){
-            return redirect('admin/users')->with('msg', 'Du kannst deinen eigenen Benutzerrang nicht bearbeiten!')->with('msgState', 'alert');
+            return redirect('admin/users/'.$user->id)->with('msg', 'Du kannst deinen eigenen Benutzerrang nicht bearbeiten!')->with('msgState', 'alert');
         }
         elseif($request->role == 'is_user'){
             if($user->hasPermission('is_operator') || $user->hasPermission('is_admin')){
@@ -441,7 +442,7 @@ class AdminController extends Controller
         $address->fax = $request->fax;
         $address->save();
 
-        return redirect('admin/users')->with('msg', 'Die Benutzerdaten wurden erfolgreich aktualisiert.')->with('msgState', 'success');
+        return redirect('admin/users/'.$user->id)->with('msg', 'Die Benutzerdaten wurden erfolgreich aktualisiert.')->with('msgState', 'success');
       }
     }
 

@@ -68,7 +68,7 @@
           {{ $member->firstname }} {{ $member->lastname }}
         @endif
         </h4>
-         @if(session()->has('msg'))
+        @if(session()->has('msg'))
           <div class="callout {{ session('msgState') }}">
             <p>{!! session('msg') !!}</p>
           </div>
@@ -118,7 +118,7 @@
                 </tr>
                 <tr>
                   <td><strong>Kommentar:</strong></td>
-                  <td></td>
+                  <td>{{ $member->remark }}</td>
               </table>
             </div>
             <div class="large-2 medium-3 small-12 columns">

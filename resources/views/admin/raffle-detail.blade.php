@@ -18,6 +18,10 @@
           <div class="callout alert">
             <p>Die Akion ist beendet, da das Zeitlimit überschritten wurde.</p>
           </div>
+        @elseif($raffle->hasEventDate == 1 && time() >= $raffle->eventDate)
+          <div class="callout alert">
+            <p>Die Akion ist beendet, da das Event-Datum überschritten wurde.</p>
+          </div>
         @endif
         @if($raffle->maxpState == 1 && count($members) >= $raffle->maxp)
           <div class="callout alert">
@@ -25,32 +29,45 @@
           </div>
         @endif
         <div class="callout">
-          <p><strong>Start:</strong> {{ date(trans('global.datetimeformat'), $raffle->start) }}, 
-          <strong>Ende:</strong> 
+          <p><strong>Start:</strong> {{ date(trans('global.datetimeformat'), $raffle->start) }}</p>
+          <p><strong>Ende:</strong> 
             @if($raffle->endState == 0)
               Unbegrenzt
             @else
               {{ date(trans('global.datetimeformat'), $raffle->end) }}
             @endif
           </p>
+          @if($raffle->hasEventDate == 1)
+          <p><strong>Event-Datum:</strong> {{ date(trans('global.datetimeformat'), $raffle->eventDate) }}</p>
+          @endif
+          
           <p>{!! $raffle->body !!}</p>
+
+          @if($raffle->legalAgeReq == 1)
+            <p>Teilnehmer müssen mindestens 18 Jahre alt sein.</p>
+          @endif
+          @if($raffle->imageReq == 1)
+            <p>Teilnehmer müssen ein Profilbild besitzen.</p>
+          @endif
+          @if($raffle->instWin == 1)
+            <p>Alle Teilnehmer werden automatisch bestätigt.</p>
+          @endif
+          
           <a class="button secondary" href="{{ URL('admin/raffles') }}">Zurück</a>
           <a class="button secondary" href="{{ URL('admin/raffles/'.$raffle->id.'/pdf') }}">PDF Vorschau</a>
         </div>
-        @if($raffle->sendPdf == 1)
-          <div class="callout">
-            <?php
-              $file = $raffle->files()->where('slug','raffle_img')->first();
-            ?>
+        <div class="callout">
+          <?php
+            $file = $raffle->files()->where('slug','raffle_img')->first();
+          ?>
 
-            <p>Aktionsgrafik:</p>
-            @if($file != null)
-              <img src="{{ URL::asset($file->path) }}" style="width:700px;height:400px;">
-            @else
-              Keine Grafik vorhanden
-            @endif
-          </div>
-        @endif
+          <p>Aktionsgrafik:</p>
+          @if($file != null)
+            <img src="{{ URL::asset($file->path) }}" style="width:700px;height:400px;">
+          @else
+            Keine Grafik vorhanden
+          @endif
+        </div>
       </div>
 
         <div class="large-12 column">

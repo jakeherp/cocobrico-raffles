@@ -90,6 +90,10 @@
             </select>
           </div>
         </label>
+        <div class="input-group">
+            <span class="input-group-label"><i class="fa fa-comment"></i></span>
+            {{ Form::textarea('remark', $member->remark, ['class' => 'input-group-field', 'placeholder' => 'Kommentar']) }}
+        </div>
         <label>
           <div class="input-group">
             {!! Form::checkbox('sendNotification', '1', true) !!} Benachrichtigt den Benutzer über die Änderungen per Email. 

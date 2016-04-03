@@ -173,7 +173,8 @@ class UserController extends Controller
         $user->lastname = $request->lastname;
         $user->gender = $request->gender;
         $user->birthday = strtotime($request->birthday);
-		$user->save();
+        $user->remark = '';
+		    $user->save();
 
         $user->fileFolder();
 
