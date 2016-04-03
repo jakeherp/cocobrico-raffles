@@ -25,22 +25,22 @@
         @endif
         @if($raffle->maxpState == 1 && count($members) >= $raffle->maxp)
           <div class="callout alert">
-          <p>Die Akion ist beendet, da das Teilnehmerlimit erreicht wurde.</p>
+          <p>Die Aktion ist beendet, da das Teilnehmerlimit erreicht wurde.</p>
           </div>
         @endif
         <div class="callout">
-          <p><strong>Start:</strong> {{ date(trans('global.datetimeformat'), $raffle->start) }}</p>
-          <p><strong>Ende:</strong> 
+          <p><strong>Start:</strong> {{ date(trans('global.datetimeformat'), $raffle->start) }}<br>
+          <strong>Ende:</strong> 
             @if($raffle->endState == 0)
               Unbegrenzt
             @else
               {{ date(trans('global.datetimeformat'), $raffle->end) }}
             @endif
-          </p>
+          <br>
           @if($raffle->hasEventDate == 1)
-          <p><strong>Event-Datum:</strong> {{ date(trans('global.datetimeformat'), $raffle->eventDate) }}</p>
+          <strong>Event-Datum:</strong> {{ date(trans('global.datetimeformat'), $raffle->eventDate) }}
           @endif
-          
+          </p>
           <p>{!! $raffle->body !!}</p>
 
           @if($raffle->legalAgeReq == 1)
@@ -63,7 +63,7 @@
 
           <p>Aktionsgrafik:</p>
           @if($file != null)
-            <img src="{{ URL::asset($file->path) }}" style="width:700px;height:400px;">
+            <img src="{{ URL::asset($file->path) }}" style="max-width:100%;height:auto;">
           @else
             Keine Grafik vorhanden
           @endif

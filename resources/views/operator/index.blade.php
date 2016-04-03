@@ -6,7 +6,6 @@
 
   	<div class="large-12 column">
 	  	<h1><i class="fa fa-search"></i> Teilnehmersuche</h1>
-	  	<p>Geben Sie den Namen, den Geburtstag, den Reservierungscode oder den Gewinncode eines Benutzers ein.</p>
 	  	@if(session()->has('msg'))
           <div class="callout {{ session('msgState') }}">
             <p>{{ session('msg') }}</p>
@@ -20,10 +19,11 @@
                 </div>
 	    		{!! Form::submit('Suchen', ['class' => 'large expanded alert button']) !!}
 	    	{!! Form::close() !!}
-	    	<a class="success button" id="toggleUserSearchButton"><i class="fa fa-search"></i></a>
+	    	<a class="success button" id="toggleUserSearchButton"><i class="fa fa-search"></i> Benutzer suchen</a>
 	    </div>
 	    <div class="callout text-center" id="userSearchCallout">
 	    	{!! Form::open(['url' => 'operator/search', 'method' => 'post']) !!}
+          <p>Geben Sie den Namen, das Geburtsdatum, den Reservierungscode oder den Gewinncode eines Benutzers ein.</p>
 	    		<div class="input-group">
                     <span class="input-group-label"><i class="fa fa-user"></i></span>
                     {!! Form::text('searchUser', null, ['class' => 'input-group-field', 'placeholder' => 'Suchbegriff']) !!}

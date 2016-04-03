@@ -4,6 +4,7 @@
 
 <section class="row" id="content">
 	<div class="large-12 column">
+		<a href="{{ URL('operator/') }}" class="alert button pull-right">Zurück</a>
 		<h1>{{ $member->firstname }} {{ $member->lastname }}</h1>
 		@if(session()->has('msg'))
           <div class="callout {{ session('msgState') }}">
@@ -24,7 +25,7 @@
 			              <tr>
 			                <th>Name</th>
 			                <th>Eventdatum</th>
-			                <th>Aktion</th>
+			                <th width="150">Aktion</th>
 			              </tr>
 			            </thead>
 			            <tbody>
@@ -35,7 +36,7 @@
 			                    @if($raffle->hasUser($member->id) && $raffle->users()->find($member->id)->pivot->confirmed == 1)
 			                    	<td>
 			                    		<a 
-				                        class="alert button noActionButton" 
+				                        class="alert button noActionButton expanded" 
 				                        timestamp="{{ date(trans('global.datetimeformat'),strtotime($raffle->users()->find($member->id)->pivot->updated_at)) }}" 
 				                        data-tooltip aria-haspopup="true" 
 				                        data-disable-hover='false' 
@@ -49,14 +50,14 @@
 								        {!! Form::hidden('_method', 'PUT', []) !!}
 								        <input type="hidden" name="user_id" value="{{ $member->id }}">
 								        <input type="hidden" name="raffle_id" value="{{ $raffle->id }}">
-				                    	<td><button class="success button"><i class="fa fa-check-square-o"></i> Checkin</button></td>
+				                    	<td><button class="success button expanded"><i class="fa fa-check-square-o"></i> Checkin</button></td>
 				                    {!! Form::close() !!}
 			                    @else
 			                    	{!! Form::open(['url' => 'operator/register', 'method' => 'post']) !!}
 								        {!! Form::hidden('_method', 'PUT', []) !!}
 								        <input type="hidden" name="user_id" value="{{ $member->id }}">
 								        <input type="hidden" name="raffle_id" value="{{ $raffle->id }}">
-				                    	<td><button class="warning button"><i class="fa fa-check-square-o"></i> Registrieren</button></td>
+				                    	<td><button class="warning button expanded"><i class="fa fa-check-square-o"></i> Registrieren</button></td>
 				                    {!! Form::close() !!}
 			                    @endif
 			                 </tr>
@@ -65,15 +66,30 @@
 			          </table>
 
 					<h5>Persönliche Daten:</h5>
-					Email Adresse: {{ $member->email }}<br>
-					Geburtsdatum: {{ date(trans('global.dateformat'),$member->birthday) }} ({{ floor((time() - $member->birthday) / 31556926) }} Jahre)<br>
-					Anschrift: <br>
-					@if($member->address != null)
-		              {{ $member->address->address1 }} {{ $member->address->address2 }}<br>
-		              {{ $member->address->zipcode }} {{ $member->address->city }}<br>
-		              {{ $member->address->country->name }}<br><br>
-		            @endif
-					Mitglied seit: {{ date(trans('global.dateformat'),strtotime($member->created_at)) }}
+					<table>
+						<tr>
+							<td><strong>Email Adresse:</strong></td>
+							<td>{{ $member->email }}</td>
+						</tr>
+						<tr>
+							<td><strong>Geburtsdatum:</strong></td>
+							<td>{{ date(trans('global.dateformat'),$member->birthday) }} ({{ floor((time() - $member->birthday) / 31556926) }} Jahre)</td>
+						</tr>
+						<tr>
+							<td valign="top"><strong>Anschrift:</strong></td>
+							<td>
+								@if($member->address != null)
+					              {{ $member->address->address1 }} {{ $member->address->address2 }}<br>
+					              {{ $member->address->zipcode }} {{ $member->address->city }}<br>
+					              {{ $member->address->country->name }}<br><br>
+					            @endif
+							</td>
+						</tr>
+						<tr>
+							<td><strong>Mitglied seit:</strong></td>
+							<td>{{ date(trans('global.dateformat'),strtotime($member->created_at)) }}</td>
+						</tr>
+					</table>
 				</div>
 			</div>
 		</div>
