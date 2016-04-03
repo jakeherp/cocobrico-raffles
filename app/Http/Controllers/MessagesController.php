@@ -56,7 +56,7 @@ class MessagesController extends Controller
     	$message->sent_at = time();
     	$message->save();
 
-        if($member->aMessage == 1){
+        if($member->aMessages == 1){
             $sent = Mail::send('emails.aMessage', ['user' => $member, 'message' => $message], function ($m) use ($member) {
               $m->from('noreply@cocobrico.com', 'Cocobrico');
               $m->to($member->email, $member->email)->subject('Neue Nachricht');

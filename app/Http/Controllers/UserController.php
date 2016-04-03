@@ -142,19 +142,19 @@ class UserController extends Controller
    		else{
    			// User is existing in the database
 		    $regUser = User::where('email', '=', $request->email)->where('password', '!=', '')->first();
-        if($regUser->active == 0){
-          return redirect('/')->withErrors(['Dein Benutzerkonto wurde gesperrt. Bei Fragen wende dich bitte an europe@cocobrico.com.']);
-        }
-        else{
-  		    if ($regUser != null) {
-  		   		// User is already registered
-  		   		return redirect('login')->with('email', $request->email);
-  		    }
-  		    else{
-  		   		// User is not registered yet
-  		   		return view('auth.verifyEmail', compact('user'));
-  		    }
-        }
+  		  if ($regUser != null) {
+  		   	// User is already registered
+          if($regUser->active == 0){
+            return redirect('/')->withErrors(['Dein Benutzerkonto wurde gesperrt. Bei Fragen wende dich bitte an europe@cocobrico.com.']);
+          }
+          else{
+  		   	  return redirect('login')->with('email', $request->email);
+          }
+  		  }
+  		  else{
+  		   	// User is not registered yet
+  		   	return view('auth.verifyEmail', compact('user'));
+  		  }
    		}
    	}
 
