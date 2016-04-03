@@ -57,10 +57,12 @@ class MessagesController extends Controller
     	$message->sent_at = time();
     	$message->save();
 
-        if($member->aMessages == 1){
-          $sent = Mail::send('emails.aMessage', ['member' => $member], function ($m) use ($member) {
+        $newmessage = $message;
+
+        if($newmessage->user->aMessages == 1){
+          $sent = Mail::send('emails.aMessage', ['newmessage' => $newmessage], function ($m) use ($newmessage) {
             $m->from('noreply@cocobrico.com', 'Cocobrico');
-            $m->to($member->email, $member->email)->subject('Neue Nachricht');
+            $m->to($newmessage->user->email, $newmessage->user->email)->subject('Neue Nachricht');
           });
         }
 
@@ -119,6 +121,7 @@ class MessagesController extends Controller
         $message = Message::find($request->message_id);
         $user = $message->user;
         $message->delete();
+
         return redirect('admin/messages/'.$user->id);
     }
 }
