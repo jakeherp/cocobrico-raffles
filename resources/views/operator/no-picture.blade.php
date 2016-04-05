@@ -4,6 +4,7 @@
 
 <section class="row" id="content">
   	<div class="large-12 column">
+      <div class="callout">
        <p>Die Teilnahme an der Aktion {{ $raffle->title }} erfordert ein Profilbild. Der Benutzer hat kein Profilbild hochgeladen. Soll er dennoch aktiviert werden?</p>
        {!! Form::open(['url' => 'operator/register', 'method' => 'post']) !!}
             {!! Form::hidden('_method', 'PUT', []) !!}
@@ -13,6 +14,7 @@
             <button class="warning button"><i class="fa fa-check-square-o"></i> Registrieren</button>
         {!! Form::close() !!}
         <a href="{{ URL('operator/'.$user->id) }}" class="secondary button">Zurück</a>
+      </div>
     </div>
 </section>
 
