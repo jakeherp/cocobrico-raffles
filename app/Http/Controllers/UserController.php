@@ -173,6 +173,11 @@ class UserController extends Controller
         $user->lastname = $request->lastname;
         $user->gender = $request->gender;
         $user->birthday = strtotime($request->birthday);
+
+        if(time() < strtotime('+13 years', $user->birthday)){
+          return redirect()->back()->withInput()->withErrors(['Du musst mindestens 13 Jahre alt sein um dich registrieren zu können.']);
+        }
+
         $user->remark = '';
 		    $user->save();
 

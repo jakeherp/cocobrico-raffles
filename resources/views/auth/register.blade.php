@@ -60,7 +60,7 @@
                       </div>
                       <div class="input-group">
                         <span class="input-group-label"><i class="fa fa-calendar"></i></span>
-                        {!! Form::date('birthday', date('Y-m-d'), ['class' => 'input-group-field', 'placeholder' => trans('auth.birthday')]) !!}
+                        {!! Form::date('birthday', null, ['class' => 'input-group-field', 'placeholder' => trans('auth.birthday')]) !!}
                       </div>
                       <label>
                         Weitere Informationen
