@@ -33,6 +33,25 @@
                 title="Löschen" 
                 data-open="deleteUserModal" 
               ><i class="fa fa-trash"></i></a>
+              @if($member->hasPermission('change_picture') || $member->hasPermission('change_details'))
+                <a 
+                  class="button small warning deleteFlagButton pull-right" 
+                  data-tooltip aria-haspopup="true" 
+                  data-disable-hover='false' 
+                  tabindex=1 
+                  title="Berechtigung zur Datenänderung" 
+                  data-open="deleteFlagModal" 
+                ><i class="fa fa-question"></i></a>
+              @else
+                <a 
+                  class="button small success checkDataButton pull-right" 
+                  data-tooltip aria-haspopup="true" 
+                  data-disable-hover='false' 
+                  tabindex=1 
+                  title="Daten überprüfen" 
+                  data-open="checkDataModal" 
+                ><i class="fa fa-question"></i></a>
+              @endif
               <a
                 class="button small primary"
                 style="float:right;"
@@ -228,6 +247,42 @@
       <div class="callout alert" id="blockUserText">Wollen Sie den Benutzer wirklich sperren?</div>
       {!! Form::open(['url' => 'admin/users/block', 'method' => 'post']) !!}
         <input type="hidden" id="userId2" name="user_id" value="{{ $member->id }}">
+        <button id="blockUserButton" class="alert button">Bestätigen</button>
+        <button type="reset" class="secondary button" data-close>Abbrechen</button>
+      {!! Form::close() !!}
+      <button class="close-button" data-close aria-label="Close reveal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Modal for checking data of user -->
+    <div class="reveal" id="checkDataModal" data-reveal>
+      <h3>Daten überprüfen lassen</h3>
+      <div class="callout alert">Senden Sie dem Benutzer eine Nachricht mit genaueren Informationen!</div>
+      {!! Form::open(['url' => 'admin/users/check', 'method' => 'post']) !!}
+        <input type="hidden" name="user_id" value="{{ $member->id }}">
+        <input type="text" name="message" value="" placeholder="Nachricht">
+        <label><div class="input-group">
+          {!! Form::checkbox('allowDetailChange', '1', true) !!} Dem Benutzer erlauben seine Kontaktdaten und sein Geburtsdatum jederzeit ändern zu können.
+        </div></label>
+        <label><div class="input-group">
+          {!! Form::checkbox('allowPictureChange', '1', false) !!} Dem Benutzer erlauben sein Profilfoto jederzeit ändern zu können.
+        </div></label>
+        <button id="checkDataButton" class="alert button">Senden</button>
+        <button type="reset" class="secondary button" data-close>Abbrechen</button>
+      {!! Form::close() !!}
+      <button class="close-button" data-close aria-label="Close reveal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Modal for deleting flags -->
+    <div class="reveal" id="deleteFlagModal" data-reveal>
+      <h3>Erlaubnis zur Datenänderung</h3>
+      <div class="callout alert">Wollen Sie dem User die Erlaubnis zur Daten-/Profilbildänderung entziehen?</div>
+      {!! Form::open(['url' => 'admin/users/check', 'method' => 'post']) !!}
+        <input type="hidden" name="user_id" value="{{ $member->id }}">
+        <input type="hidden" name="delete" value="1">
         <button id="blockUserButton" class="alert button">Bestätigen</button>
         <button type="reset" class="secondary button" data-close>Abbrechen</button>
       {!! Form::close() !!}

@@ -39,7 +39,7 @@
                   <p>Profilbild hochladen:</p>
                 @endif
 
-                @if(count($user->raffles()->where('start','<=',time())->where('end','>=',time())->get()) > 0)
+                @if($user->hasPermission('change_picture') == false && $file != null && count($user->raffles()->where('start','<=',time())->where('end','>=',time())->get()) > 0)
                   <div class="callout warning">Dein Profilbild kann nicht geändert werden, solange du an einer laufenden Aktion teilnimmst.</div> 
                 @else
                   {!! Form::file('profilePicture'); !!}
@@ -52,7 +52,7 @@
         <div class="callout">
           <div class="row">
             <div class="large-12 column">
-            @if(count($user->raffles()->where('start','<=',time())->where('end','>=',time())->get()) > 0)
+            @if($user->hasPermission('change_details') == false && count($user->raffles()->where('start','<=',time())->where('end','>=',time())->get()) > 0)
               <a 
                 class="small alert button pull-right" 
                 disabled
@@ -72,7 +72,7 @@
                 aria-haspopup="true" 
                 data-open="changePasswordModal" 
                 >ändern</a><br><br>
-              @if(count($user->raffles()->where('start','<=',time())->where('end','>=',time())->get()) > 0)
+              @if($user->hasPermission('change_details') == false && count($user->raffles()->where('start','<=',time())->where('end','>=',time())->get()) > 0)
                 <div class="callout warning">Deine Benutzerdaten können nicht geändert werden, solange du an einer laufenden Aktion teilnimmst.</div>
               @endif
             </div>
@@ -163,6 +163,12 @@
                   Nachname
                   {!! Form::text('lastname', $user->lastname, ['placeholder' => 'Nachname']) !!}
                 </label>
+                @if($user->hasPermission('change_details'))
+                  <label>
+                  Geburtsdatum
+                    {!! Form::date('birthday', date('Y-m-d',$user->birthday), ['placeholder' => trans('auth.birthday')]) !!}
+                  </label>
+                @endif
                </div>
                <div class="callout">
                 <label>

@@ -23,6 +23,7 @@
                 <th class="orderby">Geburtsdatum</th>
                 <th>Mitglied seit</th>
                 <th>Aktionen</th>
+                <th>?</th>
               </tr>
             </thead>
             <tbody>
@@ -73,6 +74,11 @@
                     ">
                       {{ count($member->raffles) }}
                     </span></td>
+                    <td>
+                      @if($member->hasPermission('change_details') || $member->hasPermission('change_picture'))
+                        ?
+                      @endif
+                    </td>
                   </tr>
               @endforeach
             </tbody>

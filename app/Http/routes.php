@@ -115,6 +115,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('admin/users', 'AdminController@users');
         Route::get('admin/users/newsletter', 'UserController@exportForNewsletter');
         Route::post('admin/users/delete', 'UserController@delete');
+        Route::post('admin/users/check', 'UserController@checkRequest');
         Route::post('admin/users/block', 'UserController@block');
         Route::get('admin/users/{id}/edit', 'AdminController@editUserView');
         Route::put('admin/users/edit', 'AdminController@updateUser');

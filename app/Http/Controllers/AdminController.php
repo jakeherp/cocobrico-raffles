@@ -415,17 +415,17 @@ class AdminController extends Controller
         }
         elseif($request->role == 'is_user'){
             if($user->hasPermission('is_operator') || $user->hasPermission('is_admin')){
-                $user->permissions()->delete();
+                $user->permissions()->where('slug','is_operator')->orWhere('slug','is_admin')->delete();
             }
         }
         elseif($request->role == 'is_operator' && !$user->hasPermission('is_operator')){
-            $user->permissions()->delete();
+            $user->permissions()->where('slug','is_operator')->orWhere('slug','is_admin')->delete();
             $role = new Permission();
             $role->slug = 'is_operator';
             $user->permissions()->save($role);
         }
         elseif($request->role == 'is_admin' && !$user->hasPermission('is_admin')){
-            $user->permissions()->delete();
+            $user->permissions()->where('slug','is_operator')->orWhere('slug','is_admin')->delete();
             $role = new Permission();
             $role->slug = 'is_admin';
             $user->permissions()->save($role);

@@ -17,6 +17,7 @@ use App\Http\Requests\EditProfileRequest;
 use App\Address;
 use App\Country;
 use App\File;
+use App\Permission;
 use App\User;
 
 use Auth;
@@ -27,7 +28,7 @@ use Mail;
 class UserController extends Controller
 {
     public function __construct(){
-        $this->middleware('admin', ['only' => ['delete','block','exportForNewsletter']]);
+        $this->middleware('admin', ['only' => ['delete','block','exportForNewsletter','checkRequest']]);
     }
 
     /**
@@ -243,12 +244,15 @@ class UserController extends Controller
     public function edit(EditProfileRequest $request){
       $user = Auth::user();
       if ($user != null) {
-        if(count($user->raffles()->where('start','<=',time())->where('end','>=',time())->get()) > 0){
+        if($user->hasPermission('change_details') == false && count($user->raffles()->where('start','<=',time())->where('end','>=',time())->get()) > 0){
           return redirect('dashboard')->with('msg', 'Du kannst deine Benutzerdaten nicht ändern, solange du an einem aktiven Gewinnspiel teilnimmst.')->with('msgState', 'alert');
         }
         else{
           $user->firstname = $request->firstname;
           $user->lastname = $request->lastname;
+          if($request->birthday != null){
+            $user->birthday = strtotime($request->birthday);
+          }
           $user->save();
 
           $address = $user->address;
@@ -389,6 +393,37 @@ class UserController extends Controller
       }
       else{
         return redirect()->back();
+      }
+    }
+
+    /**
+     * Sends a request to the user, that he should change profile information.
+     *
+     * @return Response
+     */
+    public function checkRequest(Request $request){
+      $user = Auth::user();
+      if($request->delete != null){
+        $user->permissions()->where('slug','change_details')->orWhere('slug','change_picture')->delete();
+        return redirect('admin/users/'.$user->id)->with('msg', 'Dem Benutzer wurden die Berechtigungen zur Änderung seiner Profildetails bzw. seines Profilbildes entzogen.')->with('msgState', 'success');
+      }
+      else{
+        if($request->allowDetailChange != null && $user->hasPermission('change_details') == false){
+          $role = new Permission();
+          $role->slug = 'change_details';
+          $user->permissions()->save($role);
+        }
+        if($request->allowPictureChange != null && $user->hasPermission('change_picture') == false){
+          $role = new Permission();
+          $role->slug = 'change_picture';
+          $user->permissions()->save($role);
+        }
+        $body = '<p>Hallo '.$user->firstname.',</p><p>Wir bitten dich deine Profildaten zu überprüfen.</p><p>Anmerkung des Cocobrico-Teams:</p><p>'.$request->message.'<p>Viele Grüße,<br>Dein Cocobrico Team</p>';
+        $send = Mail::send('emails.default', compact('body'), function ($m) use ($user) {
+          $m->from('europe@cocobrico.com', 'Cocobrico');
+          $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject('Überprüfung deiner Daten');
+        });
+        return redirect('admin/users/'.$user->id)->with('msg', 'Der Benutzer wurde benachrichtigt.')->with('msgState', 'success');
       }
     }
 
