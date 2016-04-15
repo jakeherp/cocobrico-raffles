@@ -4,6 +4,8 @@
 
 <section class="row" id="content">
 
+      <p>Aktuelle Zeit: {{ date('d.m.Y H:i',time()) }}</p>
+
   	  <div class="large-12 column">
   	  	<h1><i class="fa fa-newspaper-o"></i> Changelog</h1>
         <div class="callout">

@@ -43,8 +43,8 @@ class RafflesController extends Controller
       $raffle->maxpState = $request->maxpState;
       $raffle->hasEventDate = $request->hasEventDate;
       if($raffle->maxpState == 0)      { $raffle->maxp = 0; }         else { $raffle->maxp = $request->maxp; }
-      if($raffle->endState == 0)       { $raffle->end = 0; }          else { $raffle->end = strtotime($request->end); }
-      if($raffle->hasEventDate == 0)   { $raffle->eventDate = 0; }    else { $raffle->eventDate = strtotime($request->eventDate); }
+      if($raffle->endState == 0)       { $raffle->end = 0; }          else { $raffle->end = strtotime($request->end) + (24*3600-1); }
+      if($raffle->hasEventDate == 0)   { $raffle->eventDate = 0; }    else { $raffle->eventDate = strtotime($request->eventDate) + (24*3600-1); }
       if($request->imageReq == null)   { $raffle->imageReq = 0; }     else { $raffle->imageReq = 1; }
       if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; }  else { $raffle->legalAgeReq = 1; }
       if($request->instWin == null)    { $raffle->instWin = 0; }      else { $raffle->instWin = 1; }
@@ -125,8 +125,8 @@ class RafflesController extends Controller
         $raffle->maxpState = $request->maxpState;
         $raffle->hasEventDate = $request->hasEventDate;
         if($raffle->maxpState == 0)      { $raffle->maxp = 0; }         else { $raffle->maxp = $request->maxp; }
-        if($raffle->endState == 0)       { $raffle->end = 0; }          else { $raffle->end = strtotime($request->end); }
-        if($raffle->hasEventDate == 0)   { $raffle->eventDate = 0; }    else { $raffle->eventDate = strtotime($request->eventDate); }
+        if($raffle->endState == 0)       { $raffle->end = 0; }          else { $raffle->end = strtotime($request->end) + (24*3600-1); }
+        if($raffle->hasEventDate == 0)   { $raffle->eventDate = 0; }    else { $raffle->eventDate = strtotime($request->eventDate) + (24*3600-1); }
         if($request->imageReq == null)   { $raffle->imageReq = 0; }     else { $raffle->imageReq = 1; }
         if($request->legalAgeReq == null){ $raffle->legalAgeReq = 0; }  else { $raffle->legalAgeReq = 1; }
         if($request->instWin == null)    { $raffle->instWin = 0; }      else { $raffle->instWin = 1; }

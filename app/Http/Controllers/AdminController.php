@@ -39,7 +39,7 @@ class AdminController extends Controller
     	$user = Auth::user();
         $members = User::all();
         $conv1 = User::whereHas('messages', function ($query) {
-            $query->where('answered',0);
+            $query->where('answered',0)->where('read',0);
         })->get();
         $raffles = Raffle::orderBy('end','desc')->get();
     	return view('admin.dashboard', compact('user','members','conv1','raffles'));

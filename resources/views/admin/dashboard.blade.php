@@ -3,7 +3,6 @@
 @section('content')
 
 <section class="row" id="content">
-
   	<div class="row">
         <div class="large-12 columns">
           <h1><i class="fa fa-envelope"></i> Neue Nachrichten</h1>
