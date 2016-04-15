@@ -65,7 +65,7 @@
                     <td>
                       {{ floor((time() - $member->birthday) / 31556926) }} Jahre - {{ date(trans('global.dateformat'),$member->birthday) }}</td>
                     <td>
-                      {{ date(trans('global.dateformat'),strtotime($member->created_at)) }}
+                      {{ date(trans('global.dateformat'),$member->registered_at) }}
                     </td>
                     <td><span class="has-tooltip" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="
                       @foreach($member->raffles AS $raffle)

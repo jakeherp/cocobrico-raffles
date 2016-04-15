@@ -231,18 +231,18 @@ class RafflesController extends Controller
             $code->user_id = $user->id;
             $code->save();
             $user->raffles()->attach($raffle->id);
-            $user->raffles()->updateExistingPivot($raffle->id, ['code' => $pCode, 'confirmed' => 1, 'code_id' => $code->id]);
+            $user->raffles()->updateExistingPivot($raffle->id, ['code' => $pCode, 'confirmed' => 1, 'code_id' => $code->id, 'participated_at' => time(), 'confirmed_at' => time()]);
             $confirmed = true;
           }
         }
         elseif($raffle->instWin == 1){
           $user->raffles()->attach($raffle->id);
-          $user->raffles()->updateExistingPivot($raffle->id, ['code' => $pCode, 'confirmed' => 1]);
+          $user->raffles()->updateExistingPivot($raffle->id, ['code' => $pCode, 'confirmed' => 1, 'participated_at' => time(), 'confirmed_at' => time()]);
           $confirmed = true;
         }
         else{
           $user->raffles()->attach($raffle->id);
-          $user->raffles()->updateExistingPivot($raffle->id, ['code' => $pCode]);
+          $user->raffles()->updateExistingPivot($raffle->id, ['code' => $pCode, 'participated_at' => time()]);
           $confirmed = false;
         }
         $this->participationSucceed($user, $raffle, $confirmed);
@@ -349,7 +349,7 @@ class RafflesController extends Controller
       else{
         $code->user_id = $user->id;
         $code->save();
-        $user->raffles()->updateExistingPivot($raffle->id, ['confirmed' => 1, 'code_id' => $code->id]);
+        $user->raffles()->updateExistingPivot($raffle->id, ['confirmed' => 1, 'code_id' => $code->id, 'confirmed_at' => time()]);
 
         $email = $raffle->emails()->where('slug','confirmCode')->first();
         if($email == null){
@@ -399,7 +399,7 @@ class RafflesController extends Controller
       else{
         $code->user_id = $user->id;
         $code->save();
-        $raffle->users()->updateExistingPivot($user->id, ['confirmed' => 1, 'code_id' => $code->id]);
+        $raffle->users()->updateExistingPivot($user->id, ['confirmed' => 1, 'code_id' => $code->id, 'confirmed_at' => time()]);
 
         $email = $raffle->emails()->where('slug','confirmManual')->first();
         if($email == null){

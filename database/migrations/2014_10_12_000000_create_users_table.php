@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->boolean('aRaffles')->default(1);
             $table->boolean('aMessages')->default(1);
             $table->text('remark')->default('');
+            $table->integer('registered_at')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -9,6 +9,13 @@
   	  <div class="large-12 column">
   	  	<h1><i class="fa fa-newspaper-o"></i> Changelog</h1>
         <div class="callout">
+          <h4>15.04.2016</h4>
+          <ul>
+            <li>Bugfix: Registrierungs-, Aktionsteilnahme- und Aktionsbestätigungsdatum</li>
+            <li>Aktions-Endzeit und Aktionszeit dauern bis Ende des Tages</li>
+          </ul>
+        </div>
+        <div class="callout">
           <h4>14.04.2016</h4>
           <ul>
             <li>Administratoren können den Benutzern Sonderberechtigungen zur Änderung der Profildaten und des Profilbilds geben</li>

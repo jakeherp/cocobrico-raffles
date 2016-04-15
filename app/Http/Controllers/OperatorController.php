@@ -142,7 +142,7 @@ class OperatorController extends Controller
       else{
         $code->user_id = $user->id;
         $code->save();
-        $raffle->users()->updateExistingPivot($user->id, ['confirmed' => 1, 'code_id' => $code->id]);
+        $raffle->users()->updateExistingPivot($user->id, ['confirmed' => 1, 'code_id' => $code->id, 'confirmed_at' => time()]);
 
         $email = $raffle->emails()->where('slug','confirmManual')->first();
         if($email == null){
@@ -212,7 +212,7 @@ class OperatorController extends Controller
         } while($check != null);
 
         $user->raffles()->attach($raffle->id);
-        $user->raffles()->updateExistingPivot($raffle->id, ['code' => $pCode]);
+        $user->raffles()->updateExistingPivot($raffle->id, ['code' => $pCode, 'participated_at' => time()]);
         $confirmed = false;
 
         if($operator->hasPermission('is_admin')){

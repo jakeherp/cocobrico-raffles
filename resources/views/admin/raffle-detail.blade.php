@@ -113,7 +113,7 @@
                       {{ date(trans('global.dateformat'),strtotime($member->created_at)) }}
                     </td>
                     <td>
-                      {{ date(trans('global.datetimeformat'),strtotime($raffle->users()->find($member->id)->pivot->created_at)) }}
+                      {{ date(trans('global.datetimeformat'),$raffle->users()->find($member->id)->pivot->participated_at) }}
                     </td>
                     <td>
                       @if($member->pivot->confirmed == 1)

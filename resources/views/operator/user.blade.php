@@ -87,7 +87,7 @@
 						</tr>
 						<tr>
 							<td><strong>Mitglied seit:</strong></td>
-							<td>{{ date(trans('global.dateformat'),strtotime($member->created_at)) }}</td>
+							<td>{{ date(trans('global.dateformat'),$member->registered_at) }}</td>
 						</tr>
 					</table>
 				</div>

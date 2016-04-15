@@ -130,6 +130,7 @@ class UserController extends Controller
    			$user = new User();
    			$user->email = $email;
    			$user->register_token = str_random(40);
+        $user->registered_at = time();
    			$user->save();
 
    			// Verification-Email is send to user.
