@@ -24,7 +24,7 @@ class CreateCodesRequest extends Request
     public function rules()
     {
         return [
-            'amount'          => ['required','numeric','between:1,101']
+            'amount'          => ['required','numeric']
         ];
     }
 }

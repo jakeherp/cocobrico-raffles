@@ -38,7 +38,7 @@ class CodesController extends Controller
   					if($check == null){ $unique = true; } else { $unique = false; }
   				} while(!$unique);
   				$code->remark = $request->remark;
-  				$code->endtime = strtotime($request->endtime);
+  				$code->endtime = strtotime($request->endtime) + (24*3600-1);
   				$raffle->codes()->save($code);
   			}
   			return redirect('admin/codes')->with('msg', 'Die Codes wurden erfolgreich erstellt.')->with('msgState', 'success');
