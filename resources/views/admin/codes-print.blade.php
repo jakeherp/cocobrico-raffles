@@ -1,8 +1,8 @@
 @extends('layouts.print')
 
 @section('content')
-
-<table>
+<h1 style="text-align: center; font-size: 1.5rem;">{{ $raffle->title }}</h1>
+<table class="full-width">
   <thead>
     <tr>
       <th width="200">Code</th>

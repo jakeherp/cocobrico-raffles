@@ -17,7 +17,6 @@
             <thead>
               <tr>
                 <th class="no-sort"></th>
-                <th class="no-sort"></th>
                 <th>Name</th>
                 <th>M/W</th>
                 <th class="orderby">Geburtsdatum</th>
@@ -33,13 +32,6 @@
                 @else
                   <tr onclick="document.location = '{{ URL('admin/users/'.$member->id) }}';" style="cursor:pointer;">
                 @endif
-                    <td>
-                      @if(($file = $member->files()->where('slug','profile_img')->first()) != null)
-                      <div class="round-image" style="background:url('{{ URL::asset($file->path) }}') no-repeat center center;background-size:cover;"></div>
-                      @else
-                        Kein Foto
-                      @endif
-                    </td>
                     <td>
                       @if( count($member->messages) > 0 )
                         <a href="{{ URL('admin/messages/'.$member->id) }}" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Nachrichtenverlauf"><i class="fa fa-envelope"></i></a>

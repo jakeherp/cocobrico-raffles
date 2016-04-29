@@ -37,7 +37,6 @@
 			                    	<td>
 			                    		<a 
 				                        class="alert button noActionButton expanded" 
-				                        timestamp="{{ date(trans('global.datetimeformat'),strtotime($raffle->users()->find($member->id)->pivot->updated_at)) }}" 
 				                        data-tooltip aria-haspopup="true" 
 				                        data-disable-hover='false' 
 				                        tabindex=1 

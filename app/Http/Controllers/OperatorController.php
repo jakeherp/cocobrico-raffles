@@ -94,7 +94,7 @@ class OperatorController extends Controller
 	 */
     public function user($id){
     	$user = Auth::user();
-    	$member = User::find($id);
+    	$member = User::find((int) $id);
       $raffles = Raffle::where(function($q) {
                 $q->where('start','<=',time())
                 ->where(function ($query) {
