@@ -33,17 +33,17 @@
 			                 <tr>
 			                    <td>{{ $raffle->title }}</td>
 			                    <td>{{ date(trans('global.dateformat'),$raffle->eventDate) }}</td>
-			                    @if($raffle->hasUser($member->id) && $raffle->users()->find($member->id)->pivot->confirmed == 1)
+			                    @if($raffle->hasUser($member->id) && $raffle->users()->find($member->id)->pivot->checkin == 1)
 			                    	<td>
 			                    		<a 
 				                        class="alert button noActionButton expanded" 
 				                        data-tooltip aria-haspopup="true" 
 				                        data-disable-hover='false' 
 				                        tabindex=1 
-				                        title="Löschen" 
+				                        title="Checked in" 
 				                        data-open="noActionModal" 
-				                      	><i class="fa fa-check-square-o"></i> Checkin</a>
-				                      </td>
+				                      	><i class="fa fa-check-square-o"></i> Checkd in</a>
+				                    </td>
 			                    @elseif($raffle->hasUser($member->id))
 				                    {!! Form::open(['url' => 'operator/checkin', 'method' => 'post']) !!}
 								        {!! Form::hidden('_method', 'PUT', []) !!}

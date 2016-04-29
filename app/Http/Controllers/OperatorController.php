@@ -129,27 +129,34 @@ class OperatorController extends Controller
      *
      *
      * @param Request $request
-     * @return Response*/
+     * @return Response
+     */
     public function checkin(Request $request){
       $operator = Auth::user();
       $raffle = Raffle::find($request->raffle_id);
       $user = $raffle->users()->find($request->user_id);
-      $code = $raffle->codes()->where('remark','MMM')->where('active',1)->where('user_id',0)->where('endtime','>=',time())->first();
 
-      if($code == null){
-        return redirect()->back()->with('msg', 'Der User ' . $user->firstname . ' ' . $user->lastname . ' konnte nicht bestätigt werden, da kein verfügbarer Code vorhanden ist.')->with('msgState', 'alert');
+      if($raffle->users()->find($user->id)->pivot->confirmed == 1){
+        $checkin_ok = true;
       }
       else{
-        $code->user_id = $user->id;
-        $code->save();
-        $raffle->users()->updateExistingPivot($user->id, ['confirmed' => 1, 'code_id' => $code->id, 'confirmed_at' => time()]);
+        $code = $raffle->codes()->where('remark','MMM')->where('active',1)->where('user_id',0)->where('endtime','>=',time())->first();
+        if($code == null){
+          $checkin_ok = false;
 
-        $email = $raffle->emails()->where('slug','confirmManual')->first();
-        if($email == null){
-          $email = Email::where('standard',1)->where('slug','confirmManual')->first();
+          return redirect()->back()->with('msg', 'Der User ' . $user->firstname . ' ' . $user->lastname . ' konnte nicht bestätigt werden, da kein verfügbarer Code vorhanden ist.')->with('msgState', 'alert');
         }
+        else{
+          $code->user_id = $user->id;
+          $code->save();
+          $raffle->users()->updateExistingPivot($user->id, ['confirmed' => 1, 'code_id' => $code->id, 'confirmed_at' => time()]);
 
-        if($operator->hasPermission('is_admin')){
+          $email = $raffle->emails()->where('slug','confirmManual')->first();
+          if($email == null){
+            $email = Email::where('standard',1)->where('slug','confirmManual')->first();
+          }
+
+          if($operator->hasPermission('is_admin')){
             if(count($email->confirmations) > 0){
               $qrstring = $user->raffles()->where('raffle_id', $raffle->id)->first()->pivot->code . ', ' . $user->firstname . ' ' . $user->lastname . ', ' . date(trans('global.dateformat'),$user->birthday);
               QrCode::format('png')->margin(0)->size(200)->generate($qrstring, '../public/files/user_'.$user->id.'/qrcode.png');
@@ -171,9 +178,14 @@ class OperatorController extends Controller
                 }
                 $m->to($user->email, $user->firstname . ' ' . $user->lastname)->subject($email->subject);
             });
-        }
 
-        return redirect()->back()->with('msg', 'Der User ' . $user->firstname . ' ' . $user->lastname . ' wurde für die Aktion <strong>' . $raffle->title . '</strong> bestätigt.')->with('msgState', 'success');
+            $checkin_ok = true;
+          }
+        }
+      }
+      if($checkin_ok){
+        $raffle->users()->updateExistingPivot($user->id, ['checkin' => 1, 'checkin_at' => time()]);
+        return redirect()->back()->with('msg', 'Der User ' . $user->firstname . ' ' . $user->lastname . ' wurde für die Aktion <strong>' . $raffle->title . '</strong> eingecheckt.')->with('msgState', 'success');
       }
     }
 

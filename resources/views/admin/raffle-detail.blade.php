@@ -83,7 +83,7 @@
                 <th>Mitglied seit</th>
                 <th class="orderby">Teilnahme</th>
                 <th>Bestätigt</th>
-                <th>Code</th>
+                <th>Checkin</th>
                 <th class="no-sort">Optionen</th>
               </tr>
             </thead>
@@ -121,8 +121,8 @@
                       @endif
                     </td>
                     <td>
-                      @if($member->pivot->code_id != 0)
-                        {{ $raffle->codes()->where('id',$member->pivot->code_id)->first()->code }}
+                      @if($member->pivot->checkin == 1)
+                         {{ date(trans('global.datetimeformat'),$raffle->users()->find($member->id)->pivot->checkin_at) }}
                       @endif
                     </td>
                     <td>
