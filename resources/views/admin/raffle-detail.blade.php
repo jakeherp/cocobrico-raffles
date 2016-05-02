@@ -126,11 +126,11 @@
                       @endif
                     </td>
                     <td>
-                      <a href="{{ URL('admin/users/'.$member->id) }}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Details anzeigen"><i class="fa fa-search"></i></a>
+                      <a href="{{ URL('admin/users/'.$member->id) }}" class="tiny button" title="Details anzeigen"><i class="fa fa-search"></i></a>
                       @if($member->pivot->confirmed == 1)
-                        <a data-open="resendModal" userId="{{ $member->id }}" class="tiny success button resendModalButton" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Erneut senden"><i class="fa fa-envelope"></i></a>
+                        <a data-open="resendModal" userId="{{ $member->id }}" class="tiny success button resendModalButton" aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Erneut senden"><i class="fa fa-envelope"></i></a>
                       @else
-                        <a data-open="userWinModal" userId="{{ $member->id }}" class="tiny success button confirmUserButton" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Bestätigen"><i class="fa fa-trophy"></i></a>
+                        <a data-open="userWinModal" userId="{{ $member->id }}" class="tiny success button confirmUserButton" aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Bestätigen"><i class="fa fa-trophy"></i></a>
                       @endif
                     </td>
                   </tr>

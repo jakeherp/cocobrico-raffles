@@ -8,7 +8,7 @@
                 <a 
                   class="button small alert blockUserButton pull-right" 
                   blockState=1 
-                  data-tooltip aria-haspopup="true" 
+                  aria-haspopup="true" 
                   data-disable-hover='false' 
                   tabindex=1 
                   title="Sperren" 
@@ -18,7 +18,7 @@
                 <a 
                   class="button small alert blockUserButton pull-right" 
                   blockState=0 
-                  data-tooltip aria-haspopup="true" 
+                  aria-haspopup="true" 
                   data-disable-hover='false' 
                   tabindex=1 
                   title="Entsperren" 
@@ -27,7 +27,7 @@
               @endif
               <a 
                 class="button small alert deleteUserButton pull-right" 
-                data-tooltip aria-haspopup="true" 
+                aria-haspopup="true" 
                 data-disable-hover='false' 
                 tabindex=1 
                 title="Löschen" 
@@ -36,7 +36,7 @@
               @if($member->hasPermission('change_picture') || $member->hasPermission('change_details'))
                 <a 
                   class="button small warning deleteFlagButton pull-right" 
-                  data-tooltip aria-haspopup="true" 
+                  aria-haspopup="true" 
                   data-disable-hover='false' 
                   tabindex=1 
                   title="Berechtigung zur Datenänderung" 
@@ -45,7 +45,7 @@
               @else
                 <a 
                   class="button small success checkDataButton pull-right" 
-                  data-tooltip aria-haspopup="true" 
+                  aria-haspopup="true" 
                   data-disable-hover='false' 
                   tabindex=1 
                   title="Daten überprüfen" 
@@ -55,7 +55,7 @@
               <a
                 class="button small primary"
                 style="float:right;"
-                data-tooltip aria-haspopup="true" 
+                aria-haspopup="true" 
                 data-disable-hover='false' 
                 tabindex=1 
                 title="Protokoll"
@@ -64,7 +64,7 @@
               <a
                 class="button small secondary"
                 style="float:right;"
-                data-tooltip aria-haspopup="true" 
+                aria-haspopup="true" 
                 data-disable-hover='false' 
                 tabindex=1 
                 title="Nachrichten"
@@ -73,7 +73,7 @@
               <a
                 class="button small warning"
                 style="float:right;"
-                data-tooltip aria-haspopup="true" 
+                aria-haspopup="true" 
                 data-disable-hover='false' 
                 tabindex=1 
                 title="Bearbeiten"
@@ -181,11 +181,11 @@
                       @endif
                     </td>
                     <td>
-                      <a href="{{ URL('admin/raffles/'.$raffle->id) }}" class="small button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Details anzeigen"><i class="fa fa-search"></i></a>
+                      <a href="{{ URL('admin/raffles/'.$raffle->id) }}" class="small button" aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Details anzeigen"><i class="fa fa-search"></i></a>
                       @if($raffle->pivot->confirmed == 1)
-                        <a data-open="resendModal" raffleId="{{ $raffle->id }}" class="small success button resendModalButton" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Erneut senden"><i class="fa fa-envelope"></i></a>
+                        <a data-open="resendModal" raffleId="{{ $raffle->id }}" class="small success button resendModalButton" aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Erneut senden"><i class="fa fa-envelope"></i></a>
                       @else
-                        <a data-open="userWinModal" raffleId="{{ $raffle->id }}" class="small success button confirmUserButton" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Bestätigen"><i class="fa fa-trophy"></i></a>
+                        <a data-open="userWinModal" raffleId="{{ $raffle->id }}" class="small success button confirmUserButton" aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Bestätigen"><i class="fa fa-trophy"></i></a>
                       @endif
                     </td>
                   </tr>

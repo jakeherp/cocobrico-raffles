@@ -40,7 +40,7 @@
                 <a 
                   href="{{ url('admin/users/remarks/'. $remark->id . '/edit' ) }}"
                   class="tiny button warning" 
-                  data-tooltip aria-haspopup="true" 
+                  aria-haspopup="true" 
                   data-disable-hover='false' 
                   tabindex=1 
                   title="Bearbeiten"
@@ -48,7 +48,7 @@
                 <a 
                   class="tiny button alert deleteRemarkButton" 
                   remarkId="{{ $remark->id }}" 
-                  data-tooltip aria-haspopup="true" 
+                  aria-haspopup="true" 
                   data-disable-hover='false' 
                   tabindex=1 
                   title="Löschen" 

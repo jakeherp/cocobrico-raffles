@@ -26,13 +26,10 @@
                     <td>{{ $raffle->title }}</td>
                     <td>{{ count($raffle->codes) }}</td>
                     <td>
-                      <a href="{{ url('admin/codes/'. $raffle->id ) }}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Codes zu Aktion anzeigen"><i class="fa fa-search"></i></a>
+                      <a href="{{ url('admin/codes/'. $raffle->id ) }}" class="tiny button" title="Codes zu Aktion anzeigen"><i class="fa fa-search"></i></a>
                       <a 
                         href="{{ url('admin/codes/'. $raffle->id . '/create' ) }}"
                         class="tiny button success" 
-                        data-tooltip aria-haspopup="true" 
-                        data-disable-hover='false' 
-                        tabindex=1 
                         title="Codes hinzufügen"
                       ><i class="fa fa-plus"></i></a>
                     </td>

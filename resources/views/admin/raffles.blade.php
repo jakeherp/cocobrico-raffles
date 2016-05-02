@@ -80,11 +80,11 @@
                       @endif
                     </td>
                     <td>
-                      <a href="{{ url('admin/raffles/'. $raffle->id ) }}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Teilnehmer anzeigen"><i class="fa fa-search"></i></a>
+                      <a href="{{ url('admin/raffles/'. $raffle->id ) }}" class="tiny button" aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Teilnehmer anzeigen"><i class="fa fa-search"></i></a>
                       <a 
                         href="{{ url('admin/raffles/'. $raffle->id . '/edit' ) }}"
                         class="tiny button warning editRaffleButton" 
-                        data-tooltip aria-haspopup="true" 
+                        aria-haspopup="true" 
                         data-disable-hover='false' 
                         tabindex=1 
                         title="Bearbeiten"
@@ -93,7 +93,7 @@
                       <a 
                         class="tiny button alert deleteRaffleButton" 
                         raffleId="{{ $raffle->id }}" 
-                        data-tooltip aria-haspopup="true" 
+                        aria-haspopup="true" 
                         data-disable-hover='false' 
                         tabindex=1 
                         title="Löschen" 

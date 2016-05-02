@@ -7,14 +7,11 @@
   	  <div class="large-12 column">
         <input type="hidden" id="token" value="{{ csrf_token() }}">
         <a href="{{ url('admin/codes/'.$raffle->id.'/create') }}" class="pull-right success button"><i class="fa fa-plus"></i> Codes hinzufügen</a>
-        <a id="deactivateSelectedCodes" class="pull-right alert button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Markierte Codes annullieren" disabled="true"><i class="fa fa-ban"></i></a>
+        <a id="deactivateSelectedCodes" class="pull-right alert button" title="Markierte Codes annullieren" disabled="true"><i class="fa fa-ban"></i></a>
         @if(count($raffle->codes) > 0)
           <a 
             id="preparePrintButton" 
             class="pull-right primary button" 
-            data-tooltip aria-haspopup="true" 
-            data-disable-hover='false' 
-            tabindex=1 
             title="Druckansicht" 
             data-open="preparePrintModal"><i class="fa fa-print"></i></a>
         @else
@@ -55,16 +52,13 @@
                       @endif
                     </td>
                     <td>
-                      <button href="{{ url('admin/codes/detail/'. $code->id ) }}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Kundendetails anzeigen" disabled><i class="fa fa-search"></i></button>
+                      <button href="{{ url('admin/codes/detail/'. $code->id ) }}" class="tiny button" title="Kundendetails anzeigen" disabled><i class="fa fa-search"></i></button>
                       @if($code->active == 0 || $code->user != null)
                         <a class="tiny button alert" disabled><i class="fa fa-ban"></i></a>
                       @else
                         <a 
                         class="tiny button alert deactivateCodeButton" 
                         codeId="{{ $code->id }}" 
-                        data-tooltip aria-haspopup="true" 
-                        data-disable-hover='false' 
-                        tabindex=1 
                         title="Annullieren" 
                         data-open="deactivateCodeModal" 
                         ><i class="fa fa-ban"></i></a>

@@ -5,7 +5,7 @@
     <section class="row" id="content">
 
   	  <div class="large-12 column">
-        <a href="{{ url('admin/users/newsletter') }}" class="pull-right small alert button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Newsletter Abonnenten CSV Download"><i class="fa fa-download"></i></a>
+        <a href="{{ url('admin/users/newsletter') }}" class="pull-right small alert button" title="Newsletter Abonnenten CSV Download"><i class="fa fa-download"></i></a>
         <h1><i class="fa fa-user"></i> Mitglieder</h1>
         @if(session()->has('msg'))
           <div class="callout {{ session('msgState') }}">
@@ -34,10 +34,10 @@
                 @endif
                     <td>
                       @if( count($member->messages) > 0 )
-                        <a href="{{ URL('admin/messages/'.$member->id) }}" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Nachrichtenverlauf"><i class="fa fa-envelope"></i></a>
+                        <a href="{{ URL('admin/messages/'.$member->id) }}" title="Nachrichtenverlauf"><i class="fa fa-envelope"></i></a>
                       @endif
                       @if( count($member->remarks) > 0 )
-                        <a href="{{ URL('admin/users/'.$member->id.'/remarks') }}" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Kommentare"><span style="color: green">R</span></a>
+                        <a href="{{ URL('admin/users/'.$member->id.'/remarks') }}" title="Kommentare"><span style="color: green">R</span></a>
                       @endif
                     </td>
                     <td>

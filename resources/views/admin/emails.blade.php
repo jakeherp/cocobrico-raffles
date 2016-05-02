@@ -34,25 +34,19 @@
                     @endif 
                   </td>
                 	<td>
-                    <a href="{{ url('admin/emails/'. $email->id .'/preview' ) }}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Vorschau"><i class="fa fa-search"></i></a>
+                    <a href="{{ url('admin/emails/'. $email->id .'/preview' ) }}" class="tiny button" title="Vorschau"><i class="fa fa-search"></i></a>
                     <a 
                         href="{{ url('admin/emails/'. $email->id . '/edit' ) }}"
                         class="tiny button warning" 
-                        data-tooltip aria-haspopup="true" 
-                        data-disable-hover='false' 
-                        tabindex=1 
                         title="Bearbeiten"
                       ><i class="fa fa-pencil"></i></a>
-                      <a href="{{ url('admin/emails/'. $email->id .'/pdf' ) }}" class="tiny button success" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="PDFs zuordnen"><i class="fa fa-file-pdf-o"></i></a>
+                      <a href="{{ url('admin/emails/'. $email->id .'/pdf' ) }}" class="tiny button success" title="PDFs zuordnen"><i class="fa fa-file-pdf-o"></i></a>
                 		@if($email->standard == 1)
                 			<a class="tiny button alert" disabled="true"><i class="fa fa-trash"></i></a>
                 		@else
 	                		<a 
 	                        class="tiny button alert deleteEmailButton" 
 	                        emailId="{{ $email->id }}" 
-	                        data-tooltip aria-haspopup="true" 
-	                        data-disable-hover='false' 
-	                        tabindex=1 
 	                        title="Löschen" 
 	                        data-open="deleteEmailModal" 
 	                      	><i class="fa fa-trash"></i></a>

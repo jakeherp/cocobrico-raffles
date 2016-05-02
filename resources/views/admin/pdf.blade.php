@@ -34,13 +34,10 @@
                     @endif
                   </td>
                 	<td>
-                    <a href="{{ url('admin/pdf/'. $confirmation->id .'/preview' ) }}" class="tiny button" data-tooltip aria-haspopup="true" data-disable-hover='false' tabindex=1 title="Vorschau"><i class="fa fa-search"></i></a>
+                    <a href="{{ url('admin/pdf/'. $confirmation->id .'/preview' ) }}" class="tiny button" title="Vorschau"><i class="fa fa-search"></i></a>
                     <a 
                         href="{{ url('admin/pdf/'. $confirmation->id . '/edit' ) }}"
                         class="tiny button warning" 
-                        data-tooltip aria-haspopup="true" 
-                        data-disable-hover='false' 
-                        tabindex=1 
                         title="Bearbeiten"
                       ><i class="fa fa-pencil"></i></a>
                 		@if($confirmation->standard == 1)
@@ -49,9 +46,6 @@
 	                		<a 
 	                        class="tiny button alert deleteConfirmationButton" 
 	                        pdfId="{{ $confirmation->id }}" 
-	                        data-tooltip aria-haspopup="true" 
-	                        data-disable-hover='false' 
-	                        tabindex=1 
 	                        title="Löschen" 
 	                        data-open="deleteConfirmationModal" 
 	                      	><i class="fa fa-trash"></i></a>

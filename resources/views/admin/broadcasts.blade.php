@@ -34,17 +34,11 @@
                       <a 
                         href="{{ url('admin/broadcasts/'. $broadcast->id . '/edit' ) }}"
                         class="tiny button warning" 
-                        data-tooltip aria-haspopup="true" 
-                        data-disable-hover='false' 
-                        tabindex=1 
                         title="Bearbeiten"
                       ><i class="fa fa-pencil"></i></a>
                       <a 
                         class="tiny button alert deleteBroadcastButton" 
                         broadcastId="{{ $broadcast->id }}" 
-                        data-tooltip aria-haspopup="true" 
-                        data-disable-hover='false' 
-                        tabindex=1 
                         title="Löschen" 
                         data-open="deleteBroadcastModal" 
                       ><i class="fa fa-trash"></i></a>

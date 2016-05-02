@@ -7,8 +7,8 @@
       <div class="large-12 column">
         {!! Form::open(['url' => 'admin/messages/changeState', 'method' => 'post']) !!}
           <input type="hidden" name="member_id" value="{{ $member->id }}">
-          <button class="small alert button pull-right" name="unread" data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1" title="Als ungelesen markieren"><i class="fa fa-envelope"></i></button>
-          <a class="small primary button pull-right" href="{{ URL('admin/users/'.$member->id) }}" data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1" title="Zum Profil"><i class="fa fa-search"></i></a>
+          <button class="small alert button pull-right" name="unread" title="Als ungelesen markieren"><i class="fa fa-envelope"></i></button>
+          <a class="small primary button pull-right" href="{{ URL('admin/users/'.$member->id) }}" title="Zum Profil"><i class="fa fa-search"></i></a>
         {!! Form::close() !!}
         <h1><i class="fa fa-envelope"></i> Nachrichtenverlauf</h1>
         <p>mit 
